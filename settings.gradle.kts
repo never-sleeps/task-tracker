@@ -10,4 +10,5 @@ pluginManagement {
     }
 }
 
-include("acceptance")
+// include("acceptance")
+include("common")
