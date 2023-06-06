@@ -267,7 +267,7 @@ components:
         message:
           type: string
 
-    ResponseResult:
+    ResponseResultStatus:
       type: string
       enum:
         - success
@@ -284,8 +284,8 @@ components:
         requestId:
           type: string
           description: Идентификатор запроса для отладки
-        result:
-          $ref: '#/components/schemas/ResponseResult'
+        resultStatus:
+          $ref: '#/components/schemas/ResponseResultStatus'
         errors:
           type: array
           items:
@@ -559,9 +559,6 @@ components:
         executor:
           type: string
           description: Task executor ID
-        dueDate:
-          type: string
-          description: Task due date
         createdBy:
           type: string
           description: Task author ID
@@ -620,14 +617,12 @@ components:
           type: string
           description: Id автора проекта
         type:
-          type: string
+          type: object
+          $ref: '#/components/schemas/TaskType'
           description: Task type
         executor:
           type: string
           description: Task executor ID
-        dueDate:
-          type: string
-          description: Task due date
 
     TaskResponseObject:
       allOf:
@@ -672,16 +667,10 @@ components:
     ProjectRequestDebug:
       type: object
       properties:
-        debug:
-          $ref: '#/components/schemas/ProjectDebug'
-
-    ProjectDebug:
-      type: object
-      properties:
         stub:
-          $ref: '#/components/schemas/ProjectRequestDebugStub'
+          $ref: '#/components/schemas/ProjectDebugStub'
 
-    ProjectRequestDebugStub:
+    ProjectDebugStub:
       type: string
       enum:
         - success
@@ -695,16 +684,10 @@ components:
     TaskRequestDebug:
       type: object
       properties:
-        debug:
-          $ref: '#/components/schemas/TaskDebug'
-
-    TaskDebug:
-      type: object
-      properties:
         stub:
-          $ref: '#/components/schemas/TaskRequestDebugStub'
+          $ref: '#/components/schemas/TaskDebugStub'
 
-    TaskRequestDebugStub:
+    TaskDebugStub:
       type: string
       enum:
         - success
@@ -713,5 +696,4 @@ components:
         - badTitle
         - badSearchСreatedBy
         - badSearchExecutor
-        - badSearchDueDate
         - permissionError

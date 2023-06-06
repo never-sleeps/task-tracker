@@ -1,13 +1,11 @@
-package ru.otus.otuskotlin.marketplace.common
-
 import kotlinx.datetime.Instant
-import ru.otus.otuskotlin.marketplace.common.models.AppCommand
-import ru.otus.otuskotlin.marketplace.common.models.AppError
-import ru.otus.otuskotlin.marketplace.common.models.AppState
-import ru.otus.otuskotlin.marketplace.common.models.RequestId
-import ru.otus.otuskotlin.marketplace.common.models.project.Project
-import ru.otus.otuskotlin.marketplace.common.models.project.ProjectFilter
-import ru.otus.otuskotlin.marketplace.common.stubs.ProjectStub
+import models.AppCommand
+import models.AppError
+import models.AppState
+import models.RequestId
+import models.project.Project
+import models.project.ProjectSearchFilter
+import stubs.ProjectDebugStub
 
 data class ProjectContext(
     override var requestId: RequestId = RequestId.NONE,
@@ -17,8 +15,8 @@ data class ProjectContext(
     override var errors: MutableList<AppError> = mutableListOf(),
 
     var projectRequest: Project = Project(),
-    var projectFilterRequest: ProjectFilter = ProjectFilter(),
+    var projectSearchFilterRequest: ProjectSearchFilter = ProjectSearchFilter(),
     var projectResponse: Project = Project(),
     var projectsResponse: MutableList<Project> = mutableListOf(),
-    var stubCase: ProjectStub = ProjectStub.NONE,
+    var stubCase: ProjectDebugStub = ProjectDebugStub.NONE,
 ) : IContext

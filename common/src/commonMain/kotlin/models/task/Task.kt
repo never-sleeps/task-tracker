@@ -1,18 +1,17 @@
-package ru.otus.otuskotlin.marketplace.common.models.task
+package models.task
 
-import kotlinx.datetime.Instant
-import ru.otus.otuskotlin.marketplace.common.NONE
-import ru.otus.otuskotlin.marketplace.common.models.user.UserId
+import models.user.UserId
 
 data class Task(
+    var id: TaskId = TaskId.NONE,
     var type: TaskType = TaskType.NONE,
-    var priority: TaskPriority = TaskPriority.MEDIUM,
-    var status: TaskStatus = TaskStatus.TODO,
+    var priority: TaskPriority = TaskPriority.NONE,
+    var status: TaskStatus = TaskStatus.NONE,
     var title: String = "",
     var description: String = "",
     var executor: UserId = UserId.NONE,
-    var dueDate: Instant = Instant.NONE,
-    var createdBy: UserId = UserId.NONE
+    var createdBy: UserId = UserId.NONE,
+    val permissions: MutableSet<TaskPermission> = mutableSetOf(),
 )
 
 enum class TaskType {
@@ -21,19 +20,21 @@ enum class TaskType {
     FRONTEND,
     DESIGN,
     TESTING,
-    OTHER
+    OTHER,
 }
 
 enum class TaskPriority {
+    NONE,
     CRITICAL,
     HIGH,
     MEDIUM,
-    LOW
+    LOW,
 }
 
 enum class TaskStatus {
+    NONE,
     TODO,
     IN_PROGRESS,
     DONE,
-    CANCELED
+    CANCELED,
 }

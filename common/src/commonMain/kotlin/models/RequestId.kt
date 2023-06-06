@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.marketplace.common.models
+package models
 
 import kotlin.jvm.JvmInline
 

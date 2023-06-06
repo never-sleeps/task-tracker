@@ -1,7 +1,7 @@
-package ru.otus.otuskotlin.marketplace.common.helpers
+package helpers
 
-import ru.otus.otuskotlin.marketplace.common.ProjectContext
-import ru.otus.otuskotlin.marketplace.common.models.AppError
+import ProjectContext
+import models.AppError
 
 fun Throwable.asAppError(
     code: String = "unknown",

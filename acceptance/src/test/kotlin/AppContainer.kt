@@ -1,5 +1,3 @@
-package ru.otus.otuskotlin.marketplace.blackbox
-
 import io.ktor.http.* // ktlint-disable no-wildcard-imports
 import org.testcontainers.containers.GenericContainer
 import org.testcontainers.utility.DockerImageName

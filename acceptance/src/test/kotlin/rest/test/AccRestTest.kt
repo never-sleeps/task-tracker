@@ -1,15 +1,15 @@
-package ru.otus.otuskotlin.marketplace.blackbox.rest.test
+package rest.test
 
+import AppContainer
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.core.test.TestCaseSeverityLevel
 import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
-import io.ktor.client.*
-import io.ktor.client.call.*
-import io.ktor.client.engine.okhttp.*
-import io.ktor.client.request.*
-import io.ktor.http.*
-import ru.otus.otuskotlin.marketplace.blackbox.AppContainer
+import io.ktor.client.* // ktlint-disable no-wildcard-imports
+import io.ktor.client.call.* // ktlint-disable no-wildcard-imports
+import io.ktor.client.engine.okhttp.* // ktlint-disable no-wildcard-imports
+import io.ktor.client.request.* // ktlint-disable no-wildcard-imports
+import io.ktor.http.* // ktlint-disable no-wildcard-imports
 
 class AccRestTest : FunSpec({
     // Временно отключаем завал до момента реализации функциональности
@@ -23,7 +23,7 @@ class AccRestTest : FunSpec({
                 "TC-1" to Pair(Request(), Response()),
                 "TC-2" to Pair(Request(), Response()),
                 "TC-3" to Pair(Request(), Response()),
-            )
+            ),
         ) { (req, expected) ->
             val resp = client.get {
                 url(AppContainer.C.url)

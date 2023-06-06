@@ -1,7 +1,7 @@
-package ru.otus.otuskotlin.marketplace.common.helpers
+package helpers
 
-import ru.otus.otuskotlin.marketplace.common.ProjectContext
-import ru.otus.otuskotlin.marketplace.common.models.AppCommand
+import ProjectContext
+import models.AppCommand
 
 fun ProjectContext.isUpdatableCommand() =
     this.command in listOf(AppCommand.CREATE, AppCommand.UPDATE, AppCommand.DELETE)

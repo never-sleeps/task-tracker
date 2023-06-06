@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.marketplace.common.models.task
+package models.task
 
 import kotlin.jvm.JvmInline
 

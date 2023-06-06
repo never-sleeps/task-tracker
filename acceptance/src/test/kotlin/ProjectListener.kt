@@ -1,5 +1,3 @@
-package ru.otus.otuskotlin.marketplace.blackbox
-
 import io.kotest.core.annotation.AutoScan
 import io.kotest.core.listeners.AfterProjectListener
 import io.kotest.core.listeners.BeforeProjectListener

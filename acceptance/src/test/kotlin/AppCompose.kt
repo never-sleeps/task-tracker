@@ -1,5 +1,3 @@
-package ru.otus.otuskotlin.marketplace.blackbox
-
 import org.testcontainers.containers.DockerComposeContainer
 import java.io.File
 

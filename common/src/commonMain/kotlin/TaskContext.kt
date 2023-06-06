@@ -1,13 +1,11 @@
-package ru.otus.otuskotlin.marketplace.common
-
 import kotlinx.datetime.Instant
-import ru.otus.otuskotlin.marketplace.common.models.AppCommand
-import ru.otus.otuskotlin.marketplace.common.models.AppError
-import ru.otus.otuskotlin.marketplace.common.models.AppState
-import ru.otus.otuskotlin.marketplace.common.models.RequestId
-import ru.otus.otuskotlin.marketplace.common.models.task.Task
-import ru.otus.otuskotlin.marketplace.common.models.task.TaskFilter
-import ru.otus.otuskotlin.marketplace.common.stubs.TaskStub
+import models.AppCommand
+import models.AppError
+import models.AppState
+import models.RequestId
+import stubs.TaskDebugStub
+import models.task.Task
+import models.task.TaskSearchFilter
 
 data class TaskContext(
     override var requestId: RequestId = RequestId.NONE,
@@ -17,8 +15,8 @@ data class TaskContext(
     override var errors: MutableList<AppError> = mutableListOf(),
 
     var taskRequest: Task = Task(),
-    var taskFilterRequest: TaskFilter = TaskFilter(),
+    var taskSearchFilterRequest: TaskSearchFilter = TaskSearchFilter(),
     var taskResponse: Task = Task(),
     var tasksResponse: MutableList<Task> = mutableListOf(),
-    var stubCase: TaskStub = TaskStub.NONE,
+    var stubCase: TaskDebugStub = TaskDebugStub.NONE,
 ) : IContext

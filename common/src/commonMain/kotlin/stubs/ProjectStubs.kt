@@ -1,6 +1,6 @@
-package ru.otus.otuskotlin.marketplace.common.stubs
+package stubs
 
-enum class ProjectStub {
+enum class ProjectDebugStub {
     NONE,
     SUCCESS,
     NOT_FOUND,
@@ -11,7 +11,7 @@ enum class ProjectStub {
     PERMISSION_ERROR,
 }
 
-enum class TaskStub {
+enum class TaskDebugStub {
     NONE,
     SUCCESS,
     NOT_FOUND,
@@ -19,6 +19,5 @@ enum class TaskStub {
     BAD_TITLE,
     BAD_SEARCH_CREATED_BY,
     BAD_SEARCH_EXECUTOR,
-    BAD_SEARCH_DUE_DATE,
     PERMISSION_ERROR,
 }

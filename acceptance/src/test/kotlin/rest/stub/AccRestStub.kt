@@ -1,5 +1,6 @@
-package ru.otus.otuskotlin.marketplace.blackbox.rest.stub
+package rest.stub
 
+import AppContainer
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.core.test.TestCaseSeverityLevel
 import io.kotest.matchers.shouldBe
@@ -9,7 +10,6 @@ import io.ktor.client.engine.okhttp.* // ktlint-disable no-wildcard-imports
 import io.ktor.client.request.* // ktlint-disable no-wildcard-imports
 import io.ktor.client.statement.* // ktlint-disable no-wildcard-imports
 import io.ktor.http.* // ktlint-disable no-wildcard-imports
-import ru.otus.otuskotlin.marketplace.blackbox.AppContainer
 
 class AccRestStub : BehaviorSpec({
     // Временно отключаем завал до момента реализации функциональности
