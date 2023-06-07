@@ -1,0 +1,5 @@
+
+
+```
+gradle clean openApiGenerate build
+```

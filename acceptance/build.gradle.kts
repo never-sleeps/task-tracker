@@ -7,6 +7,15 @@ dependencies {
     val kotestVersion: String by project
     val ktorVersion: String by project
     val coroutinesVersion: String by project
+    val ktorClientOkhttpVersion: String by project
+    val log4jVersion: String by project
+    val kotlinLoggingJvmVersion: String by project
+    implementation("io.ktor:ktor-client-okhttp-jvm:$ktorClientOkhttpVersion")
+    implementation("org.slf4j:slf4j-log4j12:$log4jVersion")
+    implementation("io.github.microutils:kotlin-logging-jvm:$kotlinLoggingJvmVersion")
+
+    // Project
+    implementation(project(":api-multiplatform"))
 
     implementation(kotlin("stdlib"))
     implementation("io.ktor:ktor-client-okhttp-jvm:2.2.4")

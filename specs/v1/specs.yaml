@@ -1,0 +1,699 @@
+openapi: 3.0.4
+info:
+  title: "Task tracker ${VERSION_APP}"
+  description: Setting up tasks, tracking progress
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/api/v1
+tags:
+  - name: project
+    description: Проект
+  - name: task
+    description: Задача
+
+paths:
+  /project/create:
+    post:
+      tags:
+        - project
+      summary: Create project
+      operationId: projectCreate
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectCreateRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectCreateResponse'
+
+  /project/read:
+    post:
+      tags:
+        - project
+      summary: Read project
+      operationId: projectRead
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectReadRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectReadResponse'
+
+  /project/update:
+    post:
+      tags:
+        - project
+      summary: Update project
+      operationId: projectUpdate
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectUpdateRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectUpdateResponse'
+
+  /project/delete:
+    post:
+      tags:
+        - project
+      summary: Delete project
+      operationId: projectDelete
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectDeleteRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDeleteResponse'
+
+  /project/search:
+    post:
+      tags:
+        - project
+      summary: Search project
+      operationId: projectSearch
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectSearchRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectSearchResponse'
+
+  /task/create:
+    post:
+      tags:
+        - task
+      summary: Create task
+      operationId: taskCreate
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectCreateRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectCreateResponse'
+
+  /task/read:
+    post:
+      tags:
+        - task
+      summary: Read task
+      operationId: taskRead
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectReadRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectReadResponse'
+
+  /task/update:
+    post:
+      tags:
+        - task
+      summary: Update task
+      operationId: taskUpdate
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectUpdateRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectUpdateResponse'
+
+  /task/delete:
+    post:
+      tags:
+        - task
+      summary: Delete task
+      operationId: taskDelete
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectDeleteRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDeleteResponse'
+
+  /task/search:
+    post:
+      tags:
+        - task
+      summary: Search task
+      operationId: taskSearch
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectSearchRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectSearchResponse'
+
+components:
+  schemas:
+
+    # BASE OBJECTS ======================
+
+    IRequest:
+      type: object
+      description: Базовый интерфейс для всех запросов
+      properties:
+        requestType:
+          type: string
+          description: Поле-дескриминатор для вычисления типа запроса
+          example: create
+        requestId:
+          type: string
+          description: Идентификатор запроса для отладки
+      discriminator:
+        propertyName: requestType
+        mapping:
+          createProject: '#/components/schemas/ProjectCreateRequest'
+          readProject:   '#/components/schemas/ProjectReadRequest'
+          updateProject: '#/components/schemas/ProjectUpdateRequest'
+          deleteProject: '#/components/schemas/ProjectDeleteRequest'
+          searchProject: '#/components/schemas/ProjectSearchRequest'
+          createTask:    '#/components/schemas/TaskCreateRequest'
+          readTask:      '#/components/schemas/TaskReadRequest'
+          updateTask:    '#/components/schemas/TaskUpdateRequest'
+          deleteTask:    '#/components/schemas/TaskDeleteRequest'
+          searchTask:    '#/components/schemas/TaskSearchRequest'
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        group:
+          type: string
+        field:
+          type: string
+        message:
+          type: string
+
+    ResponseResultStatus:
+      type: string
+      enum:
+        - success
+        - error
+
+    IResponse:
+      type: object
+      description: Базовый интерфейс для всех ответов
+      properties:
+        responseType:
+          type: string
+          description: Поле-дескриминатор для вычисления типа запроса
+          example: create
+        requestId:
+          type: string
+          description: Идентификатор запроса для отладки
+        resultStatus:
+          $ref: '#/components/schemas/ResponseResultStatus'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+
+      discriminator:
+        propertyName: responseType
+        mapping:
+          init:          '#/components/schemas/InitBaseResponse'
+          createProject: '#/components/schemas/ProjectCreateResponse'
+          readProject:   '#/components/schemas/ProjectReadResponse'
+          updateProject: '#/components/schemas/ProjectUpdateResponse'
+          deleteProject: '#/components/schemas/ProjectDeleteResponse'
+          searchProject: '#/components/schemas/ProjectSearchResponse'
+          createTask:    '#/components/schemas/TaskCreateResponse'
+          readTask:      '#/components/schemas/TaskReadResponse'
+          updateTask:    '#/components/schemas/TaskUpdateResponse'
+          deleteTask:    '#/components/schemas/TaskDeleteResponse'
+          searchTask:    '#/components/schemas/TaskSearchResponse'
+
+
+    # PROJECT REQUESTS / RESPONSES ======================
+
+    ProjectCreateRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/ProjectRequestDebug'
+        - type: object
+          properties:
+            data:
+              $ref: '#/components/schemas/ProjectCreateObject'
+
+    ProjectReadRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/ProjectRequestDebug'
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/ProjectId'
+
+    ProjectUpdateRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/ProjectRequestDebug'
+        - type: object
+          properties:
+            data:
+              $ref: '#/components/schemas/ProjectUpdateObject'
+
+    ProjectDeleteRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/ProjectRequestDebug'
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/ProjectId'
+
+    ProjectSearchRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/ProjectRequestDebug'
+        - type: object
+          properties:
+            filter:
+              $ref: '#/components/schemas/ProjectSearchFilter'
+
+    ProjectCreateResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/ProjectResponseSingle'
+
+    ProjectReadResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/ProjectResponseSingle'
+
+    ProjectUpdateResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/ProjectResponseSingle'
+
+    ProjectDeleteResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/ProjectResponseSingle'
+
+    ProjectSearchResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/ProjectResponseMulti'
+
+    # TASK REQUESTS / RESPONSES ======================
+
+    TaskCreateRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/TaskRequestDebug'
+        - type: object
+          properties:
+            data:
+              $ref: '#/components/schemas/TaskCreateObject'
+
+    TaskReadRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/TaskRequestDebug'
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/TaskId'
+
+    TaskUpdateRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/TaskRequestDebug'
+        - type: object
+          properties:
+            data:
+              $ref: '#/components/schemas/TaskUpdateObject'
+
+    TaskDeleteRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/TaskRequestDebug'
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/TaskId'
+
+    TaskSearchRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/TaskRequestDebug'
+        - type: object
+          properties:
+            filter:
+              $ref: '#/components/schemas/TaskSearchFilter'
+
+    TaskCreateResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/TaskResponseSingle'
+
+    TaskReadResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/TaskResponseSingle'
+
+    TaskUpdateResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/TaskResponseSingle'
+
+    TaskDeleteResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/TaskResponseSingle'
+
+    TaskSearchResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/TaskResponseMulti'
+
+    # BASE OBJECTS ======================
+
+    InitBaseResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+
+    # PROJECT OBJECTS ======================
+
+    ProjectData:
+      type: object
+      description: Данные объекта project
+      properties:
+        title:
+          type: string
+          description: Project title
+        description:
+          type: string
+          description: Project description
+        createdBy:
+          type: string
+          description: Project author ID
+
+    ProjectId:
+      type: string
+
+    ProjectCreateObject:
+      allOf:
+        - $ref: '#/components/schemas/ProjectData'
+
+    ProjectUpdateObject:
+      allOf:
+        - $ref: '#/components/schemas/ProjectData'
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/ProjectId'
+
+    ProjectSearchFilter:
+      type: object
+      description: Набор фильтров для поиска
+      properties:
+        searchText:
+          type: string
+          description: Cтрока, которая будет искаться в заголовках объектов
+        createdBy:
+          type: string
+          description: Id автора проекта
+
+    ProjectResponseObject:
+      allOf:
+        - $ref: '#/components/schemas/ProjectData'
+        - type: object
+          description: Project id, data and permissions
+          properties:
+            id:
+              $ref: '#/components/schemas/ProjectId'
+            permissions:
+              type: array
+              uniqueItems: true
+              items:
+                $ref: '#/components/schemas/ProjectPermission'
+
+    ProjectPermission:
+      type: string
+      enum:
+        - read
+        - update
+        - delete
+
+    ProjectResponseSingle:
+      allOf:
+        - type: object
+          description: Ответ с одним объектом project
+          properties:
+            project:
+              $ref: '#/components/schemas/ProjectResponseObject'
+
+    ProjectResponseMulti:
+      allOf:
+        - type: object
+          description: Список объектов project
+          properties:
+            projects:
+              type: array
+              items:
+                $ref: '#/components/schemas/ProjectResponseObject'
+
+    # TASK OBJECTS ======================
+
+    TaskData:
+      type: object
+      description: Данные объекта task
+      properties:
+        type:
+          $ref: '#/components/schemas/TaskType'
+        priority:
+          $ref: '#/components/schemas/TaskPriority'
+        status:
+          $ref: '#/components/schemas/TaskStatus'
+        title:
+          type: string
+          description: Task title
+        description:
+          type: string
+          description: Task description
+        executor:
+          type: string
+          description: Task executor ID
+        createdBy:
+          type: string
+          description: Task author ID
+
+    TaskId:
+      type: string
+
+    TaskType:
+      type: string
+      description: 'Тип задачи'
+      enum:
+        - backend
+        - frontend
+        - design
+        - testing
+        - other
+
+    TaskStatus:
+      type: string
+      description: 'Статус задачи'
+      enum:
+        - todo
+        - in progress
+        - done
+        - canceled
+
+    TaskPriority:
+      type: string
+      description: 'Приоритет задачи'
+      enum:
+        - critical
+        - high
+        - medium
+        - low
+
+    TaskCreateObject:
+      allOf:
+        - $ref: '#/components/schemas/TaskData'
+
+    TaskUpdateObject:
+      allOf:
+        - $ref: '#/components/schemas/TaskData'
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/TaskId'
+
+    TaskSearchFilter:
+      type: object
+      description: Набор фильтров для поиска задач
+      properties:
+        searchText:
+          type: string
+          description: Cтрока, которая будет искаться в заголовках объектов
+        createdBy:
+          type: string
+          description: Id автора проекта
+        type:
+          type: object
+          $ref: '#/components/schemas/TaskType'
+          description: Task type
+        executor:
+          type: string
+          description: Task executor ID
+
+    TaskResponseObject:
+      allOf:
+        - $ref: '#/components/schemas/TaskData'
+        - type: object
+          description: Task id, data and permissions
+          properties:
+            id:
+              $ref: '#/components/schemas/TaskId'
+            permissions:
+              type: array
+              uniqueItems: true
+              items:
+                $ref: '#/components/schemas/TaskPermission'
+
+    TaskPermission:
+      type: string
+      enum:
+        - read
+        - update
+        - delete
+
+    TaskResponseSingle:
+      allOf:
+        - type: object
+          description: Ответ с одним объектом task
+          properties:
+            task:
+              $ref: '#/components/schemas/TaskResponseObject'
+
+    TaskResponseMulti:
+      allOf:
+        - type: object
+          description: Список объектов task
+          properties:
+            tasks:
+              type: array
+              items:
+                $ref: '#/components/schemas/TaskResponseObject'
+
+    # STUBS ======================
+    ProjectRequestDebug:
+      type: object
+      properties:
+        stub:
+          $ref: '#/components/schemas/ProjectDebugStub'
+
+    ProjectDebugStub:
+      type: string
+      enum:
+        - success
+        - notFound
+        - badId
+        - badTitle
+        - badSearchText
+        - badSearchСreatedBy
+        - permissionError
+
+    TaskRequestDebug:
+      type: object
+      properties:
+        stub:
+          $ref: '#/components/schemas/TaskDebugStub'
+
+    TaskDebugStub:
+      type: string
+      enum:
+        - success
+        - notFound
+        - badId
+        - badTitle
+        - badSearchСreatedBy
+        - badSearchExecutor
+        - permissionError

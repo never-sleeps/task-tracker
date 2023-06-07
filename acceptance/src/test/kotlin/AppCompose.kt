@@ -1,7 +1,7 @@
-package ru.otus.otuskotlin.marketplace.blackbox
-
 import org.testcontainers.containers.DockerComposeContainer
+import org.testcontainers.containers.wait.strategy.Wait // ktlint-disable no-unused-imports
 import java.io.File
+import java.time.Duration // ktlint-disable no-unused-imports
 
 @Suppress("unused")
 class AppCompose private constructor() {

@@ -7,7 +7,7 @@
 
 ## Описание сущности Project
 
-1. Name (text)
+1. Title (text)
 2. Description (text)
 3. CreatedBy (uuid)
 4. CreatedAt (timestamp)
@@ -15,7 +15,7 @@
 ## Описание сущности Task
 
 1. Type (enum)
-2. Name (text)
+2. Title (text)
 3. Description (text)
 4. Executor (uuid)
 5. Priority (enum)
