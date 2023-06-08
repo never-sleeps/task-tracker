@@ -1,9 +1,11 @@
-package rest
+package me.neversleeps.acceptance.rest
 
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.core.test.TestCaseSeverityLevel
 import io.kotest.matchers.shouldBe
-import stub.ProjectStub
+import me.neversleeps.acceptance.RestClient
+import me.neversleeps.acceptance.stub.ProjectPaths
+import me.neversleeps.acceptance.stub.ProjectStub
 
 class ProjectStubTest : BehaviorSpec({
     severity = TestCaseSeverityLevel.MINOR

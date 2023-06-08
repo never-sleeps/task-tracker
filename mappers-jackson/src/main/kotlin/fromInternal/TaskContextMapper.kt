@@ -1,14 +1,14 @@
-package fromInternal
+package me.neversleeps.mappers.jackson.fromInternal
 
-import TaskContext
-import UnknownCommandMapping
 import me.neversleeps.api.jackson.v1.models.IResponse
 import me.neversleeps.api.jackson.v1.models.TaskCreateResponse
 import me.neversleeps.api.jackson.v1.models.TaskDeleteResponse
 import me.neversleeps.api.jackson.v1.models.TaskReadResponse
 import me.neversleeps.api.jackson.v1.models.TaskSearchResponse
 import me.neversleeps.api.jackson.v1.models.TaskUpdateResponse
-import models.AppCommand
+import me.neversleeps.common.TaskContext
+import me.neversleeps.common.models.AppCommand
+import me.neversleeps.mappers.jackson.UnknownCommandMapping
 
 fun TaskContext.toTransport(): IResponse = when (val cmd = command) {
     AppCommand.CREATE -> toTransportCreate()

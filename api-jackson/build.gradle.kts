@@ -29,7 +29,7 @@ openApiGenerate {
     apiPackage.set("$openapiGroup.api")
     modelPackage.set("$openapiGroup.models")
     invokerPackage.set("$openapiGroup.invoker")
-    inputSpec.set("$rootDir/specs/v1/specs.yaml")
+    inputSpec.set("$rootDir/_specs/v1/specs.yaml")
 
     /**
      * https://openapi-generator.tech/docs/globals

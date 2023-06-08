@@ -1,3 +1,5 @@
+package me.neversleeps.api.multiplatform
+
 import me.neversleeps.api.multiplatform.v1.models.IResponse
 import me.neversleeps.api.multiplatform.v1.models.ProjectCreateResponse
 import me.neversleeps.api.multiplatform.v1.models.ProjectPermission

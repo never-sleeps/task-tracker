@@ -1,6 +1,6 @@
-package models.project
+package me.neversleeps.common.models.project
 
-import models.user.UserId
+import me.neversleeps.common.models.user.UserId
 
 data class Project(
     var id: ProjectId = ProjectId.NONE,

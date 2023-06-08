@@ -1,4 +1,6 @@
-import models.AppCommand
+package me.neversleeps.mappers.jackson
+
+import me.neversleeps.common.models.AppCommand
 import kotlin.reflect.KClass
 
 class UnknownRequestClass(clazz: KClass<*>) :

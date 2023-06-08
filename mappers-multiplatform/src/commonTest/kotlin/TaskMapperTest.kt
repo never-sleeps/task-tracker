@@ -1,5 +1,5 @@
-import fromInternal.toTransport
-import fromTransport.fromTransport
+package me.neversleeps.mappers.multiplatform
+
 import me.neversleeps.api.multiplatform.v1.models.ResponseResultStatus
 import me.neversleeps.api.multiplatform.v1.models.TaskCreateObject
 import me.neversleeps.api.multiplatform.v1.models.TaskCreateRequest
@@ -9,13 +9,17 @@ import me.neversleeps.api.multiplatform.v1.models.TaskPermission
 import me.neversleeps.api.multiplatform.v1.models.TaskPriority
 import me.neversleeps.api.multiplatform.v1.models.TaskStatus
 import me.neversleeps.api.multiplatform.v1.models.TaskType
-import models.AppCommand
-import models.AppError
-import models.AppState
-import models.RequestId
-import models.task.Task
-import models.task.TaskId
-import models.user.UserId
+import me.neversleeps.common.TaskContext
+import me.neversleeps.common.models.AppCommand
+import me.neversleeps.common.models.AppError
+import me.neversleeps.common.models.AppState
+import me.neversleeps.common.models.RequestId
+import me.neversleeps.common.models.task.Task
+import me.neversleeps.common.models.task.TaskId
+import me.neversleeps.common.models.user.UserId
+import me.neversleeps.mappers.multiplatform.fromInternal.toTransport
+import me.neversleeps.mappers.multiplatform.fromTransport.fromTransport
+
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -41,10 +45,10 @@ class TaskMapperTest {
         context.fromTransport(request)
 
         assertEquals(AppCommand.CREATE, context.command)
-        assertEquals(stubs.TaskDebugStub.SUCCESS, context.stubCase)
-        assertEquals(models.task.TaskType.BACKEND, context.taskRequest.type)
-        assertEquals(models.task.TaskPriority.HIGH, context.taskRequest.priority)
-        assertEquals(models.task.TaskStatus.TODO, context.taskRequest.status)
+        assertEquals(me.neversleeps.common.stubs.TaskDebugStub.SUCCESS, context.stubCase)
+        assertEquals(me.neversleeps.common.models.task.TaskType.BACKEND, context.taskRequest.type)
+        assertEquals(me.neversleeps.common.models.task.TaskPriority.HIGH, context.taskRequest.priority)
+        assertEquals(me.neversleeps.common.models.task.TaskStatus.TODO, context.taskRequest.status)
         assertEquals(request.data?.title, context.taskRequest.title)
         assertEquals(request.data?.description, context.taskRequest.description)
         assertEquals(request.data?.executor, context.taskRequest.executor.asString())
@@ -67,16 +71,16 @@ class TaskMapperTest {
             ),
             taskResponse = Task(
                 id = TaskId("task-id"),
-                type = models.task.TaskType.FRONTEND,
-                priority = models.task.TaskPriority.MEDIUM,
-                status = models.task.TaskStatus.IN_PROGRESS,
+                type = me.neversleeps.common.models.task.TaskType.FRONTEND,
+                priority = me.neversleeps.common.models.task.TaskPriority.MEDIUM,
+                status = me.neversleeps.common.models.task.TaskStatus.IN_PROGRESS,
                 title = "some title",
                 description = "some description",
                 executor = UserId("executor-id"),
                 createdBy = UserId("created-by-id"),
                 permissions = mutableSetOf(
-                    models.task.TaskPermission.READ,
-                    models.task.TaskPermission.DELETE,
+                    me.neversleeps.common.models.task.TaskPermission.READ,
+                    me.neversleeps.common.models.task.TaskPermission.DELETE,
                 ),
             ),
         )

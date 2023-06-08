@@ -1,4 +1,6 @@
-@file:OptIn(ExperimentalSerializationApi::class, InternalSerializationApi::class)
+@file:OptIn(ExperimentalSerializationApi::class, InternalSerializationApi::class) // ktlint-disable filename
+
+package me.neversleeps.api.multiplatform
 
 import kotlinx.serialization.* // ktlint-disable no-wildcard-imports
 import kotlinx.serialization.descriptors.SerialDescriptor
@@ -51,6 +53,7 @@ private inline fun findInfo(
         it.superClass == klass && it.predicate()
     } ?: throw SerializationException(error)
 
+@OptIn(InternalSerializationApi::class)
 private inline fun <reified T : Any> SerializersModuleBuilder.polymorphicSerializer() {
     polymorphicDefaultSerializer(T::class) { value ->
         val info = findInfo(T::class, "Unknown class to serialize ${value::class}") { klass == value::class }

@@ -1,4 +1,4 @@
-package stub
+package me.neversleeps.acceptance.stub
 
 import me.neversleeps.api.multiplatform.v1.models.ProjectCreateObject
 import me.neversleeps.api.multiplatform.v1.models.ProjectCreateRequest

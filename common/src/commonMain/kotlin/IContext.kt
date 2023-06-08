@@ -1,8 +1,10 @@
+package me.neversleeps.common
+
 import kotlinx.datetime.Instant
-import models.AppCommand
-import models.AppError
-import models.AppState
-import models.RequestId
+import me.neversleeps.common.models.AppCommand
+import me.neversleeps.common.models.AppError
+import me.neversleeps.common.models.AppState
+import me.neversleeps.common.models.RequestId
 
 interface IContext {
     var requestId: RequestId

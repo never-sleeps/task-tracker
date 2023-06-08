@@ -1,3 +1,5 @@
+package me.neversleeps.api.multiplatform
+
 import me.neversleeps.api.multiplatform.v1.models.IRequest
 import me.neversleeps.api.multiplatform.v1.models.ProjectCreateObject
 import me.neversleeps.api.multiplatform.v1.models.ProjectCreateRequest

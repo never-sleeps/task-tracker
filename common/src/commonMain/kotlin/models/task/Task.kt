@@ -1,6 +1,6 @@
-package models.task
+package me.neversleeps.common.models.task
 
-import models.user.UserId
+import me.neversleeps.common.models.user.UserId
 
 data class Task(
     var id: TaskId = TaskId.NONE,

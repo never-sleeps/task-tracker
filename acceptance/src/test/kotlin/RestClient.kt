@@ -1,8 +1,12 @@
+package me.neversleeps.acceptance
+
 import io.ktor.client.* // ktlint-disable no-wildcard-imports
 import io.ktor.client.call.* // ktlint-disable no-wildcard-imports
 import io.ktor.client.engine.okhttp.* // ktlint-disable no-wildcard-imports
 import io.ktor.client.request.* // ktlint-disable no-wildcard-imports
 import io.ktor.http.* // ktlint-disable no-wildcard-imports
+import me.neversleeps.api.multiplatform.apiRequestSerialize
+import me.neversleeps.api.multiplatform.apiResponseDeserialize
 import me.neversleeps.api.multiplatform.v1.models.IRequest
 import me.neversleeps.api.multiplatform.v1.models.IResponse
 import mu.KotlinLogging

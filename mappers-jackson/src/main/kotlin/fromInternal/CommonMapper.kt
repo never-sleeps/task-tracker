@@ -1,9 +1,9 @@
-package fromInternal
+package me.neversleeps.mappers.jackson.fromInternal
 
 import me.neversleeps.api.jackson.v1.models.Error
 import me.neversleeps.api.jackson.v1.models.ResponseResultStatus
-import models.AppError
-import models.AppState
+import me.neversleeps.common.models.AppError
+import me.neversleeps.common.models.AppState
 
 fun AppState.toTransport(): ResponseResultStatus =
     if (this == AppState.RUNNING) {
