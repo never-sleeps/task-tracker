@@ -14,6 +14,7 @@
 | **mappers-jackson**       | Маппинг транспортных и внутренних моделей (2)        |
 | **mappers-multiplatform** | Маппинг транспортных и внутренних моделей (2)        |
 | **app-spring**            | Модуль на Spring Framework (3)                       |
+| **app-ktor**              | Модуль на Ktor Framework (4)                         |
 | **business**              | Модуль с бизнес-логикой                              |
 | **stubs**                 | Модуль с заглушками                                  |
 
@@ -24,3 +25,4 @@
 (2) Маппинги эквивалентны, различаются лишь импортами используемых моделей 
 (для `mappers-jackson` импортируются модели из `api-jackson`, для `mappers-multiplatform` – модели из `api-multiplatform`)  
 (3) Использует модели из `api-jackson`  
+(4) Использует модели из `api-jackson` в `jvmMain` и модели из `api-multiplatform` в `commonMain`. `jvmTest` содержит тесты для обоих типов api (и для `jackson`, и для `multiplatform`). Для них внутри модуля появляется разделение на `v1` и `v2` 

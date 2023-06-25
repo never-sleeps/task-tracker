@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.json.JsonMapper
 import me.neversleeps.api.jackson.v1.models.IRequest
 import me.neversleeps.api.jackson.v1.models.IResponse
 
-
 val apiMapper = JsonMapper.builder().run {
     configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
     enable(MapperFeature.USE_BASE_TYPE_AS_DEFAULT_IMPL)

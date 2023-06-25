@@ -72,7 +72,7 @@ openApiGenerate {
             "dateLibrary" to "string",
             "enumPropertyNaming" to "UPPERCASE",
             "collectionType" to "list",
-        )
+        ),
     )
 }
 
