@@ -1,8 +1,8 @@
-package fromInternal
+package me.neversleeps.mappers.multiplatform.fromInternal
 
 import me.neversleeps.api.multiplatform.v1.models.ProjectPermission
 import me.neversleeps.api.multiplatform.v1.models.ProjectResponseObject
-import models.project.Project
+import me.neversleeps.common.models.project.Project
 
 fun List<Project>.toTransport(): List<ProjectResponseObject> =
     this.map { it.toTransport() }
@@ -15,12 +15,12 @@ fun Project.toTransport(): ProjectResponseObject = ProjectResponseObject(
     permissions = this.permissions.toTransport(),
 )
 
-fun Set<models.project.ProjectPermission>.toTransport(): Set<ProjectPermission> = this
+fun Set<me.neversleeps.common.models.project.ProjectPermission>.toTransport(): Set<ProjectPermission> = this
     .map { it.toTransport() }
     .toSet()
 
-fun models.project.ProjectPermission.toTransport(): ProjectPermission = when (this) {
-    models.project.ProjectPermission.READ -> ProjectPermission.READ
-    models.project.ProjectPermission.UPDATE -> ProjectPermission.UPDATE
-    models.project.ProjectPermission.DELETE -> ProjectPermission.DELETE
+fun me.neversleeps.common.models.project.ProjectPermission.toTransport(): ProjectPermission = when (this) {
+    me.neversleeps.common.models.project.ProjectPermission.READ -> ProjectPermission.READ
+    me.neversleeps.common.models.project.ProjectPermission.UPDATE -> ProjectPermission.UPDATE
+    me.neversleeps.common.models.project.ProjectPermission.DELETE -> ProjectPermission.DELETE
 }

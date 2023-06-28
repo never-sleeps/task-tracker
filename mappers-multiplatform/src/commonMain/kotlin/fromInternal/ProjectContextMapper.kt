@@ -1,14 +1,14 @@
-package fromInternal
+package me.neversleeps.mappers.multiplatform.fromInternal
 
-import ProjectContext
-import UnknownCommandMapping
 import me.neversleeps.api.multiplatform.v1.models.IResponse
 import me.neversleeps.api.multiplatform.v1.models.ProjectCreateResponse
 import me.neversleeps.api.multiplatform.v1.models.ProjectDeleteResponse
 import me.neversleeps.api.multiplatform.v1.models.ProjectReadResponse
 import me.neversleeps.api.multiplatform.v1.models.ProjectSearchResponse
 import me.neversleeps.api.multiplatform.v1.models.ProjectUpdateResponse
-import models.AppCommand
+import me.neversleeps.common.ProjectContext
+import me.neversleeps.common.models.AppCommand
+import me.neversleeps.mappers.multiplatform.UnknownCommandMapping
 
 fun ProjectContext.toTransport(): IResponse = when (val cmd = command) {
     AppCommand.CREATE -> toTransportCreate()
@@ -20,6 +20,7 @@ fun ProjectContext.toTransport(): IResponse = when (val cmd = command) {
 }
 
 fun ProjectContext.toTransportCreate() = ProjectCreateResponse(
+    responseType = "createProject",
     requestId = this.requestId.asString(),
     resultStatus = state.toTransport(),
     errors = errors.toTransport(),
@@ -27,6 +28,7 @@ fun ProjectContext.toTransportCreate() = ProjectCreateResponse(
 )
 
 fun ProjectContext.toTransportRead() = ProjectReadResponse(
+    responseType = "readProject",
     requestId = this.requestId.asString(),
     resultStatus = state.toTransport(),
     errors = errors.toTransport(),
@@ -34,6 +36,7 @@ fun ProjectContext.toTransportRead() = ProjectReadResponse(
 )
 
 fun ProjectContext.toTransportUpdate() = ProjectUpdateResponse(
+    responseType = "updateProject",
     requestId = this.requestId.asString(),
     resultStatus = state.toTransport(),
     errors = errors.toTransport(),
@@ -41,6 +44,7 @@ fun ProjectContext.toTransportUpdate() = ProjectUpdateResponse(
 )
 
 fun ProjectContext.toTransportDelete() = ProjectDeleteResponse(
+    responseType = "deleteProject",
     requestId = this.requestId.asString(),
     resultStatus = state.toTransport(),
     errors = errors.toTransport(),
@@ -48,6 +52,7 @@ fun ProjectContext.toTransportDelete() = ProjectDeleteResponse(
 )
 
 fun ProjectContext.toTransportSearch() = ProjectSearchResponse(
+    responseType = "searchProject",
     requestId = this.requestId.asString(),
     resultStatus = state.toTransport(),
     errors = errors.toTransport(),

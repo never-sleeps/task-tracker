@@ -1,4 +1,4 @@
-package models
+package me.neversleeps.common.models
 
 enum class AppCommand {
     NONE,

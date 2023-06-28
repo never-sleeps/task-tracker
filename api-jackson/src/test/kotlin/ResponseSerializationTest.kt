@@ -1,3 +1,5 @@
+package me.neversleeps.api.jackson
+
 import me.neversleeps.api.jackson.v1.models.IResponse
 import me.neversleeps.api.jackson.v1.models.ProjectCreateResponse
 import me.neversleeps.api.jackson.v1.models.ProjectPermission

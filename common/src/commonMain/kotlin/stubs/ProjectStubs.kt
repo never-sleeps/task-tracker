@@ -1,4 +1,4 @@
-package stubs
+package me.neversleeps.common.stubs
 
 enum class ProjectDebugStub {
     NONE,

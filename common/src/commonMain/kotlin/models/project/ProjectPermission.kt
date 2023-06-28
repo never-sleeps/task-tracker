@@ -1,4 +1,4 @@
-package models.project
+package me.neversleeps.common.models.project
 
 enum class ProjectPermission {
     READ,

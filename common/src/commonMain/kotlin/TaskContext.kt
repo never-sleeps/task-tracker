@@ -1,11 +1,13 @@
+package me.neversleeps.common
+
 import kotlinx.datetime.Instant
-import models.AppCommand
-import models.AppError
-import models.AppState
-import models.RequestId
-import stubs.TaskDebugStub
-import models.task.Task
-import models.task.TaskSearchFilter
+import me.neversleeps.common.models.AppCommand
+import me.neversleeps.common.models.AppError
+import me.neversleeps.common.models.AppState
+import me.neversleeps.common.models.RequestId
+import me.neversleeps.common.models.task.Task
+import me.neversleeps.common.models.task.TaskSearchFilter
+import me.neversleeps.common.stubs.TaskDebugStub
 
 data class TaskContext(
     override var requestId: RequestId = RequestId.NONE,

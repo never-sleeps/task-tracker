@@ -1,4 +1,4 @@
-package rest // ktlint-disable filename
+package me.neversleeps.acceptance.stub // ktlint-disable filename
 
 object ProjectPaths {
     const val create = "api/v1/project/create"

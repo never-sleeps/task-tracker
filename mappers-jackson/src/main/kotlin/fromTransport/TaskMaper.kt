@@ -1,4 +1,4 @@
-package fromTransport
+package me.neversleeps.mappers.jackson.fromTransport
 
 import me.neversleeps.api.jackson.v1.models.TaskCreateObject
 import me.neversleeps.api.jackson.v1.models.TaskDebugStub
@@ -7,8 +7,8 @@ import me.neversleeps.api.jackson.v1.models.TaskSearchFilter
 import me.neversleeps.api.jackson.v1.models.TaskStatus
 import me.neversleeps.api.jackson.v1.models.TaskType
 import me.neversleeps.api.jackson.v1.models.TaskUpdateObject
-import models.task.Task
-import models.task.TaskId
+import me.neversleeps.common.models.task.Task
+import me.neversleeps.common.models.task.TaskId
 
 fun TaskCreateObject.toInternal(): Task = Task(
     type = this.type.toInternal(),
@@ -31,48 +31,49 @@ fun TaskUpdateObject.toInternal(): Task = Task(
     createdBy = this.createdBy.toUserId(),
 )
 
-fun TaskType?.toInternal(): models.task.TaskType = when (this) {
-    TaskType.BACKEND -> models.task.TaskType.BACKEND
-    TaskType.FRONTEND -> models.task.TaskType.FRONTEND
-    TaskType.DESIGN -> models.task.TaskType.DESIGN
-    TaskType.TESTING -> models.task.TaskType.TESTING
-    TaskType.OTHER -> models.task.TaskType.OTHER
-    null -> models.task.TaskType.NONE
+fun TaskType?.toInternal(): me.neversleeps.common.models.task.TaskType = when (this) {
+    TaskType.BACKEND -> me.neversleeps.common.models.task.TaskType.BACKEND
+    TaskType.FRONTEND -> me.neversleeps.common.models.task.TaskType.FRONTEND
+    TaskType.DESIGN -> me.neversleeps.common.models.task.TaskType.DESIGN
+    TaskType.TESTING -> me.neversleeps.common.models.task.TaskType.TESTING
+    TaskType.OTHER -> me.neversleeps.common.models.task.TaskType.OTHER
+    null -> me.neversleeps.common.models.task.TaskType.NONE
 }
 
-fun TaskPriority?.toInternal(): models.task.TaskPriority = when (this) {
-    TaskPriority.CRITICAL -> models.task.TaskPriority.CRITICAL
-    TaskPriority.HIGH -> models.task.TaskPriority.HIGH
-    TaskPriority.MEDIUM -> models.task.TaskPriority.MEDIUM
-    TaskPriority.LOW -> models.task.TaskPriority.LOW
-    else -> models.task.TaskPriority.NONE
+fun TaskPriority?.toInternal(): me.neversleeps.common.models.task.TaskPriority = when (this) {
+    TaskPriority.CRITICAL -> me.neversleeps.common.models.task.TaskPriority.CRITICAL
+    TaskPriority.HIGH -> me.neversleeps.common.models.task.TaskPriority.HIGH
+    TaskPriority.MEDIUM -> me.neversleeps.common.models.task.TaskPriority.MEDIUM
+    TaskPriority.LOW -> me.neversleeps.common.models.task.TaskPriority.LOW
+    else -> me.neversleeps.common.models.task.TaskPriority.NONE
 }
 
-fun TaskStatus?.toInternal(): models.task.TaskStatus = when (this) {
-    TaskStatus.TODO -> models.task.TaskStatus.TODO
-    TaskStatus.IN_PROGRESS -> models.task.TaskStatus.IN_PROGRESS
-    TaskStatus.DONE -> models.task.TaskStatus.DONE
-    TaskStatus.CANCELED -> models.task.TaskStatus.CANCELED
-    else -> models.task.TaskStatus.NONE
+fun TaskStatus?.toInternal(): me.neversleeps.common.models.task.TaskStatus = when (this) {
+    TaskStatus.TODO -> me.neversleeps.common.models.task.TaskStatus.TODO
+    TaskStatus.IN_PROGRESS -> me.neversleeps.common.models.task.TaskStatus.IN_PROGRESS
+    TaskStatus.DONE -> me.neversleeps.common.models.task.TaskStatus.DONE
+    TaskStatus.CANCELED -> me.neversleeps.common.models.task.TaskStatus.CANCELED
+    else -> me.neversleeps.common.models.task.TaskStatus.NONE
 }
 
-fun TaskDebugStub?.toInternal(): stubs.TaskDebugStub = when (this) {
-    TaskDebugStub.SUCCESS -> stubs.TaskDebugStub.SUCCESS
-    TaskDebugStub.NOT_FOUND -> stubs.TaskDebugStub.NOT_FOUND
-    TaskDebugStub.BAD_ID -> stubs.TaskDebugStub.BAD_ID
-    TaskDebugStub.BAD_TITLE -> stubs.TaskDebugStub.BAD_TITLE
-    TaskDebugStub.BAD_SEARCH_EXECUTOR -> stubs.TaskDebugStub.BAD_SEARCH_EXECUTOR
-    TaskDebugStub.BAD_SEARCHСREATED_BY -> stubs.TaskDebugStub.BAD_SEARCH_CREATED_BY
-    TaskDebugStub.PERMISSION_ERROR -> stubs.TaskDebugStub.PERMISSION_ERROR
-    null -> stubs.TaskDebugStub.NONE
+fun TaskDebugStub?.toInternal(): me.neversleeps.common.stubs.TaskDebugStub = when (this) {
+    TaskDebugStub.SUCCESS -> me.neversleeps.common.stubs.TaskDebugStub.SUCCESS
+    TaskDebugStub.NOT_FOUND -> me.neversleeps.common.stubs.TaskDebugStub.NOT_FOUND
+    TaskDebugStub.BAD_ID -> me.neversleeps.common.stubs.TaskDebugStub.BAD_ID
+    TaskDebugStub.BAD_TITLE -> me.neversleeps.common.stubs.TaskDebugStub.BAD_TITLE
+    TaskDebugStub.BAD_SEARCH_EXECUTOR -> me.neversleeps.common.stubs.TaskDebugStub.BAD_SEARCH_EXECUTOR
+    TaskDebugStub.BAD_SEARCHСREATED_BY -> me.neversleeps.common.stubs.TaskDebugStub.BAD_SEARCH_CREATED_BY
+    TaskDebugStub.PERMISSION_ERROR -> me.neversleeps.common.stubs.TaskDebugStub.PERMISSION_ERROR
+    null -> me.neversleeps.common.stubs.TaskDebugStub.NONE
 }
 
-fun TaskSearchFilter.toInternal(): models.task.TaskSearchFilter = models.task.TaskSearchFilter(
-    searchText = this.searchText ?: "",
-    createdBy = this.createdBy.toUserId(),
-    type = this.type?.toInternal() ?: models.task.TaskType.NONE,
-    executor = this.createdBy.toUserId(),
-)
+fun TaskSearchFilter.toInternal(): me.neversleeps.common.models.task.TaskSearchFilter =
+    me.neversleeps.common.models.task.TaskSearchFilter(
+        searchText = this.searchText ?: "",
+        createdBy = this.createdBy.toUserId(),
+        type = this.type?.toInternal() ?: me.neversleeps.common.models.task.TaskType.NONE,
+        executor = this.createdBy.toUserId(),
+    )
 
 fun String?.toTaskWithId() = Task(id = this.toTaskId())
 

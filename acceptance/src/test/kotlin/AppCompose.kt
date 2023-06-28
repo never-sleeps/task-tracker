@@ -1,3 +1,5 @@
+package me.neversleeps.acceptance
+
 import org.testcontainers.containers.DockerComposeContainer
 import org.testcontainers.containers.wait.strategy.Wait // ktlint-disable no-unused-imports
 import java.io.File
@@ -9,7 +11,7 @@ class AppCompose private constructor() {
     private val _port = 80
 
     private val compose =
-        DockerComposeContainer(File("../deploy/docker-compose-app.yml")).apply {
+        DockerComposeContainer(File("../_deploy/docker-compose-app.yml")).apply {
             withExposedService(
                 _service,
                 _port,

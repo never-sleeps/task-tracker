@@ -33,6 +33,12 @@ kotlin {
                 implementation(kotlin("test-annotations-common"))
             }
         }
+        @Suppress("UNUSED_VARIABLE")
+        val jvmTest by getting {
+            dependencies {
+                implementation(kotlin("test-junit"))
+            }
+        }
     }
 }
 
@@ -46,7 +52,7 @@ openApiGenerate {
     apiPackage.set("$openapiGroup.api")
     modelPackage.set("$openapiGroup.models")
     invokerPackage.set("$openapiGroup.invoker")
-    inputSpec.set("$rootDir/specs/v1/specs.yaml")
+    inputSpec.set("$rootDir/_specs/v1/specs.yaml")
     library.set("multiplatform")
 
     /**
@@ -66,7 +72,7 @@ openApiGenerate {
             "dateLibrary" to "string",
             "enumPropertyNaming" to "UPPERCASE",
             "collectionType" to "list",
-        )
+        ),
     )
 }
 

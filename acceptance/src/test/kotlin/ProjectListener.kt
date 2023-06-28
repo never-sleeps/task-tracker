@@ -1,3 +1,5 @@
+package me.neversleeps.acceptance
+
 import io.kotest.core.annotation.AutoScan
 import io.kotest.core.listeners.AfterProjectListener
 import io.kotest.core.listeners.BeforeProjectListener

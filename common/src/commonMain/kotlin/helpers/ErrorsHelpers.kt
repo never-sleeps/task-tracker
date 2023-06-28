@@ -1,7 +1,7 @@
-package helpers
+package me.neversleeps.common.helpers
 
-import ProjectContext
-import models.AppError
+import me.neversleeps.common.ProjectContext
+import me.neversleeps.common.models.AppError
 
 fun Throwable.asAppError(
     code: String = "unknown",

@@ -1,3 +1,5 @@
+package me.neversleeps.api.jackson
+
 import me.neversleeps.api.jackson.v1.models.IRequest
 import me.neversleeps.api.jackson.v1.models.ProjectCreateObject
 import me.neversleeps.api.jackson.v1.models.ProjectCreateRequest

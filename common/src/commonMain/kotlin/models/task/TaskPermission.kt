@@ -1,4 +1,4 @@
-package models.task
+package me.neversleeps.common.models.task
 
 enum class TaskPermission {
     READ,

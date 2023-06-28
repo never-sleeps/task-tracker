@@ -1,18 +1,21 @@
-import fromInternal.toTransport
-import fromTransport.fromTransport
+package me.neversleeps.mappers.multiplatform
+
 import me.neversleeps.api.multiplatform.v1.models.ProjectCreateObject
 import me.neversleeps.api.multiplatform.v1.models.ProjectCreateRequest
 import me.neversleeps.api.multiplatform.v1.models.ProjectCreateResponse
 import me.neversleeps.api.multiplatform.v1.models.ProjectDebugStub
 import me.neversleeps.api.multiplatform.v1.models.ProjectPermission
 import me.neversleeps.api.multiplatform.v1.models.ResponseResultStatus
-import models.AppCommand
-import models.AppError
-import models.AppState
-import models.RequestId
-import models.project.Project
-import models.project.ProjectId
-import models.user.UserId
+import me.neversleeps.common.ProjectContext
+import me.neversleeps.common.models.AppCommand
+import me.neversleeps.common.models.AppError
+import me.neversleeps.common.models.AppState
+import me.neversleeps.common.models.RequestId
+import me.neversleeps.common.models.project.Project
+import me.neversleeps.common.models.project.ProjectId
+import me.neversleeps.common.models.user.UserId
+import me.neversleeps.mappers.multiplatform.fromInternal.toTransport
+import me.neversleeps.mappers.multiplatform.fromTransport.fromTransport
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -34,7 +37,7 @@ class ProjectMapperTest {
         context.fromTransport(request)
 
         assertEquals(AppCommand.CREATE, context.command)
-        assertEquals(stubs.ProjectDebugStub.SUCCESS, context.stubCase)
+        assertEquals(me.neversleeps.common.stubs.ProjectDebugStub.SUCCESS, context.stubCase)
         assertEquals(request.data?.title, context.projectRequest.title)
         assertEquals(request.data?.description, context.projectRequest.description)
         assertEquals(request.data?.createdBy, context.projectRequest.createdBy.asString())
@@ -60,8 +63,8 @@ class ProjectMapperTest {
                 description = "some description",
                 createdBy = UserId("created-by-id"),
                 permissions = mutableSetOf(
-                    models.project.ProjectPermission.READ,
-                    models.project.ProjectPermission.UPDATE,
+                    me.neversleeps.common.models.project.ProjectPermission.READ,
+                    me.neversleeps.common.models.project.ProjectPermission.UPDATE,
                 ),
             ),
         )

@@ -1,11 +1,13 @@
+package me.neversleeps.common
+
 import kotlinx.datetime.Instant
-import models.AppCommand
-import models.AppError
-import models.AppState
-import models.RequestId
-import models.project.Project
-import models.project.ProjectSearchFilter
-import stubs.ProjectDebugStub
+import me.neversleeps.common.models.AppCommand
+import me.neversleeps.common.models.AppError
+import me.neversleeps.common.models.AppState
+import me.neversleeps.common.models.RequestId
+import me.neversleeps.common.models.project.Project
+import me.neversleeps.common.models.project.ProjectSearchFilter
+import me.neversleeps.common.stubs.ProjectDebugStub
 
 data class ProjectContext(
     override var requestId: RequestId = RequestId.NONE,

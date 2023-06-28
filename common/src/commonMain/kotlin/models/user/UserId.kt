@@ -1,4 +1,4 @@
-package models.user
+package me.neversleeps.common.models.user
 
 import kotlin.jvm.JvmInline
 
