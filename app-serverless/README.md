@@ -99,7 +99,7 @@ paths:
 ### Testing
 
 Example of postman request:
-![request](img/img11.png)
+![request](img/img12.png)
 
 curl:
 ```
