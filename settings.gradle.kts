@@ -15,6 +15,8 @@ pluginManagement {
     // ktor
     val ktorVersion: String by settings
 
+    val pluginShadow: String by settings
+
     plugins {
         kotlin("jvm") version kotlinVersion apply false
         kotlin("plugin.serialization") version kotlinVersion apply false
@@ -35,6 +37,9 @@ pluginManagement {
 
         // ktor
         id("io.ktor.plugin") version ktorVersion apply false
+
+        // shadow
+        id("com.github.johnrengelman.shadow") version pluginShadow apply false
     }
 }
 
@@ -48,3 +53,4 @@ include("app-spring")
 include("business")
 include("stubs")
 include("app-ktor")
+include("app-serverless")
