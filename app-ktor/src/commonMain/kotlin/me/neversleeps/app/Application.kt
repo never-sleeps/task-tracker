@@ -7,16 +7,28 @@ import io.ktor.server.engine.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import io.ktor.server.websocket.*
 import me.neversleeps.api.multiplatform.apiMapper
 import me.neversleeps.app.multiplatform.project
 import me.neversleeps.app.multiplatform.task
+import me.neversleeps.app.multiplatform.wsHandlerV2
 import me.neversleeps.business.ProjectProcessor
 import me.neversleeps.business.TaskProcessor
 
 fun Application.module(
     projectProcessor: ProjectProcessor = ProjectProcessor(),
     taskProcessor: TaskProcessor = TaskProcessor(),
+    installPlugin: Boolean = true
 ) {
+    if (installPlugin) {
+        install(WebSockets) {
+            pingPeriodMillis = 15000
+            timeoutMillis = 15000
+            maxFrameSize = Long.MAX_VALUE
+            masking = false
+        }
+    }
+
     routing {
         get("/") {
             call.respondText("Hello, world!")
@@ -28,6 +40,12 @@ fun Application.module(
 
             project(projectProcessor)
             task(taskProcessor)
+        }
+        webSocket("/ws/v2/project") {
+            wsHandlerV2(projectProcessor)
+        }
+        webSocket("/ws/v2/task") {
+            wsHandlerV2(taskProcessor)
         }
     }
 }

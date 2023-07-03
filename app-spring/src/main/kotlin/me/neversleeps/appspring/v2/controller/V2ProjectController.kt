@@ -1,28 +1,28 @@
-package me.neversleeps.appspring.controller.v1
+package me.neversleeps.appspring.v2.controller
 
-import me.neversleeps.api.jackson.v1.models.ProjectCreateRequest
-import me.neversleeps.api.jackson.v1.models.ProjectCreateResponse
-import me.neversleeps.api.jackson.v1.models.ProjectDeleteRequest
-import me.neversleeps.api.jackson.v1.models.ProjectDeleteResponse
-import me.neversleeps.api.jackson.v1.models.ProjectReadRequest
-import me.neversleeps.api.jackson.v1.models.ProjectReadResponse
-import me.neversleeps.api.jackson.v1.models.ProjectSearchRequest
-import me.neversleeps.api.jackson.v1.models.ProjectSearchResponse
-import me.neversleeps.api.jackson.v1.models.ProjectUpdateRequest
-import me.neversleeps.api.jackson.v1.models.ProjectUpdateResponse
+import me.neversleeps.api.multiplatform.v1.models.ProjectCreateRequest
+import me.neversleeps.api.multiplatform.v1.models.ProjectCreateResponse
+import me.neversleeps.api.multiplatform.v1.models.ProjectDeleteRequest
+import me.neversleeps.api.multiplatform.v1.models.ProjectDeleteResponse
+import me.neversleeps.api.multiplatform.v1.models.ProjectReadRequest
+import me.neversleeps.api.multiplatform.v1.models.ProjectReadResponse
+import me.neversleeps.api.multiplatform.v1.models.ProjectSearchRequest
+import me.neversleeps.api.multiplatform.v1.models.ProjectSearchResponse
+import me.neversleeps.api.multiplatform.v1.models.ProjectUpdateRequest
+import me.neversleeps.api.multiplatform.v1.models.ProjectUpdateResponse
 import me.neversleeps.appspring.service.ProjectBlockingProcessor
 import me.neversleeps.common.ProjectContext
-import me.neversleeps.mappers.jackson.fromInternal.toTransportCreate
-import me.neversleeps.mappers.jackson.fromInternal.toTransportDelete
-import me.neversleeps.mappers.jackson.fromInternal.toTransportRead
-import me.neversleeps.mappers.jackson.fromInternal.toTransportSearch
-import me.neversleeps.mappers.jackson.fromInternal.toTransportUpdate
-import me.neversleeps.mappers.jackson.fromTransport.fromTransport
+import me.neversleeps.mappers.multiplatform.fromInternal.toTransportCreate
+import me.neversleeps.mappers.multiplatform.fromInternal.toTransportDelete
+import me.neversleeps.mappers.multiplatform.fromInternal.toTransportRead
+import me.neversleeps.mappers.multiplatform.fromInternal.toTransportSearch
+import me.neversleeps.mappers.multiplatform.fromInternal.toTransportUpdate
+import me.neversleeps.mappers.multiplatform.fromTransport.fromTransport
 import org.springframework.web.bind.annotation.* // ktlint-disable no-wildcard-imports
 
 @RestController
-@RequestMapping("api/v1/project")
-class ProjectController(
+@RequestMapping("api/v2/project")
+class V2ProjectController(
     private val processor: ProjectBlockingProcessor,
 ) {
 

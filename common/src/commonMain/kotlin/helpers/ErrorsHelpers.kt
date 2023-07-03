@@ -1,6 +1,7 @@
 package me.neversleeps.common.helpers
 
 import me.neversleeps.common.ProjectContext
+import me.neversleeps.common.TaskContext
 import me.neversleeps.common.models.AppError
 
 fun Throwable.asAppError(
@@ -16,3 +17,5 @@ fun Throwable.asAppError(
 )
 
 fun ProjectContext.addError(vararg error: AppError) = errors.addAll(error)
+
+fun TaskContext.addError(vararg error: AppError) = errors.addAll(error)

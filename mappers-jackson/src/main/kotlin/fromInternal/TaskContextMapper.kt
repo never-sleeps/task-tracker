@@ -1,6 +1,8 @@
 package me.neversleeps.mappers.jackson.fromInternal
 
 import me.neversleeps.api.jackson.v1.models.IResponse
+import me.neversleeps.api.jackson.v1.models.InitBaseResponse
+import me.neversleeps.api.jackson.v1.models.ResponseResultStatus
 import me.neversleeps.api.jackson.v1.models.TaskCreateResponse
 import me.neversleeps.api.jackson.v1.models.TaskDeleteResponse
 import me.neversleeps.api.jackson.v1.models.TaskReadResponse
@@ -18,6 +20,12 @@ fun TaskContext.toTransport(): IResponse = when (val cmd = command) {
     AppCommand.SEARCH -> toTransportSearch()
     AppCommand.NONE -> throw UnknownCommandMapping(cmd)
 }
+
+fun TaskContext.toTransportInit() = InitBaseResponse(
+    requestId = this.requestId.asString(),
+    resultStatus = if (errors.isEmpty()) ResponseResultStatus.SUCCESS else ResponseResultStatus.ERROR,
+    errors = errors.toTransport(),
+)
 
 fun TaskContext.toTransportCreate() = TaskCreateResponse(
     requestId = this.requestId.asString(),
