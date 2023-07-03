@@ -14,9 +14,13 @@ import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.plugins.cors.routing.CORS
 import io.ktor.server.plugins.defaultheaders.DefaultHeaders
 import io.ktor.server.routing.*
+import io.ktor.server.websocket.*
 import me.neversleeps.api.jackson.apiMapper
 import me.neversleeps.app.jackson.project
 import me.neversleeps.app.jackson.task
+import me.neversleeps.app.jackson.wsHandlerV1
+import me.neversleeps.app.simpleWS.wsChat
+import me.neversleeps.app.simpleWS.wsPing
 import me.neversleeps.business.ProjectProcessor
 import me.neversleeps.business.TaskProcessor
 import org.slf4j.event.Level
@@ -64,6 +68,20 @@ fun Application.moduleJvm() {
 
             project(projectProcessor)
             task(taskProcessor)
+        }
+
+        webSocket("/ws/ping") {
+            wsPing()
+        }
+        webSocket("/ws/chat") {
+            wsChat()
+        }
+
+        webSocket("/ws/v1/project") {
+            wsHandlerV1(projectProcessor)
+        }
+        webSocket("/ws/v1/task") {
+            wsHandlerV1(taskProcessor)
         }
 
         static("static") {

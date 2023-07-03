@@ -1,4 +1,4 @@
-package me.neversleeps.appspring.controller.v1
+package me.neversleeps.appspring.v1.controller
 
 import me.neversleeps.api.jackson.v1.models.TaskCreateRequest
 import me.neversleeps.api.jackson.v1.models.TaskCreateResponse
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("api/v1/task")
-class TaskController(
+class V1TaskController(
     private val processor: TaskBlockingProcessor,
 ) {
 

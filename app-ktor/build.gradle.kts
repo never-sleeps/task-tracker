@@ -65,11 +65,12 @@ kotlin {
                 implementation(ktor("auto-head-response")) // "io.ktor:ktor-server-auto-head-response:$ktorVersion"
                 implementation(ktor("caching-headers")) // "io.ktor:ktor-server-caching-headers:$ktorVersion"
                 implementation(ktor("cors")) // "io.ktor:ktor-server-cors:$ktorVersion"
-                implementation(ktor("websockets")) // "io.ktor:ktor-server-websockets:$ktorVersion"
                 implementation(ktor("config-yaml")) // "io.ktor:ktor-server-config-yaml:$ktorVersion"
                 implementation(ktor("content-negotiation")) // "io.ktor:ktor-server-content-negotiation:$ktorVersion"
-                implementation(ktor("websockets")) // "io.ktor:ktor-websockets:$ktorVersion"
                 implementation(ktor("auth")) // "io.ktor:ktor-auth:$ktorVersion"
+
+                implementation(ktor("websockets")) // "io.ktor:ktor-server-websockets:$ktorVersion"
+                implementation(ktor("websockets")) // "io.ktor:ktor-websockets:$ktorVersion"
 
                 implementation(project(":common"))
                 implementation(project(":business"))

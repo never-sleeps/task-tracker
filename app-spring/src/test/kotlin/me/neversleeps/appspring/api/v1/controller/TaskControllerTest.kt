@@ -5,7 +5,7 @@ import me.neversleeps.api.jackson.v1.models.TaskDeleteRequest
 import me.neversleeps.api.jackson.v1.models.TaskReadRequest
 import me.neversleeps.api.jackson.v1.models.TaskSearchRequest
 import me.neversleeps.api.jackson.v1.models.TaskUpdateRequest
-import me.neversleeps.appspring.controller.v1.TaskController
+import me.neversleeps.appspring.v1.controller.V1TaskController
 import me.neversleeps.appspring.service.TaskBlockingProcessor
 import me.neversleeps.common.TaskContext
 import me.neversleeps.mappers.jackson.fromInternal.toTransportCreate
@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 
-@WebMvcTest(TaskController::class)
+@WebMvcTest(V1TaskController::class)
 internal class TaskControllerTest : BaseControllerTest() {
 
     @MockBean

@@ -5,7 +5,7 @@ import me.neversleeps.api.jackson.v1.models.ProjectDeleteRequest
 import me.neversleeps.api.jackson.v1.models.ProjectReadRequest
 import me.neversleeps.api.jackson.v1.models.ProjectSearchRequest
 import me.neversleeps.api.jackson.v1.models.ProjectUpdateRequest
-import me.neversleeps.appspring.controller.v1.ProjectController
+import me.neversleeps.appspring.v1.controller.V1ProjectController
 import me.neversleeps.appspring.service.ProjectBlockingProcessor
 import me.neversleeps.common.ProjectContext
 import me.neversleeps.mappers.jackson.fromInternal.toTransportCreate
@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 
-@WebMvcTest(ProjectController::class)
+@WebMvcTest(V1ProjectController::class)
 internal class ProjectControllerTest : BaseControllerTest() {
 
     @MockBean
