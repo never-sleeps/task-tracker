@@ -1,0 +1,8 @@
+{
+  "requestType": "createProject",
+  "stub": "success",
+  "data": {
+    "title": "some title",
+    "description": "some description"
+  }
+}
