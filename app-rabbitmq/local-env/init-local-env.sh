@@ -4,19 +4,19 @@ echo "=========================="
 echo "stopping container"
 echo "----------------"
 
-docker container stop rabbitmq-otus
+docker container stop rabbitmq-task-tracker
 
 echo "=========================="
 echo "remove old image"
 echo "----------------"
 
-docker container rm rabbitmq-otus
+docker container rm rabbitmq-task-tracker
 
 echo "=========================="
 echo "Creating container"
 echo "----------------"
 
-docker run --name rabbitmq-otus  \
+docker run --name rabbitmq-task-tracker  \
              -e RABBITMQ_DEFAULT_USER=guest     \
              -e RABBITMQ_DEFAULT_PASS=guest    \
              -e RABBITMQ_DEFAULT_VHOST='/' -p 5672:5672 -p 15672:15672\
