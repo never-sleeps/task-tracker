@@ -5,9 +5,11 @@ import exception.UnknownCommand
 import me.neversleeps.common.ProjectContext
 import me.neversleeps.common.TaskContext
 import me.neversleeps.common.models.AppCommand
+import me.neversleeps.common.models.AppState
 
 class ProjectProcessor {
     suspend fun execute(ctx: ProjectContext) {
+        ctx.state = AppState.RUNNING
         when (ctx.command) {
             AppCommand.CREATE -> ctx.projectResponse = ProjectStub.get()
             AppCommand.READ -> ctx.projectResponse = ProjectStub.get()
@@ -21,6 +23,7 @@ class ProjectProcessor {
 
 class TaskProcessor {
     suspend fun execute(ctx: TaskContext) {
+        ctx.state = AppState.RUNNING
         when (ctx.command) {
             AppCommand.CREATE -> ctx.taskResponse = TaskStub.get()
             AppCommand.READ -> ctx.taskResponse = TaskStub.get()

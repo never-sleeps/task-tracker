@@ -7,23 +7,29 @@ dependencies {
     val kotestVersion: String by project
     val ktorVersion: String by project
     val coroutinesVersion: String by project
-    val ktorClientOkhttpVersion: String by project
-    val log4jVersion: String by project
+    val logbackVersion: String by project
     val kotlinLoggingJvmVersion: String by project
-    implementation("io.ktor:ktor-client-okhttp-jvm:$ktorClientOkhttpVersion")
-    implementation("org.slf4j:slf4j-log4j12:$log4jVersion")
-    implementation("io.github.microutils:kotlin-logging-jvm:$kotlinLoggingJvmVersion")
-
-    // Project
-    implementation(project(":api-multiplatform"))
+    val ktorClientOkhttpVersion: String by project
+    val rabbitVersion: String by project
+    val kafkaVersion: String by project
 
     implementation(kotlin("stdlib"))
-    implementation("io.ktor:ktor-client-okhttp-jvm:2.2.4")
+    implementation("io.ktor:ktor-client-okhttp-jvm:$ktorClientOkhttpVersion")
+
+    // project modules
+    implementation(project(":api-jackson"))
+    implementation(project(":api-multiplatform"))
+
+    implementation("ch.qos.logback:logback-classic:$logbackVersion")
+    implementation("io.github.microutils:kotlin-logging-jvm:$kotlinLoggingJvmVersion")
 
     testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
     testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
     testImplementation("io.kotest:kotest-framework-datatest:$kotestVersion")
     testImplementation("io.kotest:kotest-property:$kotestVersion")
+
+    implementation("com.rabbitmq:amqp-client:$rabbitVersion")
+    implementation("org.apache.kafka:kafka-clients:$kafkaVersion")
 
     testImplementation("org.testcontainers:testcontainers:$testcontainersVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
@@ -37,12 +43,9 @@ var severity: String = "MINOR"
 tasks {
     withType<Test>().configureEach {
         useJUnitPlatform()
-    }
-    test {
-        systemProperty("kotest.framework.test.severity", "NORMAL")
-    }
-    create<Test>("test-strict") {
-        systemProperty("kotest.framework.test.severity", "MINOR")
-        group = "verification"
+        dependsOn(":app-spring:dockerBuildImage")
+        dependsOn(":app-ktor:publishImageToLocalRegistry")
+        dependsOn(":app-rabbitmq:dockerBuildImage")
+        dependsOn(":app-kafka:dockerBuildImage")
     }
 }

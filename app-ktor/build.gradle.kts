@@ -27,8 +27,8 @@ application {
 
 ktor {
     docker {
-        localImageName.set(project.name + "-ktor")
-        imageTag.set(project.version.toString())
+        localImageName.set(project.name)
+        imageTag.set("latest")
         jreVersion.set(io.ktor.plugin.features.JreVersion.JRE_17)
     }
 }

@@ -4,6 +4,9 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Clock
 import me.neversleeps.api.jackson.apiMapper
 import me.neversleeps.api.jackson.v1.models.IRequest
+import me.neversleeps.appspring.service.TaskBlockingProcessor
+import me.neversleeps.business.ProjectProcessor
+import me.neversleeps.business.TaskProcessor
 import me.neversleeps.common.TaskContext
 import me.neversleeps.common.helpers.asAppError
 import me.neversleeps.common.helpers.isUpdatableCommand
@@ -17,7 +20,10 @@ import org.springframework.web.socket.WebSocketSession
 import org.springframework.web.socket.handler.TextWebSocketHandler
 
 @Component
-class WsTaskHandlerV1 : TextWebSocketHandler() {
+class WsTaskHandlerV1(
+    private val processor: TaskBlockingProcessor
+) : TextWebSocketHandler() {
+
     private val sessions = mutableMapOf<String, WebSocketSession>()
 
     override fun afterConnectionEstablished(session: WebSocketSession) {
@@ -36,6 +42,8 @@ class WsTaskHandlerV1 : TextWebSocketHandler() {
             try {
                 val request = apiMapper.readValue(message.payload, IRequest::class.java)
                 ctx.fromTransport(request)
+
+                processor.execute(ctx)
 
                 val result = apiMapper.writeValueAsString(ctx.toTransport())
                 if (ctx.isUpdatableCommand()) {

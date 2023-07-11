@@ -43,7 +43,7 @@ pluginManagement {
     }
 }
 
-// include("acceptance")
+include("acceptance")
 include("common")
 include("api-jackson")
 include("api-multiplatform")
@@ -54,3 +54,5 @@ include("business")
 include("stubs")
 include("app-ktor")
 include("app-serverless")
+include("app-rabbitmq")
+include("app-kafka")

@@ -16,6 +16,8 @@
 | **app-spring**        | Модуль на Spring Framework (3)                       |
 | **app-ktor**          | Модуль на Ktor Framework (4)                         |
 | **app-serverless**    | serverless модуль                                    |
+| **app-rabbitmq**      | RabbitMQ module                                      |
+| **app-kafka**         | Kafka module                                         |
 | **business**          | Модуль с бизнес-логикой                              |
 | stubs                 | Модуль с заглушками                                  |
 

@@ -1,0 +1,8 @@
+# Конфигурация для spring + (в перспективе) postgresql
+
+version: '3'
+services:
+  app-ktor:
+    image: app-ktor:latest
+    ports:
+      - "8080:8080"
