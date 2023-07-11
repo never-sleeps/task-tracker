@@ -3,15 +3,15 @@ services:
   zookeeper:
     image: confluentinc/cp-zookeeper:7.0.9
     healthcheck:
-      test: "[[ $$(echo srvr | nc localhost 2181 | grep -oG 'Mode: standalone') = \"Mode: standalone\" ]]"
+      test: "[[ $$(echo srvr | nc localhost 2182 | grep -oG 'Mode: standalone') = \"Mode: standalone\" ]]"
       interval: 10s
       timeout: 1s
       retries: 30
     environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_CLIENT_PORT: 2182
       ZOOKEEPER_TICK_TIME: 2000
     ports:
-      - "2181:2181"
+      - "2182:2182"
     networks:
       - app-tier
 
@@ -21,25 +21,25 @@ services:
       zookeeper:
         condition: service_healthy
     healthcheck:
-      test: "test $$( /usr/bin/zookeeper-shell zookeeper:2181 get /brokers/ids/1 | grep { ) != ''"
+      test: "test $$( /usr/bin/zookeeper-shell zookeeper:2182 get /brokers/ids/1 | grep { ) != ''"
       interval: 3s
       timeout: 2s
       retries: 300
     environment:
       KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2182'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:9091
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9093,PLAINTEXT_HOST://localhost:9094
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-      KAFKA_JMX_PORT: 9101
+      KAFKA_JMX_PORT: 9103
       KAFKA_JMX_HOSTNAME: localhost
     ports:
-      - "9092:9092"
-      - "9091:9091"
-      - "9101:9101"
+      - "9093:9093"
+      - "9094:9094"
+      - "9103:9103"
     networks:
       - app-tier
 
@@ -47,9 +47,9 @@ services:
     image: obsidiandynamics/kafdrop
     restart: "no"
     ports:
-      - "9000:9000"
+      - "9001:9001"
     environment:
-      KAFKA_BROKERCONNECT: "kafka:9092"
+      KAFKA_BROKERCONNECT: "kafka:9093"
       JVM_OPTS: "-Xms16M -Xmx48M -Xss180K -XX:-TieredCompilation -XX:+UseStringDeduplication -noverify"
     depends_on:
       - "kafka"
@@ -62,7 +62,7 @@ services:
       kafka:
         condition: service_healthy
     environment:
-      KAFKA_HOSTS: "kafka:9092"
+      KAFKA_HOSTS: "kafka:9093"
     networks:
       - app-tier
 

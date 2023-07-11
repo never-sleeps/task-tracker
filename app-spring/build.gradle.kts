@@ -12,6 +12,7 @@ dependencies {
     val springdocOpenapiUiVersion: String by project
     val coroutinesVersion: String by project
     val serializationVersion: String by project
+    val kotlinLoggingJvmVersion: String by project
 
     implementation("org.springframework.boot:spring-boot-starter-actuator") // info; refresh; springMvc output
     implementation("org.springframework.boot:spring-boot-starter-web") // Controller, Service, etc..
@@ -25,6 +26,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactive:$coroutinesVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
+
+    implementation("io.github.microutils:kotlin-logging-jvm:$kotlinLoggingJvmVersion")
 
     implementation(project(":common")) // transport models
     implementation(project(":api-jackson")) // jackson-api

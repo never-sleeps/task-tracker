@@ -18,22 +18,17 @@ import me.neversleeps.business.TaskProcessor
 fun Application.module(
     projectProcessor: ProjectProcessor = ProjectProcessor(),
     taskProcessor: TaskProcessor = TaskProcessor(),
-    installPlugin: Boolean = true
+    installPlugins: Boolean = true
 ) {
-    if (installPlugin) {
-        install(WebSockets) {
-            pingPeriodMillis = 15000
-            timeoutMillis = 15000
-            maxFrameSize = Long.MAX_VALUE
-            masking = false
-        }
+    if (installPlugins) {
+        install(WebSockets)
     }
 
     routing {
         get("/") {
             call.respondText("Hello, world!")
         }
-        route("v2") { // до этого разделения на v1/v2 не было. тут введено из-за io.ktor.server.application.DuplicatePluginException
+        route("/api/v2") { // до этого разделения на v1/v2 не было. тут введено из-за io.ktor.server.application.DuplicatePluginException
             install(ContentNegotiation) {
                 json(apiMapper)
             }
@@ -51,7 +46,5 @@ fun Application.module(
 }
 
 fun main() {
-    embeddedServer(CIO, port = 8080) {
-        module()
-    }.start(wait = true)
+    embeddedServer(CIO, port = 8080, module = Application::module).start(wait = true)
 }

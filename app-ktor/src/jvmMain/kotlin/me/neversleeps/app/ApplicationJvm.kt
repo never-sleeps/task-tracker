@@ -24,6 +24,7 @@ import me.neversleeps.app.simpleWS.wsPing
 import me.neversleeps.business.ProjectProcessor
 import me.neversleeps.business.TaskProcessor
 import org.slf4j.event.Level
+import java.time.Duration
 import me.neversleeps.app.module as commonModule
 
 // function with config (application.conf)
@@ -58,7 +59,7 @@ fun Application.moduleJvm() {
     install(Locations)
 
     routing {
-        route("v1") {
+        route("api/v1") {
             install(ContentNegotiation) {
                 jackson {
                     setConfig(apiMapper.serializationConfig)

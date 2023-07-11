@@ -29,11 +29,11 @@ import kotlin.test.assertEquals
 
 class V2ProjectStubApiTest {
     object ProjectPaths {
-        const val create = "/v2/project/create"
-        const val read = "/v2/project/read"
-        const val update = "/v2/project/update"
-        const val delete = "/v2/project/delete"
-        const val search = "/v2/project/search"
+        const val create = "/api/v2/project/create"
+        const val read = "/api/v2/project/read"
+        const val update = "/api/v2/project/update"
+        const val delete = "/api/v2/project/delete"
+        const val search = "/api/v2/project/search"
     }
 
     @Test

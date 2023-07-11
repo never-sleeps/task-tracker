@@ -3,6 +3,6 @@
 version: '3'
 services:
   app-ktor:
-    image: app-ktor:1.0-SNAPSHOT
+    image: app-ktor:latest
     ports:
       - "8080:8080"

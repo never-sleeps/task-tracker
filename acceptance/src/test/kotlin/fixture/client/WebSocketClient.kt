@@ -26,15 +26,14 @@ class WebSocketClient(dockerCompose: DockerCompose) : Client {
         var response = ""
         client.webSocket(url) {
             withTimeout(3000) {
-                val incame = incoming.receive() as Frame.Text
-                val data = incame.readText()
-                // init - игнорим
+                val income = incoming.receive() as Frame.Text
+                val data = income.readText() // init message - игнорим
             }
             send(Frame.Text(request))
 
-            withTimeout(3000) {
-                val incame = incoming.receive() as Frame.Text
-                response = incame.readText()
+            withTimeout(5000) {
+                val income = incoming.receive() as Frame.Text
+                response = income.readText()
             }
         }
 

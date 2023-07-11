@@ -5,6 +5,7 @@ import me.neversleeps.acceptance.blackbox.docker.KafkaDockerCompose
 import me.neversleeps.acceptance.blackbox.fixture.BaseFunSpec
 import me.neversleeps.acceptance.blackbox.fixture.client.KafkaClient
 
+// java.net.UnknownHostException: kafka: nodename nor servname provided, or not known
 @Ignored
 class AcceptanceKafkaTest : BaseFunSpec(KafkaDockerCompose, {
     val client = KafkaClient(KafkaDockerCompose)

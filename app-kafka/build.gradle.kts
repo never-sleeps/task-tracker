@@ -13,7 +13,7 @@ docker {
         mainClassName.set(application.mainClass.get())
         baseImage.set("openjdk:17")
         maintainer.set("(c) neversleeps")
-//        ports.set(listOf(8080))
+        ports.set(listOf(8080, 9093))
         val imageName = project.name
         images.set(
             listOf(

@@ -26,12 +26,9 @@ class RabbitDirectProcessorV2(
 
     companion object : KLogging()
 
-    private val projectContext = ProjectContext()
-
     override suspend fun Channel.processMessage(message: Delivery) {
-        projectContext.apply {
-            timeStart = Clock.System.now()
-        }
+        val projectContext = ProjectContext()
+            .apply { timeStart = Clock.System.now() }
 
         apiRequestDeserialize<IRequest>(String(message.body))
             .also {
@@ -54,6 +51,7 @@ class RabbitDirectProcessorV2(
     }
 
     override fun Channel.onError(e: Throwable) {
+        val projectContext = ProjectContext()
         logger.error { e.printStackTrace() }
         projectContext.state = AppState.FAILING
         projectContext.addError(error = arrayOf(e.asAppError()))
