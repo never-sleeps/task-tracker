@@ -28,8 +28,8 @@ echo "=========================="
 echo "launch gradle"
 echo "----------------"
 cd ..
-./gradlew :ok-marketplace-app-rabbit:clean
-./gradlew :ok-marketplace-app-rabbit:build
+./gradlew :app-rabbitmq:clean
+./gradlew :app-rabbitmq:build
 
 echo "=========================="
 echo "local env was created"

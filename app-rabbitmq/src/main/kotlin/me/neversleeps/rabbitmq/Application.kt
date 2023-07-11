@@ -8,7 +8,9 @@ import me.neversleeps.rabbitmq.processor.RabbitDirectProcessorV1
 import me.neversleeps.rabbitmq.processor.RabbitDirectProcessorV2
 
 fun main() {
-    val config = RabbitConfig()
+    val config = RabbitConfig(
+        host = System.getenv("RABBIT_HOST") ?: RabbitConfig.HOST,
+    )
     val projectProcessor = ProjectProcessor()
 
     val producerConfigV1 = RabbitExchangeConfiguration(

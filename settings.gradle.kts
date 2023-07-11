@@ -43,7 +43,7 @@ pluginManagement {
     }
 }
 
-// include("acceptance")
+include("acceptance")
 include("common")
 include("api-jackson")
 include("api-multiplatform")

@@ -17,9 +17,11 @@ import kotlin.test.assertEquals
 import me.neversleeps.api.jackson.v1.models.ProjectCreateObject as ProjectCreateObjectV1
 import me.neversleeps.api.jackson.v1.models.ProjectCreateRequest as ProjectCreateRequestV1
 import me.neversleeps.api.jackson.v1.models.ProjectCreateResponse as ProjectCreateResponseV1
+import me.neversleeps.api.jackson.v1.models.ResponseResultStatus as ResponseResultStatusV1
 import me.neversleeps.api.multiplatform.v1.models.ProjectCreateObject as ProjectCreateObjectV2
 import me.neversleeps.api.multiplatform.v1.models.ProjectCreateRequest as ProjectCreateRequestV2
 import me.neversleeps.api.multiplatform.v1.models.ProjectCreateResponse as ProjectCreateResponseV2
+import me.neversleeps.api.multiplatform.v1.models.ResponseResultStatus as ResponseResultStatusV2
 
 class RabbitMqTest : AbstractRabbitMqTest() {
 
@@ -60,6 +62,7 @@ class RabbitMqTest : AbstractRabbitMqTest() {
             println("RESPONSE: $responseJson")
             val response = apiMapper.readValue(responseJson, ProjectCreateResponseV1::class.java)
             val expected = ProjectStub.get()
+            assertEquals(ResponseResultStatusV1.SUCCESS, response.resultStatus)
             assertEquals(expected.title, response.project?.title)
             assertEquals(expected.description, response.project?.description)
         }
@@ -91,6 +94,7 @@ class RabbitMqTest : AbstractRabbitMqTest() {
             println("RESPONSE: $responseJson")
             val response = apiResponseDeserialize<ProjectCreateResponseV2>(responseJson)
             val expected = ProjectStub.get()
+            assertEquals(ResponseResultStatusV2.SUCCESS, response.resultStatus)
             assertEquals(expected.title, response.project?.title)
             assertEquals(expected.description, response.project?.description)
         }
