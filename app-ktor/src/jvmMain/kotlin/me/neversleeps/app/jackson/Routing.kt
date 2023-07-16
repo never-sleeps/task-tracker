@@ -2,45 +2,44 @@ package me.neversleeps.app.jackson // ktlint-disable filename
 
 import io.ktor.server.application.* // ktlint-disable no-wildcard-imports
 import io.ktor.server.routing.*
-import me.neversleeps.business.ProjectProcessor
-import me.neversleeps.business.TaskProcessor
+import me.neversleeps.app.AppSettings
 
-fun Route.project(processor: ProjectProcessor) {
+fun Route.project(appSettings: AppSettings) {
     route("project") {
         post("create") {
-            call.create(processor)
+            call.createProject(appSettings)
         }
         post("read") {
-            call.read(processor)
+            call.readProject(appSettings)
         }
         post("update") {
-            call.update(processor)
+            call.updateProject(appSettings)
         }
         post("delete") {
-            call.delete(processor)
+            call.deleteProject(appSettings)
         }
         post("search") {
-            call.search(processor)
+            call.searchProject(appSettings)
         }
     }
 }
 
-fun Route.task(processor: TaskProcessor) {
+fun Route.task(appSettings: AppSettings) {
     route("task") {
         post("create") {
-            call.create(processor)
+            call.createTask(appSettings)
         }
         post("read") {
-            call.read(processor)
+            call.readTask(appSettings)
         }
         post("update") {
-            call.update(processor)
+            call.updateTask(appSettings)
         }
         post("delete") {
-            call.delete(processor)
+            call.deleteTask(appSettings)
         }
         post("search") {
-            call.search(processor)
+            call.searchTask(appSettings)
         }
     }
 }

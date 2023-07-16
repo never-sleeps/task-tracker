@@ -82,6 +82,11 @@ kotlin {
                 // Stubs
                 implementation(project(":stubs"))
 
+                // logging
+                implementation(project(":lib-logging-kermit"))
+                implementation(project(":api-log1"))
+                implementation(project(":mappers-log1"))
+
                 implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
@@ -126,9 +131,14 @@ kotlin {
 
                 implementation("ch.qos.logback:logback-classic:$logbackVersion")
 
-                // transport models
+                // transport models + logging
                 implementation(project(":api-jackson"))
                 implementation(project(":mappers-jackson"))
+                implementation(project(":lib-logging-logback"))
+
+                // logging
+                implementation("com.sndyuk:logback-more-appenders:1.8.8")
+                implementation("org.fluentd:fluent-logger:0.3.4")
             }
         }
 

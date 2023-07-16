@@ -19,22 +19,21 @@ import me.neversleeps.api.jackson.apiMapper
 import me.neversleeps.app.jackson.project
 import me.neversleeps.app.jackson.task
 import me.neversleeps.app.jackson.wsHandlerV1
+import me.neversleeps.app.plugins.initAppSettings
 import me.neversleeps.app.simpleWS.wsChat
 import me.neversleeps.app.simpleWS.wsPing
-import me.neversleeps.business.ProjectProcessor
-import me.neversleeps.business.TaskProcessor
+import me.neversleeps.logging.jvm.LogWrapperLogback
 import org.slf4j.event.Level
-import java.time.Duration
 import me.neversleeps.app.module as commonModule
 
 // function with config (application.conf)
 fun main(args: Array<String>): Unit = io.ktor.server.cio.EngineMain.main(args)
 
+private val clazz = Application::moduleJvm::class.qualifiedName ?: "Application"
+
 @Suppress("unused") // Referenced in application.conf
-fun Application.moduleJvm() {
-    val projectProcessor = ProjectProcessor()
-    val taskProcessor = TaskProcessor()
-    commonModule(projectProcessor, taskProcessor)
+fun Application.moduleJvm(appSettings: AppSettings = initAppSettings()) {
+    commonModule(appSettings)
 
     install(CachingHeaders)
     install(DefaultHeaders)
@@ -53,6 +52,11 @@ fun Application.moduleJvm() {
 
     install(CallLogging) {
         level = Level.INFO
+        val lgr = appSettings
+            .corSettings
+            .loggerProvider
+            .logger(clazz) as? LogWrapperLogback
+        lgr?.logger?.also { logger = it }
     }
 
     @Suppress("OPT_IN_USAGE")
@@ -67,8 +71,8 @@ fun Application.moduleJvm() {
                 }
             }
 
-            project(projectProcessor)
-            task(taskProcessor)
+            project(appSettings)
+            task(appSettings)
         }
 
         webSocket("/ws/ping") {
@@ -79,10 +83,10 @@ fun Application.moduleJvm() {
         }
 
         webSocket("/ws/v1/project") {
-            wsHandlerV1(projectProcessor)
+            wsHandlerV1(appSettings.projectProcessor)
         }
         webSocket("/ws/v1/task") {
-            wsHandlerV1(taskProcessor)
+            wsHandlerV1(appSettings.taskProcessor)
         }
 
         static("static") {

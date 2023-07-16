@@ -5,8 +5,8 @@ import me.neversleeps.api.jackson.v1.models.TaskDeleteRequest
 import me.neversleeps.api.jackson.v1.models.TaskReadRequest
 import me.neversleeps.api.jackson.v1.models.TaskSearchRequest
 import me.neversleeps.api.jackson.v1.models.TaskUpdateRequest
-import me.neversleeps.appspring.v1.controller.V1TaskController
 import me.neversleeps.appspring.service.TaskBlockingProcessor
+import me.neversleeps.appspring.v1.controller.V1TaskController
 import me.neversleeps.common.TaskContext
 import me.neversleeps.mappers.jackson.fromInternal.toTransportCreate
 import me.neversleeps.mappers.jackson.fromInternal.toTransportDelete
