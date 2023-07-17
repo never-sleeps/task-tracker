@@ -1,0 +1,15 @@
+POST http://127.0.0.1:8080/api/v1/project/create
+Content-Type: application/json
+
+{
+  "requestType": "create",
+  "requestId": "12345",
+  "stub": "success",
+  "data": {
+    "title": "some title",
+    "description": "some description",
+    "createdBy": "8098d197-a58f-4ae4-b602-8db6a146fb17"
+  }
+}
+
+###

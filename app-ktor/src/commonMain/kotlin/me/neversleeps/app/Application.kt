@@ -12,13 +12,11 @@ import me.neversleeps.api.multiplatform.apiMapper
 import me.neversleeps.app.multiplatform.project
 import me.neversleeps.app.multiplatform.task
 import me.neversleeps.app.multiplatform.wsHandlerV2
-import me.neversleeps.business.ProjectProcessor
-import me.neversleeps.business.TaskProcessor
+import me.neversleeps.app.plugins.initAppSettings
 
 fun Application.module(
-    projectProcessor: ProjectProcessor = ProjectProcessor(),
-    taskProcessor: TaskProcessor = TaskProcessor(),
-    installPlugins: Boolean = true
+    appSettings: AppSettings = initAppSettings(),
+    installPlugins: Boolean = true,
 ) {
     if (installPlugins) {
         install(WebSockets)
@@ -33,14 +31,14 @@ fun Application.module(
                 json(apiMapper)
             }
 
-            project(projectProcessor)
-            task(taskProcessor)
+            project(appSettings)
+            task(appSettings)
         }
         webSocket("/ws/v2/project") {
-            wsHandlerV2(projectProcessor)
+            wsHandlerV2(appSettings.projectProcessor)
         }
         webSocket("/ws/v2/task") {
-            wsHandlerV2(taskProcessor)
+            wsHandlerV2(appSettings.taskProcessor)
         }
     }
 }

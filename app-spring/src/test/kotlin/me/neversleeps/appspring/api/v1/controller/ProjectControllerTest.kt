@@ -5,8 +5,8 @@ import me.neversleeps.api.jackson.v1.models.ProjectDeleteRequest
 import me.neversleeps.api.jackson.v1.models.ProjectReadRequest
 import me.neversleeps.api.jackson.v1.models.ProjectSearchRequest
 import me.neversleeps.api.jackson.v1.models.ProjectUpdateRequest
-import me.neversleeps.appspring.v1.controller.V1ProjectController
 import me.neversleeps.appspring.service.ProjectBlockingProcessor
+import me.neversleeps.appspring.v1.controller.V1ProjectController
 import me.neversleeps.common.ProjectContext
 import me.neversleeps.mappers.jackson.fromInternal.toTransportCreate
 import me.neversleeps.mappers.jackson.fromInternal.toTransportDelete

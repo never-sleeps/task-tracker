@@ -11,7 +11,7 @@ import me.neversleeps.api.multiplatform.v1.models.TaskDeleteRequest
 import me.neversleeps.api.multiplatform.v1.models.TaskReadRequest
 import me.neversleeps.api.multiplatform.v1.models.TaskSearchRequest
 import me.neversleeps.api.multiplatform.v1.models.TaskUpdateRequest
-import me.neversleeps.business.TaskProcessor
+import me.neversleeps.app.AppSettings
 import me.neversleeps.common.TaskContext
 import me.neversleeps.mappers.multiplatform.fromInternal.toTransportCreate
 import me.neversleeps.mappers.multiplatform.fromInternal.toTransportDelete
@@ -20,7 +20,8 @@ import me.neversleeps.mappers.multiplatform.fromInternal.toTransportSearch
 import me.neversleeps.mappers.multiplatform.fromInternal.toTransportUpdate
 import me.neversleeps.mappers.multiplatform.fromTransport.fromTransport
 
-suspend fun ApplicationCall.create(processor: TaskProcessor) {
+suspend fun ApplicationCall.createTask(appSettings: AppSettings) {
+    val processor = appSettings.taskProcessor
     val request = apiMapper.decodeFromString<TaskCreateRequest>(receiveText())
     val context = TaskContext()
     context.fromTransport(request)
@@ -28,7 +29,8 @@ suspend fun ApplicationCall.create(processor: TaskProcessor) {
     respond(apiMapper.encodeToString(context.toTransportCreate()))
 }
 
-suspend fun ApplicationCall.read(processor: TaskProcessor) {
+suspend fun ApplicationCall.readTask(appSettings: AppSettings) {
+    val processor = appSettings.taskProcessor
     val request = apiMapper.decodeFromString<TaskReadRequest>(receiveText())
     val context = TaskContext()
     context.fromTransport(request)
@@ -36,7 +38,8 @@ suspend fun ApplicationCall.read(processor: TaskProcessor) {
     respond(apiMapper.encodeToString(context.toTransportRead()))
 }
 
-suspend fun ApplicationCall.update(processor: TaskProcessor) {
+suspend fun ApplicationCall.updateTask(appSettings: AppSettings) {
+    val processor = appSettings.taskProcessor
     val request = apiMapper.decodeFromString<TaskUpdateRequest>(receiveText())
     val context = TaskContext()
     context.fromTransport(request)
@@ -44,7 +47,8 @@ suspend fun ApplicationCall.update(processor: TaskProcessor) {
     respond(apiMapper.encodeToString(context.toTransportUpdate()))
 }
 
-suspend fun ApplicationCall.delete(processor: TaskProcessor) {
+suspend fun ApplicationCall.deleteTask(appSettings: AppSettings) {
+    val processor = appSettings.taskProcessor
     val request = apiMapper.decodeFromString<TaskDeleteRequest>(receiveText())
     val context = TaskContext()
     context.fromTransport(request)
@@ -52,7 +56,8 @@ suspend fun ApplicationCall.delete(processor: TaskProcessor) {
     respond(apiMapper.encodeToString(context.toTransportDelete()))
 }
 
-suspend fun ApplicationCall.search(processor: TaskProcessor) {
+suspend fun ApplicationCall.searchTask(appSettings: AppSettings) {
+    val processor = appSettings.taskProcessor
     val request = apiMapper.decodeFromString<TaskSearchRequest>(receiveText())
     val context = TaskContext()
     context.fromTransport(request)
