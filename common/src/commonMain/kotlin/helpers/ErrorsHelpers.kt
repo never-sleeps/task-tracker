@@ -3,6 +3,7 @@ package me.neversleeps.common.helpers
 import me.neversleeps.common.ProjectContext
 import me.neversleeps.common.TaskContext
 import me.neversleeps.common.models.AppError
+import me.neversleeps.common.models.AppState
 
 fun Throwable.asAppError(
     code: String = "unknown",
@@ -19,3 +20,13 @@ fun Throwable.asAppError(
 fun ProjectContext.addError(vararg error: AppError) = errors.addAll(error)
 
 fun TaskContext.addError(vararg error: AppError) = errors.addAll(error)
+
+fun ProjectContext.fail(error: AppError) {
+    addError(error)
+    state = AppState.FAILING
+}
+
+fun TaskContext.fail(error: AppError) {
+    addError(error)
+    state = AppState.FAILING
+}
