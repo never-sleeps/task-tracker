@@ -26,10 +26,7 @@ class RabbitDirectProcessorV2(
 
     companion object : KLogging()
 
-    override suspend fun Channel.processMessage(message: Delivery) {
-        val projectContext = ProjectContext()
-            .apply { timeStart = Clock.System.now() }
-
+    override suspend fun Channel.processMessage(message: Delivery, projectContext: ProjectContext) {
         apiRequestDeserialize<IRequest>(String(message.body))
             .also {
                 logger.info { "TYPE: ${it::class.java.simpleName}" }
@@ -50,8 +47,7 @@ class RabbitDirectProcessorV2(
             }
     }
 
-    override fun Channel.onError(e: Throwable) {
-        val projectContext = ProjectContext()
+    override fun Channel.onError(e: Throwable, projectContext: ProjectContext) {
         logger.error { e.printStackTrace() }
         projectContext.state = AppState.FAILING
         projectContext.addError(error = arrayOf(e.asAppError()))
