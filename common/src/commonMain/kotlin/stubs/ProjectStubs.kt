@@ -9,6 +9,7 @@ enum class ProjectDebugStub {
     BAD_SEARCH_TEXT,
     BAD_SEARCH_CREATED_BY,
     PERMISSION_ERROR,
+    DB_ERROR
 }
 
 enum class TaskDebugStub {
@@ -20,4 +21,5 @@ enum class TaskDebugStub {
     BAD_SEARCH_CREATED_BY,
     BAD_SEARCH_EXECUTOR,
     PERMISSION_ERROR,
+    DB_ERROR
 }
