@@ -8,5 +8,5 @@ data class Project(
     var title: String = "",
     var description: String = "",
     var createdBy: UserId = UserId.NONE,
-    val permissions: MutableSet<ProjectPermission> = mutableSetOf()
+    var permissions: MutableSet<ProjectPermission> = mutableSetOf()
 )

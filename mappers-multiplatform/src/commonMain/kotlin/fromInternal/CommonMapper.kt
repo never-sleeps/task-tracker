@@ -6,7 +6,7 @@ import me.neversleeps.common.models.AppError
 import me.neversleeps.common.models.AppState
 
 fun AppState.toTransport(): ResponseResultStatus =
-    if (this == AppState.RUNNING) {
+    if (this == AppState.FINISHING) {
         ResponseResultStatus.SUCCESS
     } else {
         ResponseResultStatus.ERROR
