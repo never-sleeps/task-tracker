@@ -11,7 +11,7 @@ data class Task(
     var description: String = "",
     var executor: UserId = UserId.NONE,
     var createdBy: UserId = UserId.NONE,
-    val permissions: MutableSet<TaskPermission> = mutableSetOf(),
+    var permissions: MutableSet<TaskPermission> = mutableSetOf(),
 )
 
 enum class TaskType {

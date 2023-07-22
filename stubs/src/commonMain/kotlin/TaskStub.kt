@@ -1,3 +1,4 @@
+
 import me.neversleeps.common.models.task.Task
 import me.neversleeps.common.models.task.TaskId
 import me.neversleeps.common.models.task.TaskPermission
@@ -43,4 +44,37 @@ object TaskStub {
             permissions = mutableSetOf(TaskPermission.READ, TaskPermission.DELETE),
         ),
     )
+
+    fun prepareResult(block: Task.() -> Unit): Task = get().apply(block)
+
+    fun prepareSearchList(
+        searchText: String? = null,
+        createdBy: UserId? = null,
+        type: TaskType? = null,
+        executor: UserId? = null,
+    ) =
+        listOf(
+            prepareSearchItem(get(), "PRO-101", searchText, createdBy, type, executor),
+            prepareSearchItem(get(), "PRO-102", searchText, createdBy, type, executor),
+            prepareSearchItem(get(), "PRO-103", searchText, createdBy, type, executor),
+            prepareSearchItem(get(), "PRO-104", searchText, createdBy, type, executor),
+            prepareSearchItem(get(), "PRO-105", searchText, createdBy, type, executor),
+        )
+
+    private fun prepareSearchItem(
+        base: Task,
+        newId: String?,
+        searchText: String?,
+        createdBy: UserId?,
+        type: TaskType?,
+        executor: UserId? = null,
+    ): Task =
+        base.copy(
+            id = newId?.let { TaskId(newId) } ?: base.id,
+            title = searchText?.let { "${base.title} $searchText" } ?: base.title,
+            description = searchText?.let { "${base.description} $searchText" } ?: base.description,
+            createdBy = createdBy ?: base.createdBy,
+            type = type ?: base.type,
+            executor = executor ?: base.executor,
+        )
 }

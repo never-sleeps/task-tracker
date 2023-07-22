@@ -28,4 +28,23 @@ object ProjectStub {
             permissions = mutableSetOf(ProjectPermission.READ, ProjectPermission.DELETE),
         ),
     )
+
+    fun prepareResult(block: Project.() -> Unit): Project = get().apply(block)
+
+    fun prepareSearchList(searchText: String? = null, createdBy: UserId? = null) =
+        listOf(
+            prepareSearchItem(get(), "PRO-101", searchText, createdBy),
+            prepareSearchItem(get(), "PRO-102", searchText, createdBy),
+            prepareSearchItem(get(), "PRO-103", searchText, createdBy),
+            prepareSearchItem(get(), "PRO-104", searchText, createdBy),
+            prepareSearchItem(get(), "PRO-105", searchText, createdBy),
+        )
+
+    private fun prepareSearchItem(base: Project, newId: String?, searchText: String?, createdBy: UserId?): Project =
+        base.copy(
+            id = newId?.let { ProjectId(newId) } ?: base.id,
+            title = searchText?.let { "${base.title} $searchText" } ?: base.title,
+            description = searchText?.let { "${base.description} $searchText" } ?: base.description,
+            createdBy = createdBy ?: base.createdBy,
+        )
 }
