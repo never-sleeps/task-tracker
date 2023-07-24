@@ -16,9 +16,10 @@ import io.ktor.server.plugins.defaultheaders.DefaultHeaders
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
 import me.neversleeps.api.jackson.apiMapper
+import me.neversleeps.app.jackson.WsProjectControllerV1
+import me.neversleeps.app.jackson.WsTaskControllerV1
 import me.neversleeps.app.jackson.project
 import me.neversleeps.app.jackson.task
-import me.neversleeps.app.jackson.wsHandlerV1
 import me.neversleeps.app.plugins.initAppSettings
 import me.neversleeps.app.simpleWS.wsChat
 import me.neversleeps.app.simpleWS.wsPing
@@ -62,6 +63,9 @@ fun Application.moduleJvm(appSettings: AppSettings = initAppSettings()) {
     @Suppress("OPT_IN_USAGE")
     install(Locations)
 
+    val wsProjectHandler = WsProjectControllerV1()
+    val wsTaskHandler = WsTaskControllerV1()
+
     routing {
         route("api/v1") {
             install(ContentNegotiation) {
@@ -83,10 +87,10 @@ fun Application.moduleJvm(appSettings: AppSettings = initAppSettings()) {
         }
 
         webSocket("/ws/v1/project") {
-            wsHandlerV1(appSettings.projectProcessor)
+            wsProjectHandler.handle(this, appSettings)
         }
         webSocket("/ws/v1/task") {
-            wsHandlerV1(appSettings.taskProcessor)
+            wsTaskHandler.handle(this, appSettings)
         }
 
         static("static") {

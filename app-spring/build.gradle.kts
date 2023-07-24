@@ -15,7 +15,8 @@ dependencies {
     val kotlinLoggingJvmVersion: String by project
 
     implementation("org.springframework.boot:spring-boot-starter-actuator") // info; refresh; springMvc output
-    implementation("org.springframework.boot:spring-boot-starter-web") // Controller, Service, etc..
+    implementation("org.springframework.boot:spring-boot-starter-web") // Controller, Service, etc.. FOR TASK
+    implementation("org.springframework.boot:spring-boot-starter-webflux") // Controller, Service, etc.. FOR PROJECT
     implementation("org.springframework.boot:spring-boot-starter-websocket") // Controller, Service, etc..
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springdocOpenapiUiVersion")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin") // from models to json and Vice versa
@@ -38,6 +39,9 @@ dependencies {
 
     // tests
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+    // logging
+    implementation(project(":lib-logging-logback"))
 
     testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
     testImplementation("org.springframework.boot:spring-boot-starter-webflux") // Controller, Service, etc..

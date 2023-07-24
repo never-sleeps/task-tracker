@@ -5,6 +5,7 @@ import me.neversleeps.api.multiplatform.apiResponseSerialize
 import me.neversleeps.api.multiplatform.v1.models.IRequest
 import me.neversleeps.api.multiplatform.v1.models.IResponse
 import me.neversleeps.common.ProjectContext
+import me.neversleeps.kafka.config.AppKafkaConfig
 import me.neversleeps.mappers.multiplatform.fromInternal.toTransport
 import me.neversleeps.mappers.multiplatform.fromTransport.fromTransport
 

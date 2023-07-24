@@ -6,6 +6,7 @@ import me.neversleeps.api.multiplatform.apiRequestSerialize
 import me.neversleeps.api.multiplatform.v1.models.ProjectCreateObject
 import me.neversleeps.api.multiplatform.v1.models.ProjectCreateRequest
 import me.neversleeps.api.multiplatform.v1.models.ProjectDebugStub
+import me.neversleeps.kafka.config.AppKafkaConfig
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.apache.kafka.clients.consumer.MockConsumer
 import org.apache.kafka.clients.consumer.OffsetResetStrategy

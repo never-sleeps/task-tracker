@@ -47,6 +47,8 @@ dependencies {
     implementation(project(":mappers-multiplatform"))
     // logic
     implementation(project(":business"))
+    // logging
+    implementation(project(":lib-logging-logback"))
 
     testImplementation(kotlin("test-junit"))
 }

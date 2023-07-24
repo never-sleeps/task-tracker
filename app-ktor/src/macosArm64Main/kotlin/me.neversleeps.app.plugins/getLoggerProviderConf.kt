@@ -1,10 +1,9 @@
-package me.neversleeps.app.plugins
+package me.neversleeps.app.plugins // ktlint-disable filename
 
-import io.ktor.server.application.*
+import io.ktor.server.application.* // ktlint-disable no-wildcard-imports
 import me.neversleeps.logging.common.LoggerProvider
-import ru.otus.otuskotlin.marketplace.logging.common.MpLoggerProvider
-import ru.otus.otuskotlin.marketplace.logging.kermit.mpLoggerKermit
+import me.neversleeps.logging.kermit.mpLoggerKermit
 
-actual fun Application.getLoggerProviderConf(): LoggerProvider = MpLoggerProvider {
+actual fun Application.getLoggerProviderConf(): LoggerProvider = LoggerProvider {
     mpLoggerKermit(it)
 }

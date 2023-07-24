@@ -1,4 +1,4 @@
-package me.neversleeps.kafka
+package me.neversleeps.kafka.config
 
 class AppKafkaConfig(
     val kafkaHosts: List<String> = KAFKA_HOSTS,

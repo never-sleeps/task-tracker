@@ -1,4 +1,4 @@
-package me.neversleeps.appspring.api.v1.controller
+package me.neversleeps.appspring.api.v1.controller.web
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Autowired

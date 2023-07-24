@@ -28,6 +28,7 @@ fun TaskContext.toTransportInit() = InitBaseResponse(
 )
 
 fun TaskContext.toTransportCreate() = TaskCreateResponse(
+    responseType = "createTask",
     requestId = this.requestId.asString(),
     resultStatus = state.toTransport(),
     errors = errors.toTransport(),
@@ -35,6 +36,7 @@ fun TaskContext.toTransportCreate() = TaskCreateResponse(
 )
 
 fun TaskContext.toTransportRead() = TaskReadResponse(
+    responseType = "readTask",
     requestId = this.requestId.asString(),
     resultStatus = state.toTransport(),
     errors = errors.toTransport(),
@@ -42,6 +44,7 @@ fun TaskContext.toTransportRead() = TaskReadResponse(
 )
 
 fun TaskContext.toTransportUpdate() = TaskUpdateResponse(
+    responseType = "updateTask",
     requestId = this.requestId.asString(),
     resultStatus = state.toTransport(),
     errors = errors.toTransport(),
@@ -49,6 +52,7 @@ fun TaskContext.toTransportUpdate() = TaskUpdateResponse(
 )
 
 fun TaskContext.toTransportDelete() = TaskDeleteResponse(
+    responseType = "deleteTask",
     requestId = this.requestId.asString(),
     resultStatus = state.toTransport(),
     errors = errors.toTransport(),
@@ -56,6 +60,7 @@ fun TaskContext.toTransportDelete() = TaskDeleteResponse(
 )
 
 fun TaskContext.toTransportSearch() = TaskSearchResponse(
+    responseType = "searchTask",
     requestId = this.requestId.asString(),
     resultStatus = state.toTransport(),
     errors = errors.toTransport(),

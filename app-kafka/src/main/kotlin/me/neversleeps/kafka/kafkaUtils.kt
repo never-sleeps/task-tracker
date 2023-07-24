@@ -1,5 +1,6 @@
 package me.neversleeps.kafka // ktlint-disable filename
 
+import me.neversleeps.kafka.config.AppKafkaConfig
 import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.clients.consumer.KafkaConsumer
 import org.apache.kafka.clients.producer.KafkaProducer

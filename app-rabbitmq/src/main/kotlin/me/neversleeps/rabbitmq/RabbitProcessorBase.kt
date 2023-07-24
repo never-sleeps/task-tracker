@@ -9,8 +9,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import kotlinx.datetime.Clock
-import me.neversleeps.common.ProjectContext
 import me.neversleeps.rabbitmq.config.RabbitConfig
 import me.neversleeps.rabbitmq.config.RabbitExchangeConfiguration
 import mu.KLogging
@@ -50,25 +48,17 @@ abstract class RabbitProcessorBase(
     /**
      * Обработка поступившего сообщения в deliverCallback
      */
-    protected abstract suspend fun Channel.processMessage(message: Delivery, context: ProjectContext)
-
-    /**
-     * Обработка ошибок
-     */
-    protected abstract fun Channel.onError(e: Throwable, context: ProjectContext)
+    protected abstract suspend fun Channel.processMessage(message: Delivery)
 
     /**
      * Callback, который вызывается при доставке сообщения consumer'у
      */
     private fun Channel.getDeliveryCallback(): DeliverCallback = DeliverCallback { _, message ->
         runBlocking {
-            val context = ProjectContext().apply {
-                timeStart = Clock.System.now()
-            }
             kotlin.runCatching {
-                processMessage(message, context)
+                processMessage(message)
             }.onFailure {
-                onError(it, context)
+                println("Failure $it")
             }
         }
     }

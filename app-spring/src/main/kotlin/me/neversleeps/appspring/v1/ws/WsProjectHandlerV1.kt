@@ -1,13 +1,13 @@
 package me.neversleeps.appspring.v1.ws
 
 import kotlinx.coroutines.runBlocking
-import kotlinx.datetime.Clock
 import me.neversleeps.api.jackson.apiMapper
 import me.neversleeps.api.jackson.v1.models.IRequest
-import me.neversleeps.appspring.service.ProjectBlockingProcessor
+import me.neversleeps.business.ProjectProcessor
+import me.neversleeps.common.CorSettings
 import me.neversleeps.common.ProjectContext
-import me.neversleeps.common.helpers.asAppError
 import me.neversleeps.common.helpers.isUpdatableCommand
+import me.neversleeps.common.models.AppCommand
 import me.neversleeps.mappers.jackson.fromInternal.toTransport
 import me.neversleeps.mappers.jackson.fromInternal.toTransportInit
 import me.neversleeps.mappers.jackson.fromTransport.fromTransport
@@ -20,8 +20,10 @@ import org.springframework.web.socket.handler.TextWebSocketHandler
 
 @Component
 class WsProjectHandlerV1(
-    private val processor: ProjectBlockingProcessor
+    private val processor: ProjectProcessor,
+    settings: CorSettings,
 ) : TextWebSocketHandler() {
+    private val logger = settings.loggerProvider.logger(WsProjectHandlerV1::class)
     private val sessions = mutableMapOf<String, WebSocketSession>()
 
     companion object : KLogging()
@@ -36,31 +38,26 @@ class WsProjectHandlerV1(
     }
 
     override fun handleTextMessage(session: WebSocketSession, message: TextMessage) {
-        val ctx = ProjectContext(timeStart = Clock.System.now())
-
         runBlocking {
-            try {
-                val request = apiMapper.readValue(message.payload, IRequest::class.java)
-                logger.info { "request: $request" }
-                ctx.fromTransport(request)
-
-                processor.execute(ctx)
-
-                val result = apiMapper.writeValueAsString(ctx.toTransport())
-                logger.info { "result: $result" }
-                if (ctx.isUpdatableCommand()) {
-                    sessions.values.forEach {
-                        it.sendMessage(TextMessage(result))
+            processor.process(
+                logger = logger,
+                logId = "ws-v1",
+                command = AppCommand.NONE,
+                fromTransport = { ctx ->
+                    val request = apiMapper.readValue(message.payload, IRequest::class.java)
+                    ctx.fromTransport(request)
+                },
+                sendResponse = { ctx ->
+                    val result = apiMapper.writeValueAsString(ctx.toTransport())
+                    if (ctx.isUpdatableCommand()) {
+                        sessions.values.forEach {
+                            it.sendMessage(TextMessage(result))
+                        }
+                    } else {
+                        session.sendMessage(TextMessage(result))
                     }
-                } else {
-                    session.sendMessage(TextMessage(result))
-                }
-            } catch (e: Exception) {
-                ctx.errors.add(e.asAppError())
-
-                val response = apiMapper.writeValueAsString(ctx.toTransport())
-                session.sendMessage(TextMessage(response))
-            }
+                },
+            )
         }
     }
 

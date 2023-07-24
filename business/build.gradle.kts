@@ -21,6 +21,8 @@ kotlin {
                 implementation(project(":common"))
                 implementation(project(":stubs"))
                 implementation(project(":lib-cor"))
+                implementation(project(":mappers-log1"))
+                implementation(project(":api-log1"))
             }
         }
 

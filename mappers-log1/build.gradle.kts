@@ -19,7 +19,7 @@ kotlin {
             dependencies {
                 implementation(kotlin("stdlib-common"))
 
-                implementation(project(":api-log1"))
+                api(project(":api-log1"))
                 implementation(project(":common"))
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:$datetimeVersion")
             }
