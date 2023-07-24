@@ -1,4 +1,4 @@
-package me.neversleeps.appspring.api.v1.controller
+package me.neversleeps.appspring.api.v1.controller.web
 
 import me.neversleeps.api.jackson.v1.models.TaskCreateRequest
 import me.neversleeps.api.jackson.v1.models.TaskDeleteRequest

@@ -1,5 +1,10 @@
 package me.neversleeps.rabbitmq.config
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+
+val rabbitLogger: Logger = LoggerFactory.getLogger("RabbitLogger")
+
 data class RabbitConfig(
     val host: String = HOST,
     val port: Int = PORT,

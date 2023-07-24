@@ -1,4 +1,4 @@
-package me.neversleeps.appspring.api.v1.controller
+package me.neversleeps.appspring.api.v1.controller.web
 
 import io.kotest.common.runBlocking
 import jakarta.websocket.* // ktlint-disable no-wildcard-imports

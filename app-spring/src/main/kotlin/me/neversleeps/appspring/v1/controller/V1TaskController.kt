@@ -26,41 +26,41 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("api/v1/task")
 class V1TaskController(
-    private val processor: TaskBlockingProcessor,
+    private val blockingProcessor: TaskBlockingProcessor,
 ) {
 
     @PostMapping("create")
     fun create(@RequestBody request: TaskCreateRequest): TaskCreateResponse {
         val context = TaskContext().apply { this.fromTransport(request) }
-        processor.execute(context)
+        blockingProcessor.execute(context)
         return context.toTransportCreate()
     }
 
     @PostMapping("read")
     fun read(@RequestBody request: TaskReadRequest): TaskReadResponse {
         val context = TaskContext().apply { this.fromTransport(request) }
-        processor.execute(context)
+        blockingProcessor.execute(context)
         return context.toTransportRead()
     }
 
     @PostMapping("update")
     fun update(@RequestBody request: TaskUpdateRequest): TaskUpdateResponse {
         val context = TaskContext().apply { this.fromTransport(request) }
-        processor.execute(context)
+        blockingProcessor.execute(context)
         return context.toTransportUpdate()
     }
 
     @PostMapping("delete")
     fun delete(@RequestBody request: TaskDeleteRequest): TaskDeleteResponse {
         val context = TaskContext().apply { this.fromTransport(request) }
-        processor.execute(context)
+        blockingProcessor.execute(context)
         return context.toTransportDelete()
     }
 
     @PostMapping("search")
     fun search(@RequestBody request: TaskSearchRequest): TaskSearchResponse {
         val context = TaskContext().apply { this.fromTransport(request) }
-        processor.execute(context)
+        blockingProcessor.execute(context)
         return context.toTransportSearch()
     }
 }

@@ -10,54 +10,71 @@ import me.neversleeps.api.multiplatform.v1.models.ProjectSearchRequest
 import me.neversleeps.api.multiplatform.v1.models.ProjectSearchResponse
 import me.neversleeps.api.multiplatform.v1.models.ProjectUpdateRequest
 import me.neversleeps.api.multiplatform.v1.models.ProjectUpdateResponse
-import me.neversleeps.appspring.service.ProjectBlockingProcessor
-import me.neversleeps.common.ProjectContext
-import me.neversleeps.mappers.multiplatform.fromInternal.toTransportCreate
-import me.neversleeps.mappers.multiplatform.fromInternal.toTransportDelete
-import me.neversleeps.mappers.multiplatform.fromInternal.toTransportRead
-import me.neversleeps.mappers.multiplatform.fromInternal.toTransportSearch
-import me.neversleeps.mappers.multiplatform.fromInternal.toTransportUpdate
-import me.neversleeps.mappers.multiplatform.fromTransport.fromTransport
+import me.neversleeps.business.ProjectProcessor
+import me.neversleeps.common.CorSettings
+import me.neversleeps.common.models.AppCommand
 import org.springframework.web.bind.annotation.* // ktlint-disable no-wildcard-imports
 
 @RestController
 @RequestMapping("api/v2/project")
 class V2ProjectController(
-    private val processor: ProjectBlockingProcessor,
+    private val processor: ProjectProcessor,
+    settings: CorSettings,
 ) {
+    private val logger = settings.loggerProvider.logger(V2ProjectController::class)
 
     @PostMapping("create")
-    fun createProject(@RequestBody request: ProjectCreateRequest): ProjectCreateResponse {
-        val context = ProjectContext().apply { this.fromTransport(request) }
-        processor.execute(context)
-        return context.toTransportCreate()
+    suspend fun createProject(@RequestBody request: String): String {
+        return processV2<ProjectCreateRequest, ProjectCreateResponse>(
+            processor = processor,
+            command = AppCommand.CREATE,
+            requestString = request,
+            logger = logger,
+            logId = "project-create",
+        )
     }
 
     @PostMapping("read")
-    fun readProject(@RequestBody request: ProjectReadRequest): ProjectReadResponse {
-        val context = ProjectContext().apply { this.fromTransport(request) }
-        processor.execute(context)
-        return context.toTransportRead()
+    suspend fun readProject(@RequestBody request: String): String {
+        return processV2<ProjectReadRequest, ProjectReadResponse>(
+            processor = processor,
+            command = AppCommand.READ,
+            requestString = request,
+            logger = logger,
+            logId = "project-read",
+        )
     }
 
     @PostMapping("update")
-    fun updateProject(@RequestBody request: ProjectUpdateRequest): ProjectUpdateResponse {
-        val context = ProjectContext().apply { this.fromTransport(request) }
-        processor.execute(context)
-        return context.toTransportUpdate()
+    suspend fun updateProject(@RequestBody request: String): String {
+        return processV2<ProjectUpdateRequest, ProjectUpdateResponse>(
+            processor = processor,
+            command = AppCommand.UPDATE,
+            requestString = request,
+            logger = logger,
+            logId = "project-update",
+        )
     }
 
     @PostMapping("delete")
-    fun deleteProject(@RequestBody request: ProjectDeleteRequest): ProjectDeleteResponse {
-        val context = ProjectContext().apply { this.fromTransport(request) }
-        processor.execute(context)
-        return context.toTransportDelete()
+    suspend fun deleteProject(@RequestBody request: String): String {
+        return processV2<ProjectDeleteRequest, ProjectDeleteResponse>(
+            processor = processor,
+            command = AppCommand.DELETE,
+            requestString = request,
+            logger = logger,
+            logId = "project-delete",
+        )
     }
 
     @PostMapping("search")
-    fun searchProject(@RequestBody request: ProjectSearchRequest): ProjectSearchResponse {
-        val context = ProjectContext().apply { this.fromTransport(request) }
-        processor.execute(context)
-        return context.toTransportSearch()
+    suspend fun searchProject(@RequestBody request: String): String {
+        return processV2<ProjectSearchRequest, ProjectSearchResponse>(
+            processor = processor,
+            command = AppCommand.SEARCH,
+            requestString = request,
+            logger = logger,
+            logId = "project-search",
+        )
     }
 }

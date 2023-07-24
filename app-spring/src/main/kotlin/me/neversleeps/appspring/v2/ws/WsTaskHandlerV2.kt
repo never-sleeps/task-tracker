@@ -21,7 +21,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler
 
 @Component
 class WsTaskHandlerV2(
-    private val processor: TaskBlockingProcessor
+    private val blockingProcessor: TaskBlockingProcessor,
 ) : TextWebSocketHandler() {
 
     private val sessions = mutableMapOf<String, WebSocketSession>()
@@ -43,7 +43,7 @@ class WsTaskHandlerV2(
                 val request = apiMapper.decodeFromString<IRequest>(message.payload)
                 ctx.fromTransport(request)
 
-                processor.execute(ctx)
+                blockingProcessor.execute(ctx)
 
                 val result = apiMapper.encodeToString(ctx.toTransportInit())
                 if (ctx.isUpdatableCommand()) {

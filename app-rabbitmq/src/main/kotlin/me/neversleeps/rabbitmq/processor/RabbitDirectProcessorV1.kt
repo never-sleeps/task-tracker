@@ -2,53 +2,51 @@ package me.neversleeps.rabbitmq.processor
 
 import com.rabbitmq.client.Channel
 import com.rabbitmq.client.Delivery
-import kotlinx.datetime.Clock
 import me.neversleeps.api.jackson.apiMapper
 import me.neversleeps.api.jackson.v1.models.IRequest
 import me.neversleeps.business.ProjectProcessor
-import me.neversleeps.common.ProjectContext
-import me.neversleeps.common.helpers.addError
-import me.neversleeps.common.helpers.asAppError
-import me.neversleeps.common.models.AppState
+import me.neversleeps.common.CorSettings
+import me.neversleeps.common.models.AppCommand
 import me.neversleeps.mappers.jackson.fromInternal.toTransport
 import me.neversleeps.mappers.jackson.fromTransport.fromTransport
 import me.neversleeps.rabbitmq.RabbitProcessorBase
 import me.neversleeps.rabbitmq.config.RabbitConfig
 import me.neversleeps.rabbitmq.config.RabbitExchangeConfiguration
+import me.neversleeps.rabbitmq.config.corSettings
 import mu.KLogging
 
 class RabbitDirectProcessorV1(
     config: RabbitConfig,
     processorConfig: RabbitExchangeConfiguration,
+    setting: CorSettings = corSettings,
     private val processor: ProjectProcessor = ProjectProcessor(),
 ) : RabbitProcessorBase(config, processorConfig) {
 
     companion object : KLogging()
 
-    override suspend fun Channel.processMessage(message: Delivery, projectContext: ProjectContext) {
-        apiMapper.readValue(message.body, IRequest::class.java).run {
-            projectContext.fromTransport(this)
-                .also { logger.info { "TYPE: ${this::class.simpleName}" } }
-        }
-        val response = processor.execute(projectContext)
-            .run { projectContext.toTransport() }
+    private val logger = setting.loggerProvider.logger(RabbitDirectProcessorV1::class)
 
-        apiMapper.writeValueAsBytes(response)
-            .also {
-                logger.info { "Publishing $response to ${processorConfig.exchange} exchange for keyOut ${processorConfig.keyOut}" }
-                basicPublish(processorConfig.exchange, processorConfig.keyOut, null, it)
-            }.also {
-                logger.info { "published" }
-            }
-    }
-
-    override fun Channel.onError(e: Throwable, projectContext: ProjectContext) {
-        logger.error { e.printStackTrace() }
-        projectContext.state = AppState.FAILING
-        projectContext.addError(error = arrayOf(e.asAppError()))
-        val response = projectContext.toTransport()
-        apiMapper.writeValueAsBytes(response).also {
-            basicPublish(processorConfig.exchange, processorConfig.keyOut, null, it)
-        }
+    override suspend fun Channel.processMessage(message: Delivery) {
+        processor.process(
+            logger = logger,
+            logId = "rabbit-v1",
+            command = AppCommand.NONE,
+            fromTransport = { ctx ->
+                apiMapper.readValue(message.body, IRequest::class.java).run {
+                    ctx.fromTransport(this).also {
+                        println("TYPE: ${this::class.simpleName}")
+                    }
+                }
+            },
+            sendResponse = { ctx ->
+                val response = ctx.toTransport()
+                apiMapper.writeValueAsBytes(response).also {
+                    println("Publishing $response to ${processorConfig.exchange} exchange for keyOut ${processorConfig.keyOut}")
+                    basicPublish(processorConfig.exchange, processorConfig.keyOut, null, it)
+                }.also {
+                    println("published")
+                }
+            },
+        )
     }
 }

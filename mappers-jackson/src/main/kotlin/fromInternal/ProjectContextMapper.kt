@@ -28,6 +28,7 @@ fun ProjectContext.toTransportInit() = InitBaseResponse(
 )
 
 fun ProjectContext.toTransportCreate() = ProjectCreateResponse(
+    responseType = "createProject",
     requestId = this.requestId.asString(),
     resultStatus = state.toTransport(),
     errors = errors.toTransport(),
@@ -35,6 +36,7 @@ fun ProjectContext.toTransportCreate() = ProjectCreateResponse(
 )
 
 fun ProjectContext.toTransportRead() = ProjectReadResponse(
+    responseType = "readProject",
     requestId = this.requestId.asString(),
     resultStatus = state.toTransport(),
     errors = errors.toTransport(),
@@ -42,6 +44,7 @@ fun ProjectContext.toTransportRead() = ProjectReadResponse(
 )
 
 fun ProjectContext.toTransportUpdate() = ProjectUpdateResponse(
+    responseType = "updateProject",
     requestId = this.requestId.asString(),
     resultStatus = state.toTransport(),
     errors = errors.toTransport(),
@@ -49,6 +52,7 @@ fun ProjectContext.toTransportUpdate() = ProjectUpdateResponse(
 )
 
 fun ProjectContext.toTransportDelete() = ProjectDeleteResponse(
+    responseType = "deleteProject",
     requestId = this.requestId.asString(),
     resultStatus = state.toTransport(),
     errors = errors.toTransport(),
@@ -56,6 +60,7 @@ fun ProjectContext.toTransportDelete() = ProjectDeleteResponse(
 )
 
 fun ProjectContext.toTransportSearch() = ProjectSearchResponse(
+    responseType = "searchProject",
     requestId = this.requestId.asString(),
     resultStatus = state.toTransport(),
     errors = errors.toTransport(),

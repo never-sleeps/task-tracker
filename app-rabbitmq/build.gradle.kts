@@ -32,6 +32,9 @@ dependencies {
 
     implementation(project(":business"))
 
+    // logging
+    implementation(project(":lib-logging-logback"))
+
     testImplementation("org.testcontainers:rabbitmq:$testcontainersVersion")
     testImplementation(kotlin("test"))
     testImplementation(project(":stubs"))

@@ -1,5 +1,6 @@
 package me.neversleeps.business
 
+import kotlinx.datetime.Clock
 import me.neversleeps.business.groups.projectOperation
 import me.neversleeps.business.groups.projectStubs
 import me.neversleeps.business.workers.projectInitStatus
@@ -18,9 +19,40 @@ import me.neversleeps.business.workers.projectStubValidationBadTitle
 import me.neversleeps.common.ProjectContext
 import me.neversleeps.common.models.AppCommand
 import me.neversleeps.lib.cor.rootChain
+import me.neversleeps.logging.common.ILogWrapper
+import me.neversleeps.mappers.log1.toLog
 
 class ProjectProcessor {
     suspend fun execute(ctx: ProjectContext) = BusinessChain.exec(ctx)
+
+    suspend fun <T> process(
+        logger: ILogWrapper,
+        logId: String,
+        command: AppCommand,
+        fromTransport: suspend (ProjectContext) -> Unit,
+        sendResponse: suspend (ProjectContext) -> T,
+    ): T {
+        val ctx = ProjectContext(timeStart = Clock.System.now())
+        var realCommand = command
+
+        return logger.doWithLogging(id = logId) {
+            fromTransport(ctx)
+            realCommand = ctx.command
+
+            logger.info(
+                msg = "$realCommand request is got",
+                data = ctx.toLog("$logId-got"),
+            )
+
+            execute(ctx)
+
+            logger.info(
+                msg = "$realCommand request is handled",
+                data = ctx.toLog("$logId-handled"),
+            )
+            sendResponse(ctx)
+        }
+    }
 
     companion object {
         private val BusinessChain = rootChain<ProjectContext> {

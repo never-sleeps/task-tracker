@@ -7,5 +7,5 @@ data class RabbitExchangeConfiguration(
     val queueIn: String,
     val queueOut: String,
     val consumerTag: String,
-    val exchangeType: String = "direct"
+    val exchangeType: String = "direct",
 )

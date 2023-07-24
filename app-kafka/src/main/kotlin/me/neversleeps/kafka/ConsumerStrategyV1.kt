@@ -5,6 +5,7 @@ import me.neversleeps.api.jackson.apiResponseSerialize
 import me.neversleeps.api.jackson.v1.models.IRequest
 import me.neversleeps.api.jackson.v1.models.IResponse
 import me.neversleeps.common.ProjectContext
+import me.neversleeps.kafka.config.AppKafkaConfig
 import me.neversleeps.mappers.jackson.fromInternal.toTransport
 import me.neversleeps.mappers.jackson.fromTransport.fromTransport
 

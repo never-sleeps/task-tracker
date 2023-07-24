@@ -9,9 +9,10 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
 import me.neversleeps.api.multiplatform.apiMapper
+import me.neversleeps.app.multiplatform.WsProjectControllerV2
+import me.neversleeps.app.multiplatform.WsTaskControllerV2
 import me.neversleeps.app.multiplatform.project
 import me.neversleeps.app.multiplatform.task
-import me.neversleeps.app.multiplatform.wsHandlerV2
 import me.neversleeps.app.plugins.initAppSettings
 
 fun Application.module(
@@ -21,6 +22,9 @@ fun Application.module(
     if (installPlugins) {
         install(WebSockets)
     }
+
+    val wsProjectHandler = WsProjectControllerV2()
+    val wsTaskHandler = WsTaskControllerV2()
 
     routing {
         get("/") {
@@ -35,10 +39,10 @@ fun Application.module(
             task(appSettings)
         }
         webSocket("/ws/v2/project") {
-            wsHandlerV2(appSettings.projectProcessor)
+            wsProjectHandler.handle(this, appSettings)
         }
         webSocket("/ws/v2/task") {
-            wsHandlerV2(appSettings.taskProcessor)
+            wsTaskHandler.handle(this, appSettings)
         }
     }
 }
