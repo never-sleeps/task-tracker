@@ -1,4 +1,4 @@
-package me.neversleeps.business.project
+package me.neversleeps.business.project.stub
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -7,8 +7,6 @@ import me.neversleeps.common.ProjectContext
 import me.neversleeps.common.models.AppCommand
 import me.neversleeps.common.models.AppState
 import me.neversleeps.common.models.project.Project
-import me.neversleeps.common.models.project.ProjectId
-import me.neversleeps.common.models.project.ProjectPermission
 import me.neversleeps.common.models.project.ProjectSearchFilter
 import me.neversleeps.common.models.user.UserId
 import me.neversleeps.common.stubs.ProjectDebugStub
@@ -21,11 +19,7 @@ import kotlin.test.fail
 class ProjectSearchStubTest {
 
     private val processor = ProjectProcessor()
-    private val id = ProjectId("03e13b55-b5b2-484d-a08b-b18aeb087c88")
-    private val title = "title for PRO-001"
-    private val description = "desc for PRO-001"
     private val createdBy = UserId("user-id")
-    private val permissions = mutableSetOf(ProjectPermission.UPDATE, ProjectPermission.DELETE, ProjectPermission.READ)
     private val searchText = "random important text"
     private val filter = ProjectSearchFilter(
         searchText = searchText,

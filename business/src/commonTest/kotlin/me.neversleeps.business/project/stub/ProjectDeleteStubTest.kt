@@ -1,4 +1,4 @@
-package me.neversleeps.business.project
+package me.neversleeps.business.project.stub
 
 import ProjectStub
 import kotlinx.coroutines.ExperimentalCoroutinesApi

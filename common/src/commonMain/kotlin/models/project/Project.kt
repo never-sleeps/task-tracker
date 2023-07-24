@@ -8,5 +8,9 @@ data class Project(
     var title: String = "",
     var description: String = "",
     var createdBy: UserId = UserId.NONE,
-    var permissions: MutableSet<ProjectPermission> = mutableSetOf()
-)
+    var permissions: MutableSet<ProjectPermission> = mutableSetOf(),
+) {
+    fun deepCopy(): Project = copy(
+        permissions = permissions.toMutableSet(),
+    )
+}

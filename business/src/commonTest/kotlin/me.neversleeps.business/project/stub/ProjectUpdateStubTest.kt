@@ -1,4 +1,4 @@
-package me.neversleeps.business.project
+package me.neversleeps.business.project.stub
 
 import ProjectStub
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -17,7 +17,7 @@ import kotlin.test.assertContains
 import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class ProjectCreateStubTest {
+class ProjectUpdateStubTest {
 
     private val processor = ProjectProcessor()
     private val id = ProjectId("03e13b55-b5b2-484d-a08b-b18aeb087c88")
@@ -30,7 +30,7 @@ class ProjectCreateStubTest {
     fun success() = runTest {
         // given
         val ctx = ProjectContext(
-            command = AppCommand.CREATE,
+            command = AppCommand.UPDATE,
             state = AppState.NONE,
             stubCase = ProjectDebugStub.SUCCESS,
             projectRequest = Project(
@@ -55,7 +55,7 @@ class ProjectCreateStubTest {
     fun badId() = runTest {
         // given
         val ctx = ProjectContext(
-            command = AppCommand.CREATE,
+            command = AppCommand.UPDATE,
             state = AppState.NONE,
             stubCase = ProjectDebugStub.BAD_ID,
             projectRequest = Project(
@@ -78,7 +78,7 @@ class ProjectCreateStubTest {
     fun badTitle() = runTest {
         // given
         val ctx = ProjectContext(
-            command = AppCommand.CREATE,
+            command = AppCommand.UPDATE,
             state = AppState.NONE,
             stubCase = ProjectDebugStub.BAD_TITLE,
             projectRequest = Project(
@@ -101,7 +101,7 @@ class ProjectCreateStubTest {
     fun databaseError() = runTest {
         // given
         val ctx = ProjectContext(
-            command = AppCommand.CREATE,
+            command = AppCommand.UPDATE,
             state = AppState.NONE,
             stubCase = ProjectDebugStub.DB_ERROR,
             projectRequest = Project(),
