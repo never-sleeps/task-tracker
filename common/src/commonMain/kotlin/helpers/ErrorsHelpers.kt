@@ -30,3 +30,20 @@ fun TaskContext.fail(error: AppError) {
     addError(error)
     state = AppState.FAILING
 }
+
+fun errorValidation(
+    field: String,
+    /**
+     * Код, характеризующий ошибку. Не должен включать имя поля или указание на валидацию.
+     * Например: empty, badSymbols, tooLong, etc
+     */
+    violationCode: String,
+    description: String,
+    level: AppError.Level = AppError.Level.ERROR,
+) = AppError(
+    code = "validation-$field-$violationCode",
+    field = field,
+    group = "validation",
+    message = "Validation error for field $field: $description",
+    level = level,
+)

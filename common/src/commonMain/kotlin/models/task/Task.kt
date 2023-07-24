@@ -12,7 +12,11 @@ data class Task(
     var executor: UserId = UserId.NONE,
     var createdBy: UserId = UserId.NONE,
     var permissions: MutableSet<TaskPermission> = mutableSetOf(),
-)
+) {
+    fun deepCopy(): Task = copy(
+        permissions = permissions.toMutableSet(),
+    )
+}
 
 enum class TaskType {
     NONE,
