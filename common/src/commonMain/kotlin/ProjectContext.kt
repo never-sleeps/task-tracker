@@ -15,6 +15,7 @@ data class ProjectContext(
     override var command: AppCommand = AppCommand.NONE,
     override var state: AppState = AppState.NONE,
     override var errors: MutableList<AppError> = mutableListOf(),
+    var settings: CorSettings = CorSettings.NONE,
 
     var stubCase: ProjectDebugStub = ProjectDebugStub.NONE,
 

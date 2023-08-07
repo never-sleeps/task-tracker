@@ -18,13 +18,13 @@ import mu.KLogging
 class RabbitDirectProcessorV1(
     config: RabbitConfig,
     processorConfig: RabbitExchangeConfiguration,
-    setting: CorSettings = corSettings,
-    private val processor: ProjectProcessor = ProjectProcessor(),
+    settings: CorSettings = corSettings,
+    private val processor: ProjectProcessor = ProjectProcessor(settings),
 ) : RabbitProcessorBase(config, processorConfig) {
 
     companion object : KLogging()
 
-    private val logger = setting.loggerProvider.logger(RabbitDirectProcessorV1::class)
+    private val logger = settings.loggerProvider.logger(RabbitDirectProcessorV1::class)
 
     override suspend fun Channel.processMessage(message: Delivery) {
         processor.process(

@@ -1,6 +1,9 @@
 package me.neversleeps.rabbitmq
 
 import me.neversleeps.business.ProjectProcessor
+import me.neversleeps.common.CorSettings
+import me.neversleeps.logging.common.LoggerProvider
+import me.neversleeps.logging.jvm.mpLoggerLogback
 import me.neversleeps.rabbitmq.config.RabbitConfig
 import me.neversleeps.rabbitmq.config.RabbitExchangeConfiguration
 import me.neversleeps.rabbitmq.controller.RabbitController
@@ -11,7 +14,10 @@ fun main() {
     val config = RabbitConfig(
         host = System.getenv("RABBIT_HOST") ?: RabbitConfig.HOST,
     )
-    val projectProcessor = ProjectProcessor()
+    val corSettings = CorSettings(
+        loggerProvider = LoggerProvider { mpLoggerLogback(it) },
+    )
+    val projectProcessor = ProjectProcessor(corSettings)
 
     val producerConfigV1 = RabbitExchangeConfiguration(
         keyIn = "in-v1",

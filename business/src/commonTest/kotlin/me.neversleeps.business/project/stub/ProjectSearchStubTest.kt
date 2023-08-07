@@ -3,6 +3,7 @@ package me.neversleeps.business.project.stub
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import me.neversleeps.business.ProjectProcessor
+import me.neversleeps.common.CorSettings
 import me.neversleeps.common.ProjectContext
 import me.neversleeps.common.models.AppCommand
 import me.neversleeps.common.models.AppState
@@ -18,7 +19,7 @@ import kotlin.test.fail
 @OptIn(ExperimentalCoroutinesApi::class)
 class ProjectSearchStubTest {
 
-    private val processor = ProjectProcessor()
+    private val processor = ProjectProcessor(CorSettings())
     private val createdBy = UserId("user-id")
     private val searchText = "random important text"
     private val filter = ProjectSearchFilter(

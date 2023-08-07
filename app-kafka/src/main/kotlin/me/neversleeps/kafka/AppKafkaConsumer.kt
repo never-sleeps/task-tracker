@@ -34,12 +34,12 @@ interface ConsumerStrategy {
 class AppKafkaConsumer(
     private val config: AppKafkaConfig,
     consumerStrategies: List<ConsumerStrategy>,
-    setting: CorSettings = corSettings,
-    private val processor: ProjectProcessor = ProjectProcessor(),
+    settings: CorSettings = corSettings,
+    private val processor: ProjectProcessor = ProjectProcessor(settings),
     private val consumer: Consumer<String, String> = config.createKafkaConsumer(),
     private val producer: Producer<String, String> = config.createKafkaProducer(),
 ) {
-    private val logger = setting.loggerProvider.logger(AppKafkaConsumer::class)
+    private val logger = settings.loggerProvider.logger(AppKafkaConsumer::class)
     private val process = atomic(true) // multithreading
     private val topicsAndStrategyByInputTopic = consumerStrategies.associate {
         val topics = it.topics(config)

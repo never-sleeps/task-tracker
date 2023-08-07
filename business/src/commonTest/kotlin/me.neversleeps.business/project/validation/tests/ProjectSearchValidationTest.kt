@@ -3,6 +3,7 @@ package me.neversleeps.business.project.validation.tests
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import me.neversleeps.business.ProjectProcessor
+import me.neversleeps.common.CorSettings
 import me.neversleeps.common.ProjectContext
 import me.neversleeps.common.models.AppCommand
 import me.neversleeps.common.models.AppState
@@ -15,7 +16,7 @@ import kotlin.test.assertNotEquals
 class ProjectSearchValidationTest {
 
     private val command = AppCommand.SEARCH
-    private val processor by lazy { ProjectProcessor() }
+    private val processor by lazy { ProjectProcessor(CorSettings()) }
 
     @Test
     fun correctEmpty() = runTest {

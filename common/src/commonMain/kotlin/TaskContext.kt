@@ -15,6 +15,7 @@ data class TaskContext(
     override var command: AppCommand = AppCommand.NONE,
     override var state: AppState = AppState.NONE,
     override var errors: MutableList<AppError> = mutableListOf(),
+    var settings: CorSettings = CorSettings.NONE,
 
     var taskRequest: Task = Task(),
     var taskSearchFilterRequest: TaskSearchFilter = TaskSearchFilter(),

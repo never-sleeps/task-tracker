@@ -4,6 +4,7 @@ import ProjectStub
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import me.neversleeps.business.ProjectProcessor
+import me.neversleeps.common.CorSettings
 import me.neversleeps.common.ProjectContext
 import me.neversleeps.common.models.AppCommand
 import me.neversleeps.common.models.AppState
@@ -19,7 +20,7 @@ import kotlin.test.assertEquals
 @OptIn(ExperimentalCoroutinesApi::class)
 class ProjectUpdateStubTest {
 
-    private val processor = ProjectProcessor()
+    private val processor = ProjectProcessor(CorSettings())
     private val id = ProjectId("03e13b55-b5b2-484d-a08b-b18aeb087c88")
     private val title = "title for PRO-001"
     private val description = "desc for PRO-001"

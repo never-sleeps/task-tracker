@@ -18,5 +18,5 @@ class CorConfig {
     )
 
     @Bean
-    fun processor() = ProjectProcessor()
+    fun processor(corSettings: CorSettings) = ProjectProcessor(corSettings)
 }

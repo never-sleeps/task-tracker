@@ -15,12 +15,15 @@ import me.neversleeps.business.workers.taskStubValidationBadId
 import me.neversleeps.business.workers.taskStubValidationBadSearchCreatedBy
 import me.neversleeps.business.workers.taskStubValidationBadSearchExecutor
 import me.neversleeps.business.workers.taskStubValidationBadTitle
+import me.neversleeps.common.CorSettings
 import me.neversleeps.common.TaskContext
 import me.neversleeps.common.models.AppCommand
 import me.neversleeps.lib.cor.rootChain
 
-class TaskProcessor {
-    suspend fun execute(ctx: TaskContext) = BusinessChain.exec(ctx)
+class TaskProcessor(val settings: CorSettings) {
+    suspend fun execute(ctx: TaskContext) = BusinessChain.exec(
+        ctx.apply { this.settings = this@TaskProcessor.settings },
+    )
 
     companion object {
         private val BusinessChain = rootChain<TaskContext> {
