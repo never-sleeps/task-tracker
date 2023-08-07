@@ -8,6 +8,7 @@ import me.neversleeps.api.multiplatform.v1.models.IResponse
 import me.neversleeps.business.ProjectProcessor
 import me.neversleeps.common.models.AppCommand
 import me.neversleeps.logging.common.ILogWrapper
+import me.neversleeps.mappers.log1.toLog
 import me.neversleeps.mappers.multiplatform.fromInternal.toTransport
 import me.neversleeps.mappers.multiplatform.fromTransport.fromTransport
 
@@ -30,4 +31,5 @@ suspend inline fun <
         ctx.fromTransport(request)
     },
     { ctx -> apiMapper.encodeToString(ctx.toTransport()) },
+    { logId -> toLog(logId) },
 )

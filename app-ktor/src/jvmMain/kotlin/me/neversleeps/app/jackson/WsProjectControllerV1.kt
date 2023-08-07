@@ -19,6 +19,7 @@ import me.neversleeps.common.models.AppCommand
 import me.neversleeps.mappers.jackson.fromInternal.toTransport
 import me.neversleeps.mappers.jackson.fromInternal.toTransportInit
 import me.neversleeps.mappers.jackson.fromTransport.fromTransport
+import me.neversleeps.mappers.log1.toLog
 
 class WsProjectControllerV1 {
     private val mutex = Mutex()
@@ -67,6 +68,7 @@ class WsProjectControllerV1 {
                         }
                     }
                 },
+                { logId -> toLog(logId) },
             )
         }.collect()
     }

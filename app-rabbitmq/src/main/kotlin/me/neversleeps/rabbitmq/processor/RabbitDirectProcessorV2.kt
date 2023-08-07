@@ -8,6 +8,7 @@ import me.neversleeps.api.multiplatform.v1.models.IRequest
 import me.neversleeps.business.ProjectProcessor
 import me.neversleeps.common.CorSettings
 import me.neversleeps.common.models.AppCommand
+import me.neversleeps.mappers.log1.toLog
 import me.neversleeps.mappers.multiplatform.fromInternal.toTransport
 import me.neversleeps.mappers.multiplatform.fromTransport.fromTransport
 import me.neversleeps.rabbitmq.RabbitProcessorBase
@@ -49,6 +50,7 @@ class RabbitDirectProcessorV2(
                     println("published")
                 }
             },
+            { logId -> toLog(logId) },
         )
     }
 }

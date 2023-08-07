@@ -7,6 +7,7 @@ import me.neversleeps.common.models.AppCommand
 import me.neversleeps.logging.common.ILogWrapper
 import me.neversleeps.mappers.jackson.fromInternal.toTransport
 import me.neversleeps.mappers.jackson.fromTransport.fromTransport
+import me.neversleeps.mappers.log1.toLog
 
 suspend inline fun <reified Q : IRequest, reified R : IResponse> processV1(
     processor: ProjectProcessor,
@@ -20,4 +21,5 @@ suspend inline fun <reified Q : IRequest, reified R : IResponse> processV1(
     command,
     { ctx -> ctx.fromTransport(request) },
     { ctx -> ctx.toTransport() as R },
+    { logId -> toLog(logId) },
 )

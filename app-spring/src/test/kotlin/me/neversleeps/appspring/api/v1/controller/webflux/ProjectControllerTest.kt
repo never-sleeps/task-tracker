@@ -86,8 +86,6 @@ internal class ProjectControllerTest {
         requestObj: Req,
         responseObj: Res,
     ) {
-        coEvery { processor.process<Res>(any(), any(), any(), any(), any()) } returns responseObj
-
         webClient
             .post()
             .uri(url)
@@ -100,6 +98,6 @@ internal class ProjectControllerTest {
                 println("RESPONSE: $it")
                 Assertions.assertThat(it).isEqualTo(responseObj)
             }
-        coVerify { processor.process<Res>(any(), any(), any(), any(), any()) }
+        coVerify { processor.execute(any()) }
     }
 }

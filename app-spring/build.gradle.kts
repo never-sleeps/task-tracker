@@ -42,6 +42,7 @@ dependencies {
 
     // logging
     implementation(project(":lib-logging-logback"))
+    implementation(project(":mappers-log1"))
 
     testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
     testImplementation("org.springframework.boot:spring-boot-starter-webflux") // Controller, Service, etc..
