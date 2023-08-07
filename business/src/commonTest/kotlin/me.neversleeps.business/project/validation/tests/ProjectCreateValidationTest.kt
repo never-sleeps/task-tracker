@@ -10,6 +10,7 @@ import me.neversleeps.business.project.validation.validationTitleCorrect
 import me.neversleeps.business.project.validation.validationTitleEmpty
 import me.neversleeps.business.project.validation.validationTitleSymbols
 import me.neversleeps.business.project.validation.validationTitleTrim
+import me.neversleeps.common.CorSettings
 import me.neversleeps.common.models.AppCommand
 import kotlin.test.Test
 
@@ -18,7 +19,7 @@ import kotlin.test.Test
 class ProjectCreateValidationTest {
 
     private val command = AppCommand.CREATE
-    private val processor by lazy { ProjectProcessor() }
+    private val processor by lazy { ProjectProcessor(CorSettings()) }
 
     @Test fun correctTitle() = validationTitleCorrect(command, processor)
 

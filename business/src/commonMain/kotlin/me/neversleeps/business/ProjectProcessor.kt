@@ -3,6 +3,7 @@ package me.neversleeps.business
 import kotlinx.datetime.Clock
 import me.neversleeps.business.groups.projectOperation
 import me.neversleeps.business.groups.projectStubs
+import me.neversleeps.business.statemachine.computeState
 import me.neversleeps.business.validation.project.finishAdFilterValidation
 import me.neversleeps.business.validation.project.finishAdValidation
 import me.neversleeps.business.validation.project.projectValidation
@@ -25,6 +26,7 @@ import me.neversleeps.business.workers.projectStubValidationBadId
 import me.neversleeps.business.workers.projectStubValidationBadSearchCreatedBy
 import me.neversleeps.business.workers.projectStubValidationBadSearchText
 import me.neversleeps.business.workers.projectStubValidationBadTitle
+import me.neversleeps.common.CorSettings
 import me.neversleeps.common.ProjectContext
 import me.neversleeps.common.helpers.asAppError
 import me.neversleeps.common.helpers.fail
@@ -35,8 +37,10 @@ import me.neversleeps.lib.cor.worker
 import me.neversleeps.logging.common.ILogWrapper
 import me.neversleeps.mappers.log1.toLog
 
-class ProjectProcessor {
-    suspend fun execute(ctx: ProjectContext) = BusinessChain.exec(ctx)
+class ProjectProcessor(val settings: CorSettings) {
+    suspend fun execute(ctx: ProjectContext) = BusinessChain.exec(
+        ctx.apply { this.settings = this@ProjectProcessor.settings },
+    )
 
     suspend fun <T> process(
         logger: ILogWrapper,
@@ -119,6 +123,7 @@ class ProjectProcessor {
 
                     finishAdValidation("Успешное завершение процедуры валидации")
                 }
+                computeState("Вычисление состояния проекта")
             }
             projectOperation("Обновить проект", AppCommand.UPDATE) {
                 projectStubs("Обработка стабов") {

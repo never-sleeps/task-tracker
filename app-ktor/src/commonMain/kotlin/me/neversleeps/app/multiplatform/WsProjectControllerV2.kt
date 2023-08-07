@@ -40,7 +40,7 @@ class WsProjectControllerV2 {
             val jsonStr = frame.readText()
 
             // Handle without flow destruction
-            ProjectProcessor().process(
+            appSettings.projectProcessor.process(
                 logger = logger,
                 logId = "webSocket",
                 command = AppCommand.NONE,

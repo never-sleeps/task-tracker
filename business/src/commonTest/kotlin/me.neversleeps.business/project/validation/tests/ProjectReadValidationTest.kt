@@ -6,6 +6,7 @@ import me.neversleeps.business.project.validation.validationIdCorrect
 import me.neversleeps.business.project.validation.validationIdEmpty
 import me.neversleeps.business.project.validation.validationIdFormat
 import me.neversleeps.business.project.validation.validationIdTrim
+import me.neversleeps.common.CorSettings
 import me.neversleeps.common.models.AppCommand
 import kotlin.test.Test
 
@@ -13,7 +14,7 @@ import kotlin.test.Test
 class ProjectReadValidationTest {
 
     private val command = AppCommand.READ
-    private val processor by lazy { ProjectProcessor() }
+    private val processor by lazy { ProjectProcessor(CorSettings()) }
 
     @Test fun correctId() = validationIdCorrect(command, processor)
 
