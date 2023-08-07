@@ -11,6 +11,7 @@ import me.neversleeps.common.ProjectContext
 import me.neversleeps.common.models.AppCommand
 import me.neversleeps.kafka.config.AppKafkaConfig
 import me.neversleeps.kafka.config.corSettings
+import me.neversleeps.mappers.log1.toLog
 import mu.KotlinLogging
 import org.apache.kafka.clients.consumer.Consumer
 import org.apache.kafka.clients.consumer.ConsumerRecord
@@ -67,6 +68,7 @@ class AppKafkaConsumer(
                         command = AppCommand.NONE,
                         fromTransport = { ctx -> strategy.deserialize(record.value(), ctx) },
                         sendResponse = { ctx -> sendResponse(ctx, strategy, outputTopic) },
+                        { logId -> toLog(logId) },
                     )
                 }
             }

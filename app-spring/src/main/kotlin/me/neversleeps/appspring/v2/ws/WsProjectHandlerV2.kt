@@ -10,6 +10,7 @@ import me.neversleeps.common.CorSettings
 import me.neversleeps.common.ProjectContext
 import me.neversleeps.common.helpers.isUpdatableCommand
 import me.neversleeps.common.models.AppCommand
+import me.neversleeps.mappers.log1.toLog
 import me.neversleeps.mappers.multiplatform.fromInternal.toTransport
 import me.neversleeps.mappers.multiplatform.fromInternal.toTransportInit
 import me.neversleeps.mappers.multiplatform.fromTransport.fromTransport
@@ -56,6 +57,7 @@ class WsProjectHandlerV2(
                         session.sendMessage(TextMessage(result))
                     }
                 },
+                { logId -> toLog(logId) },
             )
         }
     }

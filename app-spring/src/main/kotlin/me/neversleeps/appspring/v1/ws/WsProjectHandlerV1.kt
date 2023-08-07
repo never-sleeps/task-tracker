@@ -11,6 +11,7 @@ import me.neversleeps.common.models.AppCommand
 import me.neversleeps.mappers.jackson.fromInternal.toTransport
 import me.neversleeps.mappers.jackson.fromInternal.toTransportInit
 import me.neversleeps.mappers.jackson.fromTransport.fromTransport
+import me.neversleeps.mappers.log1.toLog
 import mu.KLogging
 import org.springframework.stereotype.Component
 import org.springframework.web.socket.CloseStatus
@@ -57,6 +58,7 @@ class WsProjectHandlerV1(
                         session.sendMessage(TextMessage(result))
                     }
                 },
+                { logId -> toLog(logId) },
             )
         }
     }

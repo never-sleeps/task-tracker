@@ -34,6 +34,7 @@ dependencies {
 
     // logging
     implementation(project(":lib-logging-logback"))
+    implementation(project(":mappers-log1"))
 
     testImplementation("org.testcontainers:rabbitmq:$testcontainersVersion")
     testImplementation(kotlin("test"))

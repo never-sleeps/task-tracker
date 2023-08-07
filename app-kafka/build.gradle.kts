@@ -49,6 +49,7 @@ dependencies {
     implementation(project(":business"))
     // logging
     implementation(project(":lib-logging-logback"))
+    implementation(project(":mappers-log1"))
 
     testImplementation(kotlin("test-junit"))
 }

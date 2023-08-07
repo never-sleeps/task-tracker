@@ -10,6 +10,7 @@ import me.neversleeps.common.models.AppCommand
 import me.neversleeps.logging.common.ILogWrapper
 import me.neversleeps.mappers.jackson.fromInternal.toTransport
 import me.neversleeps.mappers.jackson.fromTransport.fromTransport
+import me.neversleeps.mappers.log1.toLog
 
 suspend inline fun <
     reified Q : IRequest,
@@ -33,5 +34,6 @@ suspend inline fun <
         sendResponse = { ctx ->
             respond(ctx.toTransport())
         },
+        { logId -> toLog(logId) },
     )
 }

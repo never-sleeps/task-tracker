@@ -48,6 +48,7 @@ class ProjectProcessor(val settings: CorSettings) {
         command: AppCommand,
         fromTransport: suspend (ProjectContext) -> Unit,
         sendResponse: suspend (ProjectContext) -> T,
+        toLog: ProjectContext.(logId: String) -> Any,
     ): T {
         val ctx = ProjectContext(timeStart = Clock.System.now())
         var realCommand = command
