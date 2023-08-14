@@ -7,6 +7,8 @@ import me.neversleeps.common.models.AppState
 import me.neversleeps.common.models.RequestId
 import me.neversleeps.common.models.project.Project
 import me.neversleeps.common.models.project.ProjectSearchFilter
+import me.neversleeps.common.repository.project.IProjectRepository
+import me.neversleeps.common.stubs.WorkMode
 import me.neversleeps.common.stubs.ProjectDebugStub
 
 data class ProjectContext(
@@ -18,6 +20,7 @@ data class ProjectContext(
     var settings: CorSettings = CorSettings.NONE,
 
     var stubCase: ProjectDebugStub = ProjectDebugStub.NONE,
+    var workMode: WorkMode = WorkMode.PROD,
 
     // project-validation (there is not for task)
     var projectValidating: Project = Project(),
@@ -31,4 +34,10 @@ data class ProjectContext(
     // responses
     var projectResponse: Project = Project(),
     var projectsResponse: MutableList<Project> = mutableListOf(),
+
+    var projectRepository: IProjectRepository = IProjectRepository.NONE,
+    var projectRepositoryPrepare: Project = Project(),
+    var projectRepositoryRead: Project = Project(),
+    var projectRepositoryDone: Project = Project(),
+    var projectsRepositoryDone: MutableList<Project> = mutableListOf(),
 ) : IContext

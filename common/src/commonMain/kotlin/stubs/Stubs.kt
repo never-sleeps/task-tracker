@@ -23,3 +23,10 @@ enum class TaskDebugStub {
     PERMISSION_ERROR,
     DB_ERROR
 }
+
+enum class WorkMode {
+    NONE,
+    PROD,
+    TEST,
+    STUB
+}

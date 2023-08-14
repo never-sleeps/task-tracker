@@ -8,6 +8,7 @@ import me.neversleeps.common.models.RequestId
 import me.neversleeps.common.models.task.Task
 import me.neversleeps.common.models.task.TaskSearchFilter
 import me.neversleeps.common.stubs.TaskDebugStub
+import me.neversleeps.common.stubs.WorkMode
 
 data class TaskContext(
     override var requestId: RequestId = RequestId.NONE,
@@ -22,4 +23,5 @@ data class TaskContext(
     var taskResponse: Task = Task(),
     var tasksResponse: MutableList<Task> = mutableListOf(),
     var stubCase: TaskDebugStub = TaskDebugStub.NONE,
+    var workMode: WorkMode = WorkMode.PROD,
 ) : IContext

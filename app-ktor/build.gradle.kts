@@ -59,7 +59,6 @@ kotlin {
                 implementation(kotlin("stdlib-common"))
                 implementation(ktor("core")) // "io.ktor:ktor-server-core:$ktorVersion"
 
-                implementation(ktor("core")) // "io.ktor:ktor-server-core:$ktorVersion"
                 implementation(ktor("cio")) // "io.ktor:ktor-server-cio:$ktorVersion"
                 implementation(ktor("auth")) // "io.ktor:ktor-server-auth:$ktorVersion"
                 implementation(ktor("auto-head-response")) // "io.ktor:ktor-server-auto-head-response:$ktorVersion"
@@ -74,6 +73,8 @@ kotlin {
 
                 implementation(project(":common"))
                 implementation(project(":business"))
+                implementation(project(":app-repository-in-memory"))
+                implementation(project(":app-repository-stubs"))
 
                 // multiplatform api
                 implementation(project(":api-multiplatform"))
@@ -98,6 +99,7 @@ kotlin {
                 implementation(kotlin("test"))
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
+                implementation(project(":app-repository-tests"))
 
                 implementation(ktor("test-host"))
                 implementation(ktor("content-negotiation", prefix = "client-"))
@@ -122,8 +124,6 @@ kotlin {
                 implementation(ktor("auto-head-response"))
                 implementation(ktor("cors")) // "io.ktor:ktor-cors:$ktorVersion"
                 implementation(ktor("default-headers")) // "io.ktor:ktor-cors:$ktorVersion"
-                implementation(ktor("cors")) // "io.ktor:ktor-cors:$ktorVersion"
-                implementation(ktor("auto-head-response"))
 
                 implementation(ktor("websockets")) // "io.ktor:ktor-websockets:$ktorVersion"
                 implementation(ktor("auth")) // "io.ktor:ktor-auth:$ktorVersion"

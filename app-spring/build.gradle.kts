@@ -36,6 +36,10 @@ dependencies {
     implementation(project(":api-multiplatform")) // multiplatform-api
     implementation(project(":mappers-multiplatform")) // multiplatform-api
     implementation(project(":business")) // business module
+    // Repository
+    implementation(project(":app-repository-in-memory"))
+    // Stubs
+    implementation(project(":app-repository-stubs"))
 
     // tests
     testImplementation("org.springframework.boot:spring-boot-starter-test")

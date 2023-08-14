@@ -1,6 +1,7 @@
 package me.neversleeps.business.project.validation.tests
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import me.neversleeps.`in`.memory.project.ProjectRepositoryInMemory
 import me.neversleeps.business.ProjectProcessor
 import me.neversleeps.business.project.validation.validationDescriptionCorrect
 import me.neversleeps.business.project.validation.validationDescriptionEmpty
@@ -19,7 +20,7 @@ import kotlin.test.Test
 class ProjectCreateValidationTest {
 
     private val command = AppCommand.CREATE
-    private val processor by lazy { ProjectProcessor(CorSettings()) }
+    private val processor by lazy { ProjectProcessor(CorSettings(repositoryTest = ProjectRepositoryInMemory())) }
 
     @Test fun correctTitle() = validationTitleCorrect(command, processor)
 

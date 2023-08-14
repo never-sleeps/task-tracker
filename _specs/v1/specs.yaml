@@ -669,6 +669,15 @@ components:
       properties:
         stub:
           $ref: '#/components/schemas/ProjectDebugStub'
+        mode:
+          $ref: '#/components/schemas/WorkMode'
+
+    WorkMode:
+      type: string
+      enum:
+        - prod
+        - test
+        - stub
 
     ProjectDebugStub:
       type: string
@@ -686,6 +695,8 @@ components:
       properties:
         stub:
           $ref: '#/components/schemas/TaskDebugStub'
+        mode:
+          $ref: '#/components/schemas/WorkMode'
 
     TaskDebugStub:
       type: string

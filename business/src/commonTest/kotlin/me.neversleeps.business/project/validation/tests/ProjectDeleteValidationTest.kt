@@ -8,13 +8,21 @@ import me.neversleeps.business.project.validation.validationIdFormat
 import me.neversleeps.business.project.validation.validationIdTrim
 import me.neversleeps.common.CorSettings
 import me.neversleeps.common.models.AppCommand
+import me.neversleeps.`in`.memory.project.ProjectRepositoryInMemory
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class ProjectDeleteValidationTest {
 
     private val command = AppCommand.DELETE
-    private val processor by lazy { ProjectProcessor(CorSettings()) }
+    private lateinit var processor: ProjectProcessor
+
+    @BeforeTest
+    fun beforeEach() {
+        val repositoryTest = ProjectRepositoryInMemory(initObjects = listOf(ProjectStub.get()))
+        processor = ProjectProcessor(CorSettings(repositoryTest = repositoryTest))
+    }
 
     @Test fun correctId() = validationIdCorrect(command, processor)
 
