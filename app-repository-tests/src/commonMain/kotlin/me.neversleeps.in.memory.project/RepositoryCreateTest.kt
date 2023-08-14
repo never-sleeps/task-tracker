@@ -1,6 +1,7 @@
 package me.neversleeps.`in`.memory.project // ktlint-disable package-name
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import me.neversleeps.common.models.AppLock
 import me.neversleeps.common.models.project.Project
 import me.neversleeps.common.models.project.ProjectId
 import me.neversleeps.common.models.project.ProjectPermission
@@ -14,6 +15,7 @@ import kotlin.test.assertNotEquals
 @OptIn(ExperimentalCoroutinesApi::class)
 abstract class RepositoryCreateTest {
     abstract val repo: IProjectRepository
+    protected open val lockNew: AppLock = AppLock("20000000-0000-0000-0000-000000000002")
 
     private val createObj = Project(
         title = "create object",
@@ -31,6 +33,7 @@ abstract class RepositoryCreateTest {
         assertEquals(expected.description, result.data?.description)
         assertNotEquals(ProjectId.NONE, result.data?.id)
         assertEquals(emptyList(), result.errors)
+        assertEquals(lockNew, result.data?.lock)
     }
 
     companion object : BaseInitProjects("create") {

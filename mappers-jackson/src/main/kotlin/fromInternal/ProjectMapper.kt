@@ -2,6 +2,7 @@ package me.neversleeps.mappers.jackson.fromInternal
 
 import me.neversleeps.api.jackson.v1.models.ProjectPermission
 import me.neversleeps.api.jackson.v1.models.ProjectResponseObject
+import me.neversleeps.common.models.AppLock
 import me.neversleeps.common.models.project.Project
 
 fun List<Project>.toTransport(): List<ProjectResponseObject> =
@@ -13,6 +14,7 @@ fun Project.toTransport(): ProjectResponseObject = ProjectResponseObject(
     description = this.description,
     createdBy = this.createdBy.asString(),
     permissions = this.permissions.toTransport(),
+    lock = lock.takeIf { it != AppLock.NONE }?.asString(),
 )
 
 fun Set<me.neversleeps.common.models.project.ProjectPermission>.toTransport(): Set<ProjectPermission> = this

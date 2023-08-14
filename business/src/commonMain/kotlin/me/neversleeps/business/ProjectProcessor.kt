@@ -21,6 +21,8 @@ import me.neversleeps.business.validation.project.validateDescriptionHasContent
 import me.neversleeps.business.validation.project.validateDescriptionNotEmpty
 import me.neversleeps.business.validation.project.validateIdNotEmpty
 import me.neversleeps.business.validation.project.validateIdProperFormat
+import me.neversleeps.business.validation.project.validateLockNotEmpty
+import me.neversleeps.business.validation.project.validateLockProperFormat
 import me.neversleeps.business.validation.project.validateTitleHasContent
 import me.neversleeps.business.validation.project.validateTitleNotEmpty
 import me.neversleeps.business.workers.projectInitStatus
@@ -41,6 +43,7 @@ import me.neversleeps.common.ProjectContext
 import me.neversleeps.common.helpers.asAppError
 import me.neversleeps.common.helpers.fail
 import me.neversleeps.common.models.AppCommand
+import me.neversleeps.common.models.AppLock
 import me.neversleeps.common.models.AppState
 import me.neversleeps.common.models.project.ProjectId
 import me.neversleeps.lib.cor.chain
@@ -167,10 +170,13 @@ class ProjectProcessor(val settings: CorSettings) {
                 projectValidation {
                     worker("Копируем поля в projectValidating") { projectValidating = projectRequest.deepCopy() }
                     worker("Очистка id") { projectValidating.id = ProjectId(projectValidating.id.asString().trim()) }
+                    worker("Очистка lock") { projectValidating.lock = AppLock(projectValidating.lock.asString().trim()) }
                     worker("Очистка заголовка") { projectValidating.title = projectValidating.title.trim() }
                     worker("Очистка описания") { projectValidating.description = projectValidating.description.trim() }
                     validateIdNotEmpty("Проверка на непустой id")
                     validateIdProperFormat("Проверка формата id")
+                    validateLockNotEmpty("Проверка на непустой lock")
+                    validateLockProperFormat("Проверка формата lock")
                     validateTitleNotEmpty("Проверка на непустой заголовок")
                     validateTitleHasContent("Проверка на наличие содержания в заголовке")
                     validateDescriptionNotEmpty("Проверка на непустое описание")
@@ -197,8 +203,11 @@ class ProjectProcessor(val settings: CorSettings) {
                 projectValidation {
                     worker("Копируем поля в projectValidating") { projectValidating = projectRequest.deepCopy() }
                     worker("Очистка id") { projectValidating.id = ProjectId(projectValidating.id.asString().trim()) }
+                    worker("Очистка lock") { projectValidating.lock = AppLock(projectValidating.lock.asString().trim()) }
                     validateIdNotEmpty("Проверка на непустой id")
                     validateIdProperFormat("Проверка формата id")
+                    validateLockNotEmpty("Проверка на непустой lock")
+                    validateLockProperFormat("Проверка формата lock")
                     finishAdValidation("Успешное завершение процедуры валидации")
                 }
                 chain {

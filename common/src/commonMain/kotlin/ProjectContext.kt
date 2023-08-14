@@ -8,8 +8,8 @@ import me.neversleeps.common.models.RequestId
 import me.neversleeps.common.models.project.Project
 import me.neversleeps.common.models.project.ProjectSearchFilter
 import me.neversleeps.common.repository.project.IProjectRepository
-import me.neversleeps.common.stubs.WorkMode
 import me.neversleeps.common.stubs.ProjectDebugStub
+import me.neversleeps.common.stubs.WorkMode
 
 data class ProjectContext(
     override var requestId: RequestId = RequestId.NONE,

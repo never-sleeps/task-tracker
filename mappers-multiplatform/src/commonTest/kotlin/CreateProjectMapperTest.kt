@@ -19,7 +19,7 @@ import me.neversleeps.mappers.multiplatform.fromTransport.fromTransport
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class ProjectMapperTest {
+class CreateProjectMapperTest {
     @Test
     fun fromTransport() {
         val request = ProjectCreateRequest(

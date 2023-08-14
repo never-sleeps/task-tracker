@@ -11,19 +11,23 @@ import kotlin.test.assertEquals
 @OptIn(ExperimentalCoroutinesApi::class)
 abstract class RepositoryDeleteTest {
     abstract val repo: IProjectRepository
-    protected open val deleteSucc = initObjects[0]
+    protected open val deleteSuccess = initObjects[0]
+    protected open val deleteConcurrent = initObjects[1]
+    protected open val notFoundId = ProjectId("project-repo-delete-notFound")
 
     @Test
     fun deleteSuccess() = runRepoTest {
-        val result = repo.deleteProject(DbProjectIdRequest(deleteSucc.id))
+        val lockOld = deleteSuccess.lock
+        val result = repo.deleteProject(DbProjectIdRequest(deleteSuccess.id, lock = lockOld))
 
         assertEquals(true, result.isSuccess)
         assertEquals(emptyList(), result.errors)
+        assertEquals(lockOld, result.data?.lock)
     }
 
     @Test
     fun deleteNotFound() = runRepoTest {
-        val result = repo.readProject(DbProjectIdRequest(notFoundId))
+        val result = repo.readProject(DbProjectIdRequest(notFoundId, lock = lockOld))
 
         assertEquals(false, result.isSuccess)
         assertEquals(null, result.data)
@@ -31,11 +35,21 @@ abstract class RepositoryDeleteTest {
         assertEquals("id", error?.field)
     }
 
+    @Test
+    fun deleteConcurrency() = runRepoTest {
+        val lockOld = deleteSuccess.lock
+        val result = repo.deleteProject(DbProjectIdRequest(deleteConcurrent.id, lock = lockBad))
+
+        assertEquals(false, result.isSuccess)
+        val error = result.errors.find { it.code == "concurrency" }
+        assertEquals("lock", error?.field)
+        assertEquals(lockOld, result.data?.lock)
+    }
+
     companion object : BaseInitProjects("delete") {
         override val initObjects: List<Project> = listOf(
             createInitTestModel("delete"),
             createInitTestModel("deleteLock"),
         )
-        val notFoundId = ProjectId("ad-repo-delete-notFound")
     }
 }

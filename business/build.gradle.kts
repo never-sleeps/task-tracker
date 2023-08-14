@@ -36,6 +36,8 @@ kotlin {
                 implementation(kotlin("test-annotations-common"))
 
                 api("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
+                implementation(project(":app-repository-tests"))
+                implementation(project(":app-repository-stubs"))
             }
         }
 

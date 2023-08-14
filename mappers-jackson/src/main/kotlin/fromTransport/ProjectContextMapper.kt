@@ -40,7 +40,7 @@ fun ProjectContext.fromTransport(request: ProjectReadRequest) {
 fun ProjectContext.fromTransport(request: ProjectUpdateRequest) {
     requestId = request.toRequestId()
     command = AppCommand.UPDATE
-    projectRequest = request.data?.toInternal() ?: Project()
+    projectRequest = request.data?.toInternal(request.lock) ?: Project()
     stubCase = request.stub?.let { it.toInternal() } ?: me.neversleeps.common.stubs.ProjectDebugStub.NONE
     workMode = request.mode?.let { it.toInternal() } ?: me.neversleeps.common.stubs.WorkMode.NONE
 }
@@ -48,7 +48,7 @@ fun ProjectContext.fromTransport(request: ProjectUpdateRequest) {
 fun ProjectContext.fromTransport(request: ProjectDeleteRequest) {
     requestId = request.toRequestId()
     command = AppCommand.DELETE
-    projectRequest = request.id.toProjectWithId()
+    projectRequest = request.id.toProjectWithId(request.lock)
     stubCase = request.stub?.let { it.toInternal() } ?: me.neversleeps.common.stubs.ProjectDebugStub.NONE
     workMode = request.mode?.let { it.toInternal() } ?: me.neversleeps.common.stubs.WorkMode.NONE
 }

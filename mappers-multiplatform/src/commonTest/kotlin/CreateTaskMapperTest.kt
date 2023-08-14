@@ -19,11 +19,10 @@ import me.neversleeps.common.models.task.TaskId
 import me.neversleeps.common.models.user.UserId
 import me.neversleeps.mappers.multiplatform.fromInternal.toTransport
 import me.neversleeps.mappers.multiplatform.fromTransport.fromTransport
-
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class TaskMapperTest {
+class CreateTaskMapperTest {
     @Test
     fun fromTransport() {
         val request = TaskCreateRequest(

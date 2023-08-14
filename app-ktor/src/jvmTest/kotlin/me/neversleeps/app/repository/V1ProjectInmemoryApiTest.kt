@@ -79,8 +79,10 @@ class V1ProjectInmemoryApiTest {
     fun update() = testApplication {
         val client = myClient()
 
+        val created = initObject(client)
+
         val data = ProjectUpdateObject(
-            id = initObject(client).project?.id,
+            id = created.project?.id,
             title = "Болт",
             description = "КРУТЕЙШИЙ",
             createdBy = "someone-id",
@@ -91,6 +93,7 @@ class V1ProjectInmemoryApiTest {
                 requestId = COMMON_REQUEST_ID,
                 data = data,
                 stub = ProjectDebugStub.SUCCESS,
+                lock = created.project?.lock,
             )
             contentType(ContentType.Application.Json)
             setBody(requestObj)
@@ -106,20 +109,22 @@ class V1ProjectInmemoryApiTest {
     @Test
     fun delete() = testApplication {
         val client = myClient()
-        val oldId = initObject(client).project?.id
+        val created = initObject(client)
+        val oldId = created.project?.id
 
         val response = client.post(ApiProjectPaths.delete) {
             val requestObj = ProjectDeleteRequest(
                 requestId = COMMON_REQUEST_ID,
                 id = oldId,
                 stub = ProjectDebugStub.SUCCESS,
+                lock = created.project?.lock,
             )
             contentType(ContentType.Application.Json)
             setBody(requestObj)
         }
         val responseObj = response.body<ProjectDeleteResponse>()
         assertEquals(200, response.status.value)
-        assertEquals(oldId, responseObj.project?.id)
+        assertEquals(created.project?.id, responseObj.project?.id)
     }
 
     @Test
