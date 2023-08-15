@@ -80,3 +80,14 @@ fun errorRepositoryConcurrency(
     message = "The object has been changed concurrently by another user or process",
     exception = exception ?: RepositoryConcurrencyException(expectedLock, actualLock),
 )
+
+val errorNotFound = AppError(
+    field = "id",
+    message = "Not Found",
+    code = "not-found"
+)
+
+val errorEmptyId = AppError(
+    field = "id",
+    message = "Id must not be null or blank"
+)

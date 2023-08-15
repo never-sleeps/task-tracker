@@ -38,6 +38,7 @@ dependencies {
     implementation(project(":business")) // business module
     // Repository
     implementation(project(":app-repository-in-memory"))
+    implementation(project(":app-repository-postgresql"))
     // Stubs
     implementation(project(":app-repository-stubs"))
 

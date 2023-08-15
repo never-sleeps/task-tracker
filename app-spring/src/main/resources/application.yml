@@ -18,3 +18,13 @@ springdoc:
     urls:
       - name: v1
         url: specs.yaml
+
+prod-repository: ${PROD_REPOSITORY:test}
+
+sql:
+  url: ${SQL_URL:jdbc:postgresql://localhost:5432/tracker}
+  user: ${SQL_USER:postgres}
+  password: ${SQL_PASSWORD:tracker-pass}
+  schema: ${SQL_SCHEMA:tracker}
+  drop-database: ${SQL_DROP_DATABASE:false}
+  fast-migration: ${SQL_FAST_MIGRATION:true}
