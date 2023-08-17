@@ -40,7 +40,7 @@ abstract class RepositoryUpdateTest {
         lock = initObjects.first().lock,
     )
     private val reqUpdateConcurrency = Project(
-        id = updateIdNotFound,
+        id = updateConcurrent.id,
         title = "update object not found",
         description = "update object not found description",
         createdBy = UserId("owner-123"),

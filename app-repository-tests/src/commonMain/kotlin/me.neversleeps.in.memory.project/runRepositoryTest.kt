@@ -1,4 +1,4 @@
-package me.neversleeps.`in`.memory.project // ktlint-disable filename
+package me.neversleeps.`in`.memory.project // ktlint-disable filename // ktlint-disable package-name
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
