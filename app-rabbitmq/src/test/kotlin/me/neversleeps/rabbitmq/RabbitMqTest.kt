@@ -9,6 +9,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import me.neversleeps.api.jackson.apiMapper
 import me.neversleeps.api.jackson.v1.models.ProjectDebugStub
+import me.neversleeps.api.jackson.v1.models.WorkMode
 import me.neversleeps.api.multiplatform.apiRequestSerialize
 import me.neversleeps.api.multiplatform.apiResponseDeserialize
 import kotlin.test.BeforeTest
@@ -114,6 +115,7 @@ class RabbitMqTest : AbstractRabbitMqTest() {
         ProjectCreateRequestV1(
             requestId = "12345",
             stub = ProjectDebugStub.SUCCESS,
+            mode = WorkMode.STUB,
             data = ProjectCreateObjectV1(
                 title = "some title",
                 description = "some description",
@@ -124,6 +126,8 @@ class RabbitMqTest : AbstractRabbitMqTest() {
         ProjectCreateRequestV2(
             requestId = "request-id",
             requestType = "createProject",
+            stub = me.neversleeps.api.multiplatform.v1.models.ProjectDebugStub.SUCCESS,
+            mode = me.neversleeps.api.multiplatform.v1.models.WorkMode.STUB,
             data = ProjectCreateObjectV2(
                 title = "some title",
                 description = "some description",

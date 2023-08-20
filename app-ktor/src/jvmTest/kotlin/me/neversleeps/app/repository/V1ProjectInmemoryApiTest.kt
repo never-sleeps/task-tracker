@@ -23,9 +23,10 @@ import me.neversleeps.api.jackson.v1.models.ProjectSearchResponse
 import me.neversleeps.api.jackson.v1.models.ProjectUpdateObject
 import me.neversleeps.api.jackson.v1.models.ProjectUpdateRequest
 import me.neversleeps.api.jackson.v1.models.ProjectUpdateResponse
+import me.neversleeps.api.jackson.v1.models.WorkMode
 import org.junit.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertNotEquals
+import kotlin.test.assertNotNull
 
 class V1ProjectInmemoryApiTest {
     companion object {
@@ -43,6 +44,7 @@ class V1ProjectInmemoryApiTest {
         requestId = "12345",
         requestType = "createProject",
         stub = ProjectDebugStub.SUCCESS,
+        mode = WorkMode.STUB,
         data = ProjectCreateObject(
             title = "some title",
             description = "some description",
@@ -66,6 +68,7 @@ class V1ProjectInmemoryApiTest {
             val requestObj = ProjectReadRequest(
                 requestId = COMMON_REQUEST_ID,
                 stub = ProjectDebugStub.SUCCESS,
+                mode = WorkMode.STUB,
             )
             contentType(ContentType.Application.Json)
             setBody(requestObj)
@@ -93,6 +96,7 @@ class V1ProjectInmemoryApiTest {
                 requestId = COMMON_REQUEST_ID,
                 data = data,
                 stub = ProjectDebugStub.SUCCESS,
+                mode = WorkMode.STUB,
                 lock = created.project?.lock,
             )
             contentType(ContentType.Application.Json)
@@ -117,6 +121,7 @@ class V1ProjectInmemoryApiTest {
                 requestId = COMMON_REQUEST_ID,
                 id = oldId,
                 stub = ProjectDebugStub.SUCCESS,
+                mode = WorkMode.STUB,
                 lock = created.project?.lock,
             )
             contentType(ContentType.Application.Json)
@@ -130,20 +135,21 @@ class V1ProjectInmemoryApiTest {
     @Test
     fun search() = testApplication {
         val client = myClient()
-        val initObject = initObject(client)
         val response = client.post(ApiProjectPaths.search) {
             val requestObj = ProjectSearchRequest(
                 requestId = "12345",
-                filter = ProjectSearchFilter(),
+                filter = ProjectSearchFilter(searchText = "some title", createdBy = "someone"),
                 stub = ProjectDebugStub.SUCCESS,
+                mode = WorkMode.STUB,
             )
             contentType(ContentType.Application.Json)
             setBody(requestObj)
         }
         val responseObj = response.body<ProjectSearchResponse>()
         assertEquals(200, response.status.value)
-        assertNotEquals(0, responseObj.projects?.size)
-        assertEquals(initObject.project?.id, responseObj.projects?.first()?.id)
+        assertEquals("success", responseObj.resultStatus?.value)
+        assertEquals(5, responseObj.projects?.size)
+        assertNotNull(responseObj.projects?.find { it.id == "PRO-101" })
     }
 
     private suspend fun initObject(client: HttpClient): ProjectCreateResponse {

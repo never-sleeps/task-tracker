@@ -6,6 +6,7 @@ import me.neversleeps.api.multiplatform.apiRequestSerialize
 import me.neversleeps.api.multiplatform.v1.models.ProjectCreateObject
 import me.neversleeps.api.multiplatform.v1.models.ProjectCreateRequest
 import me.neversleeps.api.multiplatform.v1.models.ProjectDebugStub
+import me.neversleeps.api.multiplatform.v1.models.WorkMode
 import me.neversleeps.kafka.config.AppKafkaConfig
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.apache.kafka.clients.consumer.MockConsumer
@@ -32,6 +33,7 @@ class KafkaControllerTest {
             requestType = "createProject",
             requestId = UUID.randomUUID().toString(),
             stub = ProjectDebugStub.SUCCESS,
+            mode = WorkMode.STUB,
             data = ProjectCreateObject(
                 title = "some title",
                 description = "some description",

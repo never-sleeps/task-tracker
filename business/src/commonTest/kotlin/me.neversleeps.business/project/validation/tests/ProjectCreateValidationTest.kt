@@ -1,7 +1,6 @@
 package me.neversleeps.business.project.validation.tests
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import me.neversleeps.`in`.memory.project.ProjectRepositoryInMemory
 import me.neversleeps.business.ProjectProcessor
 import me.neversleeps.business.project.validation.validationDescriptionCorrect
 import me.neversleeps.business.project.validation.validationDescriptionEmpty
@@ -13,6 +12,7 @@ import me.neversleeps.business.project.validation.validationTitleSymbols
 import me.neversleeps.business.project.validation.validationTitleTrim
 import me.neversleeps.common.CorSettings
 import me.neversleeps.common.models.AppCommand
+import me.neversleeps.repository.stubs.ProjectRepositoryStub
 import kotlin.test.Test
 
 // пример теста валидации, собранного из тестовых функций-оберток
@@ -20,7 +20,7 @@ import kotlin.test.Test
 class ProjectCreateValidationTest {
 
     private val command = AppCommand.CREATE
-    private val processor by lazy { ProjectProcessor(CorSettings(repositoryTest = ProjectRepositoryInMemory())) }
+    private val processor by lazy { ProjectProcessor(CorSettings(repositoryStub = ProjectRepositoryStub())) }
 
     @Test fun correctTitle() = validationTitleCorrect(command, processor)
 

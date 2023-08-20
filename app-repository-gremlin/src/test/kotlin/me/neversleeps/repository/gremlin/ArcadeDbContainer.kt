@@ -1,6 +1,5 @@
 package me.neversleeps.repository.gremlin
 
-import me.neversleeps.tasktracker.repository.gremlin.ARCADEDB_VERSION
 import org.testcontainers.containers.GenericContainer
 import org.testcontainers.containers.wait.strategy.Wait
 import org.testcontainers.utility.DockerImageName
@@ -10,7 +9,8 @@ object ArcadeDbContainer {
     val username: String = "root"
     val password: String = "root_root"
     val container by lazy {
-        GenericContainer(DockerImageName.parse("arcadedata/arcadedb:$ARCADEDB_VERSION")).apply {
+        // ARCADEDB_VERSION = 23.4.1
+        GenericContainer(DockerImageName.parse("arcadedata/arcadedb:$23.4.1")).apply {
             withExposedPorts(2480, 2424, 8182)
             withEnv(
                 "JAVA_OPTS",

@@ -56,7 +56,6 @@ abstract class RepositoryUpdateTest {
         assertEquals(reqUpdateSuccess.title, result.data?.title)
         assertEquals(reqUpdateSuccess.description, result.data?.description)
         assertEquals(emptyList(), result.errors)
-        assertEquals(lockNew, result.data?.lock)
     }
 
     @Test

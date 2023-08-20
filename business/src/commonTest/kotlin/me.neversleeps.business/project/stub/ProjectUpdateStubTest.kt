@@ -13,6 +13,7 @@ import me.neversleeps.common.models.project.ProjectId
 import me.neversleeps.common.models.project.ProjectPermission
 import me.neversleeps.common.models.user.UserId
 import me.neversleeps.common.stubs.ProjectDebugStub
+import me.neversleeps.common.stubs.WorkMode
 import kotlin.test.Test
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
@@ -34,6 +35,7 @@ class ProjectUpdateStubTest {
             command = AppCommand.UPDATE,
             state = AppState.NONE,
             stubCase = ProjectDebugStub.SUCCESS,
+            workMode = WorkMode.STUB,
             projectRequest = Project(
                 id = id,
                 title = title,
@@ -59,6 +61,7 @@ class ProjectUpdateStubTest {
             command = AppCommand.UPDATE,
             state = AppState.NONE,
             stubCase = ProjectDebugStub.BAD_ID,
+            workMode = WorkMode.STUB,
             projectRequest = Project(
                 id = ProjectId(""),
                 title = title,
@@ -82,6 +85,7 @@ class ProjectUpdateStubTest {
             command = AppCommand.UPDATE,
             state = AppState.NONE,
             stubCase = ProjectDebugStub.BAD_TITLE,
+            workMode = WorkMode.STUB,
             projectRequest = Project(
                 id = ProjectId(""),
                 title = title,
@@ -105,6 +109,7 @@ class ProjectUpdateStubTest {
             command = AppCommand.UPDATE,
             state = AppState.NONE,
             stubCase = ProjectDebugStub.DB_ERROR,
+            workMode = WorkMode.STUB,
             projectRequest = Project(),
         )
         // when

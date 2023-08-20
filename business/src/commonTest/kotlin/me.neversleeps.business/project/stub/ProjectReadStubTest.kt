@@ -11,6 +11,7 @@ import me.neversleeps.common.models.AppState
 import me.neversleeps.common.models.project.Project
 import me.neversleeps.common.models.project.ProjectId
 import me.neversleeps.common.stubs.ProjectDebugStub
+import me.neversleeps.common.stubs.WorkMode
 import kotlin.test.Test
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
@@ -28,6 +29,7 @@ class ProjectReadStubTest {
             command = AppCommand.READ,
             state = AppState.NONE,
             stubCase = ProjectDebugStub.SUCCESS,
+            workMode = WorkMode.STUB,
             projectRequest = Project(
                 id = id,
             ),
@@ -49,6 +51,7 @@ class ProjectReadStubTest {
             command = AppCommand.READ,
             state = AppState.NONE,
             stubCase = ProjectDebugStub.BAD_ID,
+            workMode = WorkMode.STUB,
             projectRequest = Project(
                 id = ProjectId(""),
             ),
@@ -68,6 +71,7 @@ class ProjectReadStubTest {
             command = AppCommand.READ,
             state = AppState.NONE,
             stubCase = ProjectDebugStub.DB_ERROR,
+            workMode = WorkMode.STUB,
             projectRequest = Project(),
         )
         // when

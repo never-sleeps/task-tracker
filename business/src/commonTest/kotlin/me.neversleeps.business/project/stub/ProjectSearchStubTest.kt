@@ -11,6 +11,7 @@ import me.neversleeps.common.models.project.Project
 import me.neversleeps.common.models.project.ProjectSearchFilter
 import me.neversleeps.common.models.user.UserId
 import me.neversleeps.common.stubs.ProjectDebugStub
+import me.neversleeps.common.stubs.WorkMode
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -34,6 +35,7 @@ class ProjectSearchStubTest {
             command = AppCommand.SEARCH,
             state = AppState.NONE,
             stubCase = ProjectDebugStub.SUCCESS,
+            workMode = WorkMode.STUB,
             projectSearchFilterRequest = filter,
         )
         // when
@@ -52,6 +54,7 @@ class ProjectSearchStubTest {
             command = AppCommand.SEARCH,
             state = AppState.NONE,
             stubCase = ProjectDebugStub.BAD_ID,
+            workMode = WorkMode.STUB,
             projectSearchFilterRequest = filter,
         )
         // when
@@ -69,6 +72,7 @@ class ProjectSearchStubTest {
             command = AppCommand.SEARCH,
             state = AppState.NONE,
             stubCase = ProjectDebugStub.BAD_SEARCH_TEXT,
+            workMode = WorkMode.STUB,
             projectSearchFilterRequest = filter,
         )
         // when
@@ -86,6 +90,7 @@ class ProjectSearchStubTest {
             command = AppCommand.SEARCH,
             state = AppState.NONE,
             stubCase = ProjectDebugStub.BAD_SEARCH_CREATED_BY,
+            workMode = WorkMode.STUB,
             projectSearchFilterRequest = filter,
         )
         // when
@@ -103,6 +108,7 @@ class ProjectSearchStubTest {
             command = AppCommand.SEARCH,
             state = AppState.NONE,
             stubCase = ProjectDebugStub.DB_ERROR,
+            workMode = WorkMode.STUB,
             projectSearchFilterRequest = filter,
         )
         // when

@@ -48,7 +48,7 @@ class CreateProjectMapperTest {
         val context = ProjectContext(
             requestId = RequestId("request-id"),
             command = AppCommand.CREATE,
-            state = AppState.RUNNING,
+            state = AppState.FINISHING,
             errors = mutableListOf(
                 AppError(
                     code = "some code",

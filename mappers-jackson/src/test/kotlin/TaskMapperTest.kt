@@ -9,6 +9,7 @@ import me.neversleeps.api.jackson.v1.models.TaskPermission
 import me.neversleeps.api.jackson.v1.models.TaskPriority
 import me.neversleeps.api.jackson.v1.models.TaskStatus
 import me.neversleeps.api.jackson.v1.models.TaskType
+import me.neversleeps.api.jackson.v1.models.WorkMode
 import me.neversleeps.common.TaskContext
 import me.neversleeps.common.models.AppCommand
 import me.neversleeps.common.models.AppError
@@ -30,6 +31,7 @@ class TaskMapperTest {
             requestType = "createTask",
             requestId = UUID.randomUUID().toString(),
             stub = TaskDebugStub.SUCCESS,
+            mode = WorkMode.STUB,
             data = TaskCreateObject(
                 type = TaskType.BACKEND,
                 priority = TaskPriority.HIGH,
@@ -60,7 +62,7 @@ class TaskMapperTest {
         val context = TaskContext(
             requestId = RequestId(UUID.randomUUID().toString()),
             command = AppCommand.CREATE,
-            state = AppState.RUNNING,
+            state = AppState.FINISHING,
             errors = mutableListOf(
                 AppError(
                     code = "some code",

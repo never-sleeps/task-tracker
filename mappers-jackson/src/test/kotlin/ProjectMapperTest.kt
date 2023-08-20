@@ -49,7 +49,7 @@ class ProjectMapperTest {
         val context = ProjectContext(
             requestId = RequestId(UUID.randomUUID().toString()),
             command = AppCommand.CREATE,
-            state = AppState.RUNNING,
+            state = AppState.FINISHING,
             errors = mutableListOf(
                 AppError(
                     code = "some code",

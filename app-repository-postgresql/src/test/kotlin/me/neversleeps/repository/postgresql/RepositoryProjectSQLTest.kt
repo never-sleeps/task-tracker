@@ -14,19 +14,19 @@ class RepositoryProjectSQLCreateTest : RepositoryCreateTest() {
     )
 }
 
-class RepoAdSQLDeleteTest : RepositoryDeleteTest() {
+class RepositoryProjectSQLDeleteTest : RepositoryDeleteTest() {
     override val repo: IProjectRepository = SqlTestCompanion.repositoryUnderTestContainer(initObjects)
 }
 
-class RepoAdSQLReadTest : RepositoryReadTest() {
+class RepositoryProjectSQLReadTest : RepositoryReadTest() {
     override val repo: IProjectRepository = SqlTestCompanion.repositoryUnderTestContainer(initObjects)
 }
 
-class RepoAdSQLSearchTest : RepositorySearchTest() {
+class RepositoryProjectSQLSearchTest : RepositorySearchTest() {
     override val repo: IProjectRepository = SqlTestCompanion.repositoryUnderTestContainer(initObjects)
 }
 
-class RepoAdSQLUpdateTest : RepositoryUpdateTest() {
+class RepositoryProjectSQLUpdateTest : RepositoryUpdateTest() {
     override val repo: IProjectRepository = SqlTestCompanion.repositoryUnderTestContainer(
         initObjects,
         randomUuid = { lockNew.asString() },

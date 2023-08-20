@@ -8,7 +8,8 @@ import me.neversleeps.common.ProjectContext
 import me.neversleeps.common.models.AppCommand
 import me.neversleeps.common.models.AppState
 import me.neversleeps.common.models.project.ProjectSearchFilter
-import me.neversleeps.`in`.memory.project.ProjectRepositoryInMemory
+import me.neversleeps.common.stubs.WorkMode
+import me.neversleeps.repository.stubs.ProjectRepositoryStub
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -22,14 +23,14 @@ class ProjectSearchValidationTest {
 
     @BeforeTest
     fun beforeEach() {
-        val repositoryTest = ProjectRepositoryInMemory(initObjects = listOf(ProjectStub.get()))
-        processor = ProjectProcessor(CorSettings(repositoryTest = repositoryTest))
+        processor = ProjectProcessor(CorSettings(repositoryStub = ProjectRepositoryStub()))
     }
 
     @Test
     fun correctEmpty() = runTest {
         val ctx = ProjectContext(
             command = command,
+            workMode = WorkMode.STUB,
             state = AppState.NONE,
             projectSearchFilterRequest = ProjectSearchFilter(),
         )

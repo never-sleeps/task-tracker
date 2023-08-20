@@ -16,7 +16,7 @@ import me.neversleeps.business.project.validation.validationTitleSymbols
 import me.neversleeps.business.project.validation.validationTitleTrim
 import me.neversleeps.common.CorSettings
 import me.neversleeps.common.models.AppCommand
-import me.neversleeps.`in`.memory.project.ProjectRepositoryInMemory
+import me.neversleeps.repository.stubs.ProjectRepositoryStub
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 
@@ -25,12 +25,10 @@ class ProjectUpdateValidationTest {
 
     private val command = AppCommand.UPDATE
     private lateinit var processor: ProjectProcessor
-    val projectInit = ProjectStub.get()
 
     @BeforeTest
     fun beforeEach() {
-        val repoTest = ProjectRepositoryInMemory(initObjects = listOf(projectInit))
-        processor = ProjectProcessor(CorSettings(repositoryTest = repoTest))
+        processor = ProjectProcessor(CorSettings(repositoryStub = ProjectRepositoryStub()))
     }
 
     @Test fun correctTitle() = validationTitleCorrect(command, processor)
