@@ -26,6 +26,7 @@ fun TaskContext.fromTransport(request: TaskCreateRequest) {
     command = AppCommand.CREATE
     taskRequest = request.data?.toInternal() ?: Task()
     stubCase = request.stub?.let { it.toInternal() } ?: me.neversleeps.common.stubs.TaskDebugStub.NONE
+    workMode = request.mode?.let { it.toInternal() } ?: me.neversleeps.common.stubs.WorkMode.NONE
 }
 
 fun TaskContext.fromTransport(request: TaskReadRequest) {
@@ -33,6 +34,7 @@ fun TaskContext.fromTransport(request: TaskReadRequest) {
     command = AppCommand.READ
     taskRequest = request.id.toTaskWithId()
     stubCase = request.stub?.let { it.toInternal() } ?: me.neversleeps.common.stubs.TaskDebugStub.NONE
+    workMode = request.mode?.let { it.toInternal() } ?: me.neversleeps.common.stubs.WorkMode.NONE
 }
 
 fun TaskContext.fromTransport(request: TaskUpdateRequest) {
@@ -40,6 +42,7 @@ fun TaskContext.fromTransport(request: TaskUpdateRequest) {
     command = AppCommand.UPDATE
     taskRequest = request.data?.toInternal() ?: Task()
     stubCase = request.stub?.let { it.toInternal() } ?: me.neversleeps.common.stubs.TaskDebugStub.NONE
+    workMode = request.mode?.let { it.toInternal() } ?: me.neversleeps.common.stubs.WorkMode.NONE
 }
 
 fun TaskContext.fromTransport(request: TaskDeleteRequest) {
@@ -47,6 +50,7 @@ fun TaskContext.fromTransport(request: TaskDeleteRequest) {
     command = AppCommand.DELETE
     taskRequest = request.id.toTaskWithId()
     stubCase = request.stub?.let { it.toInternal() } ?: me.neversleeps.common.stubs.TaskDebugStub.NONE
+    workMode = request.mode?.let { it.toInternal() } ?: me.neversleeps.common.stubs.WorkMode.NONE
 }
 
 fun TaskContext.fromTransport(request: TaskSearchRequest) {
@@ -54,4 +58,5 @@ fun TaskContext.fromTransport(request: TaskSearchRequest) {
     command = AppCommand.DELETE
     taskSearchFilterRequest = request.filter?.toInternal() ?: TaskSearchFilter()
     stubCase = request.stub?.let { it.toInternal() } ?: me.neversleeps.common.stubs.TaskDebugStub.NONE
+    workMode = request.mode?.let { it.toInternal() } ?: me.neversleeps.common.stubs.WorkMode.NONE
 }

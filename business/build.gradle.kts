@@ -3,7 +3,9 @@ plugins {
 }
 
 kotlin {
-    jvm {}
+    jvm {
+        withJava()
+    }
     linuxX64 {}
     macosX64 {}
     macosArm64 {}
@@ -19,6 +21,7 @@ kotlin {
                 implementation(kotlin("stdlib-common"))
 
                 implementation(project(":common"))
+                implementation(project(":app-repository-in-memory"))
                 implementation(project(":stubs"))
                 implementation(project(":lib-cor"))
                 implementation(project(":mappers-log1"))
@@ -33,6 +36,8 @@ kotlin {
                 implementation(kotlin("test-annotations-common"))
 
                 api("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
+                implementation(project(":app-repository-tests"))
+                implementation(project(":app-repository-stubs"))
             }
         }
 

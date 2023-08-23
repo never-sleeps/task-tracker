@@ -5,10 +5,12 @@ import kotlinx.coroutines.test.runTest
 import me.neversleeps.business.ProjectProcessor
 import me.neversleeps.common.ProjectContext
 import me.neversleeps.common.models.AppCommand
+import me.neversleeps.common.models.AppLock
 import me.neversleeps.common.models.AppState
 import me.neversleeps.common.models.project.Project
 import me.neversleeps.common.models.project.ProjectId
 import me.neversleeps.common.models.project.ProjectPermission
+import me.neversleeps.common.stubs.WorkMode
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
@@ -18,12 +20,14 @@ private val project = Project(
     title = "abc",
     description = "abc",
     permissions = mutableSetOf(ProjectPermission.READ, ProjectPermission.UPDATE),
+    lock = AppLock("12345"),
 )
 
 @OptIn(ExperimentalCoroutinesApi::class)
 fun validationIdCorrect(command: AppCommand, processor: ProjectProcessor) = runTest {
     val ctx = ProjectContext(
         command = command,
+        workMode = WorkMode.STUB,
         state = AppState.NONE,
         projectRequest = project.copy(id = ProjectId("123-234-abc-ABC")),
     )
@@ -38,6 +42,7 @@ fun validationIdCorrect(command: AppCommand, processor: ProjectProcessor) = runT
 fun validationIdTrim(command: AppCommand, processor: ProjectProcessor) = runTest {
     val ctx = ProjectContext(
         command = command,
+        workMode = WorkMode.STUB,
         state = AppState.NONE,
         projectRequest = project.copy(id = ProjectId(" \n\t 123-234-abc-ABC \n\t ")),
     )
@@ -52,6 +57,7 @@ fun validationIdTrim(command: AppCommand, processor: ProjectProcessor) = runTest
 fun validationIdEmpty(command: AppCommand, processor: ProjectProcessor) = runTest {
     val ctx = ProjectContext(
         command = command,
+        workMode = WorkMode.STUB,
         state = AppState.NONE,
         projectRequest = project.copy(id = ProjectId("")),
     )
@@ -69,6 +75,7 @@ fun validationIdEmpty(command: AppCommand, processor: ProjectProcessor) = runTes
 fun validationIdFormat(command: AppCommand, processor: ProjectProcessor) = runTest {
     val ctx = ProjectContext(
         command = command,
+        workMode = WorkMode.STUB,
         state = AppState.NONE,
         projectRequest = project.copy(id = ProjectId("!@#\$%^&*(),.{}")),
     )

@@ -12,6 +12,7 @@ import me.neversleeps.business.project.validation.validationTitleSymbols
 import me.neversleeps.business.project.validation.validationTitleTrim
 import me.neversleeps.common.CorSettings
 import me.neversleeps.common.models.AppCommand
+import me.neversleeps.repository.stubs.ProjectRepositoryStub
 import kotlin.test.Test
 
 // пример теста валидации, собранного из тестовых функций-оберток
@@ -19,7 +20,7 @@ import kotlin.test.Test
 class ProjectCreateValidationTest {
 
     private val command = AppCommand.CREATE
-    private val processor by lazy { ProjectProcessor(CorSettings()) }
+    private val processor by lazy { ProjectProcessor(CorSettings(repositoryStub = ProjectRepositoryStub())) }
 
     @Test fun correctTitle() = validationTitleCorrect(command, processor)
 

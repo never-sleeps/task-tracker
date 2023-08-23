@@ -2,7 +2,9 @@ package me.neversleeps.common.helpers
 
 import me.neversleeps.common.ProjectContext
 import me.neversleeps.common.TaskContext
+import me.neversleeps.common.exceptions.RepositoryConcurrencyException
 import me.neversleeps.common.models.AppError
+import me.neversleeps.common.models.AppLock
 import me.neversleeps.common.models.AppState
 
 fun Throwable.asAppError(
@@ -46,4 +48,46 @@ fun errorValidation(
     group = "validation",
     message = "Validation error for field $field: $description",
     level = level,
+)
+
+fun errorAdministration(
+    /**
+     * Код, характеризующий ошибку. Не должен включать имя поля или указание на валидацию.
+     * Например: empty, badSymbols, tooLong, etc
+     */
+    field: String = "",
+    violationCode: String,
+    description: String,
+    level: AppError.Level = AppError.Level.ERROR,
+    exception: Exception? = null,
+) = AppError(
+    field = field,
+    code = "administration-$violationCode",
+    group = "administration",
+    message = "Microservice management error: $description",
+    level = level,
+    exception = exception,
+)
+
+fun errorRepositoryConcurrency(
+    expectedLock: AppLock,
+    actualLock: AppLock?,
+    exception: Exception? = null,
+) = AppError(
+    field = "lock",
+    code = "concurrency",
+    group = "repo",
+    message = "The object has been changed concurrently by another user or process",
+    exception = exception ?: RepositoryConcurrencyException(expectedLock, actualLock),
+)
+
+val errorNotFound = AppError(
+    field = "id",
+    message = "Not Found",
+    code = "not-found"
+)
+
+val errorEmptyId = AppError(
+    field = "id",
+    message = "Id must not be null or blank"
 )

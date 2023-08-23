@@ -8,6 +8,9 @@ import me.neversleeps.common.ProjectContext
 import me.neversleeps.common.models.AppCommand
 import me.neversleeps.common.models.AppState
 import me.neversleeps.common.models.project.ProjectSearchFilter
+import me.neversleeps.common.stubs.WorkMode
+import me.neversleeps.repository.stubs.ProjectRepositoryStub
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
@@ -16,12 +19,18 @@ import kotlin.test.assertNotEquals
 class ProjectSearchValidationTest {
 
     private val command = AppCommand.SEARCH
-    private val processor by lazy { ProjectProcessor(CorSettings()) }
+    private lateinit var processor: ProjectProcessor
+
+    @BeforeTest
+    fun beforeEach() {
+        processor = ProjectProcessor(CorSettings(repositoryStub = ProjectRepositoryStub()))
+    }
 
     @Test
     fun correctEmpty() = runTest {
         val ctx = ProjectContext(
             command = command,
+            workMode = WorkMode.STUB,
             state = AppState.NONE,
             projectSearchFilterRequest = ProjectSearchFilter(),
         )

@@ -8,20 +8,20 @@ import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
+import io.ktor.util.*
 import me.neversleeps.api.multiplatform.apiMapper
 import me.neversleeps.app.multiplatform.WsProjectControllerV2
 import me.neversleeps.app.multiplatform.WsTaskControllerV2
 import me.neversleeps.app.multiplatform.project
 import me.neversleeps.app.multiplatform.task
 import me.neversleeps.app.plugins.initAppSettings
+import me.neversleeps.app.plugins.initPlugins
 
 fun Application.module(
     appSettings: AppSettings = initAppSettings(),
     installPlugins: Boolean = true,
 ) {
-    if (installPlugins) {
-        install(WebSockets)
-    }
+    initPlugins(appSettings)
 
     val wsProjectHandler = WsProjectControllerV2()
     val wsTaskHandler = WsTaskControllerV2()
@@ -31,7 +31,7 @@ fun Application.module(
             call.respondText("Hello, world!")
         }
         route("/api/v2") { // до этого разделения на v1/v2 не было. тут введено из-за io.ktor.server.application.DuplicatePluginException
-            install(ContentNegotiation) {
+            pluginRegistry.getOrNull(AttributeKey("ContentNegotiation"))?:install(ContentNegotiation) {
                 json(apiMapper)
             }
 

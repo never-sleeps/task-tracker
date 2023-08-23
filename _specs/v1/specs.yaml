@@ -267,6 +267,10 @@ components:
         message:
           type: string
 
+    AppLock:
+      type: string
+      description: Версия оптимистичной блокировки
+
     ResponseResultStatus:
       type: string
       enum:
@@ -335,6 +339,8 @@ components:
           properties:
             data:
               $ref: '#/components/schemas/ProjectUpdateObject'
+            lock:
+              $ref: '#/components/schemas/AppLock'
 
     ProjectDeleteRequest:
       allOf:
@@ -344,6 +350,8 @@ components:
           properties:
             id:
               $ref: '#/components/schemas/ProjectId'
+            lock:
+              $ref: '#/components/schemas/AppLock'
 
     ProjectSearchRequest:
       allOf:
@@ -512,6 +520,8 @@ components:
               uniqueItems: true
               items:
                 $ref: '#/components/schemas/ProjectPermission'
+            lock:
+              $ref: '#/components/schemas/AppLock'
 
     ProjectPermission:
       type: string
@@ -669,6 +679,15 @@ components:
       properties:
         stub:
           $ref: '#/components/schemas/ProjectDebugStub'
+        mode:
+          $ref: '#/components/schemas/WorkMode'
+
+    WorkMode:
+      type: string
+      enum:
+        - prod
+        - test
+        - stub
 
     ProjectDebugStub:
       type: string
@@ -686,6 +705,8 @@ components:
       properties:
         stub:
           $ref: '#/components/schemas/TaskDebugStub'
+        mode:
+          $ref: '#/components/schemas/WorkMode'
 
     TaskDebugStub:
       type: string

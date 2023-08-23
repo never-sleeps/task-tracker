@@ -24,8 +24,10 @@ import me.neversleeps.api.multiplatform.v1.models.ProjectSearchResponse
 import me.neversleeps.api.multiplatform.v1.models.ProjectUpdateObject
 import me.neversleeps.api.multiplatform.v1.models.ProjectUpdateRequest
 import me.neversleeps.api.multiplatform.v1.models.ProjectUpdateResponse
+import me.neversleeps.api.multiplatform.v1.models.WorkMode
 import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
 class V2ProjectStubApiTest {
     object ProjectPaths {
@@ -43,6 +45,7 @@ class V2ProjectStubApiTest {
             val requestObj = ProjectCreateRequest(
                 requestId = "12345",
                 stub = ProjectDebugStub.SUCCESS,
+                mode = WorkMode.STUB,
                 data = ProjectCreateObject(
                     title = "some title",
                     description = "some description",
@@ -69,6 +72,7 @@ class V2ProjectStubApiTest {
                 requestId = "12345",
                 id = "03e13b55-b5b2-484d-a08b-b18aeb087c88",
                 stub = ProjectDebugStub.SUCCESS,
+                mode = WorkMode.STUB,
             )
             contentType(ContentType.Application.Json)
             val requestJson = apiMapper.encodeToString(requestObj)
@@ -90,6 +94,7 @@ class V2ProjectStubApiTest {
             val requestObj = ProjectUpdateRequest(
                 requestId = "12345",
                 stub = ProjectDebugStub.SUCCESS,
+                mode = WorkMode.STUB,
                 data = ProjectUpdateObject(
                     title = "some title",
                     description = "some description",
@@ -116,6 +121,7 @@ class V2ProjectStubApiTest {
                 requestId = "12345",
                 id = "03e13b55-b5b2-484d-a08b-b18aeb087c88",
                 stub = ProjectDebugStub.SUCCESS,
+                mode = WorkMode.STUB,
             )
             contentType(ContentType.Application.Json)
             val requestJson = apiMapper.encodeToString(requestObj)
@@ -137,6 +143,7 @@ class V2ProjectStubApiTest {
             val requestObj = ProjectSearchRequest(
                 requestId = "12345",
                 stub = ProjectDebugStub.SUCCESS,
+                mode = WorkMode.STUB,
                 filter = ProjectSearchFilter(searchText = "some project title"),
             )
             contentType(ContentType.Application.Json)
@@ -148,16 +155,8 @@ class V2ProjectStubApiTest {
 
         // then
         assertEquals(200, response.status.value)
-        assertEquals(2, responseObj.projects?.size)
+        assertEquals(5, responseObj.projects?.size)
 
-        assertEquals("f89cc20d-bbf8-4fd8-9199-78d62d81209f", responseObj.projects?.first()?.id)
-        assertEquals("some project title 1", responseObj.projects?.first()?.title)
-        assertEquals("some project description 1", responseObj.projects?.first()?.description)
-        assertEquals("80d71f64-05b9-4901-a26b-69f35c3dc770", responseObj.projects?.first()?.createdBy)
-
-        assertEquals("afaf15b8-8c32-4c4d-b543-c18dfa1f8a15", responseObj.projects?.last()?.id)
-        assertEquals("some project title 2", responseObj.projects?.last()?.title)
-        assertEquals("some project description 2", responseObj.projects?.last()?.description)
-        assertEquals("caa9d872-ffb5-4cb8-93b8-d52dd9d36f68", responseObj.projects?.last()?.createdBy)
+        assertNotNull(responseObj.projects?.find { it.id == "PRO-101" })
     }
 }

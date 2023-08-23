@@ -8,13 +8,20 @@ import me.neversleeps.business.project.validation.validationIdFormat
 import me.neversleeps.business.project.validation.validationIdTrim
 import me.neversleeps.common.CorSettings
 import me.neversleeps.common.models.AppCommand
+import me.neversleeps.repository.stubs.ProjectRepositoryStub
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class ProjectReadValidationTest {
 
     private val command = AppCommand.READ
-    private val processor by lazy { ProjectProcessor(CorSettings()) }
+    private lateinit var processor: ProjectProcessor
+
+    @BeforeTest
+    fun beforeEach() {
+        processor = ProjectProcessor(CorSettings(repositoryStub = ProjectRepositoryStub()))
+    }
 
     @Test fun correctId() = validationIdCorrect(command, processor)
 

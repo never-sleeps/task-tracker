@@ -5,9 +5,11 @@ import kotlinx.coroutines.test.runTest
 import me.neversleeps.business.ProjectProcessor
 import me.neversleeps.common.ProjectContext
 import me.neversleeps.common.models.AppCommand
+import me.neversleeps.common.models.AppLock
 import me.neversleeps.common.models.AppState
 import me.neversleeps.common.models.project.Project
 import me.neversleeps.common.models.project.ProjectPermission
+import me.neversleeps.common.stubs.WorkMode
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
@@ -19,12 +21,14 @@ private val project = Project(
     title = "abc",
     description = "abc",
     permissions = mutableSetOf(ProjectPermission.READ, ProjectPermission.UPDATE),
+    lock = AppLock("12345"),
 )
 
 @OptIn(ExperimentalCoroutinesApi::class)
 fun validationTitleCorrect(command: AppCommand, processor: ProjectProcessor) = runTest {
     val ctx = ProjectContext(
         command = command,
+        workMode = WorkMode.STUB,
         state = AppState.NONE,
         projectRequest = project.copy(title = "abc"),
     )
@@ -40,6 +44,7 @@ fun validationTitleCorrect(command: AppCommand, processor: ProjectProcessor) = r
 fun validationTitleTrim(command: AppCommand, processor: ProjectProcessor) = runTest {
     val ctx = ProjectContext(
         command = command,
+        workMode = WorkMode.STUB,
         state = AppState.NONE,
         projectRequest = project.copy(title = " \n\t abc \t\n "),
     )
@@ -55,6 +60,7 @@ fun validationTitleTrim(command: AppCommand, processor: ProjectProcessor) = runT
 fun validationTitleEmpty(command: AppCommand, processor: ProjectProcessor) = runTest {
     val ctx = ProjectContext(
         command = command,
+        workMode = WorkMode.STUB,
         state = AppState.NONE,
         projectRequest = project.copy(title = ""),
     )
@@ -73,6 +79,7 @@ fun validationTitleEmpty(command: AppCommand, processor: ProjectProcessor) = run
 fun validationTitleSymbols(command: AppCommand, processor: ProjectProcessor) = runTest {
     val ctx = ProjectContext(
         command = command,
+        workMode = WorkMode.STUB,
         state = AppState.NONE,
         projectRequest = project.copy(title = "!@#$%^&*(),.{}"),
     )

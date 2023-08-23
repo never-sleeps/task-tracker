@@ -16,13 +16,20 @@ import me.neversleeps.business.project.validation.validationTitleSymbols
 import me.neversleeps.business.project.validation.validationTitleTrim
 import me.neversleeps.common.CorSettings
 import me.neversleeps.common.models.AppCommand
+import me.neversleeps.repository.stubs.ProjectRepositoryStub
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class ProjectUpdateValidationTest {
 
     private val command = AppCommand.UPDATE
-    private val processor by lazy { ProjectProcessor(CorSettings()) }
+    private lateinit var processor: ProjectProcessor
+
+    @BeforeTest
+    fun beforeEach() {
+        processor = ProjectProcessor(CorSettings(repositoryStub = ProjectRepositoryStub()))
+    }
 
     @Test fun correctTitle() = validationTitleCorrect(command, processor)
 

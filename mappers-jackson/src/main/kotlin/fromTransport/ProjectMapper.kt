@@ -4,6 +4,7 @@ import me.neversleeps.api.jackson.v1.models.ProjectCreateObject
 import me.neversleeps.api.jackson.v1.models.ProjectDebugStub
 import me.neversleeps.api.jackson.v1.models.ProjectSearchFilter
 import me.neversleeps.api.jackson.v1.models.ProjectUpdateObject
+import me.neversleeps.common.models.AppLock
 import me.neversleeps.common.models.project.Project
 import me.neversleeps.common.models.project.ProjectId
 
@@ -24,11 +25,12 @@ fun ProjectCreateObject.toInternal(): Project = Project(
     createdBy = this.createdBy.toUserId(),
 )
 
-fun ProjectUpdateObject.toInternal(): Project = Project(
+fun ProjectUpdateObject.toInternal(lock: String?): Project = Project(
     id = this.id.toProjectId(),
     title = this.title ?: "",
     description = this.description ?: "",
     createdBy = this.createdBy.toUserId(),
+    lock = lock?.let { AppLock(it) } ?: AppLock.NONE,
 )
 
 fun ProjectSearchFilter.toInternal(): me.neversleeps.common.models.project.ProjectSearchFilter =
@@ -39,4 +41,8 @@ fun ProjectSearchFilter.toInternal(): me.neversleeps.common.models.project.Proje
 
 fun String?.toProjectId() = this?.let { ProjectId(it) } ?: ProjectId.NONE
 
-fun String?.toProjectWithId() = Project(id = this.toProjectId())
+fun String?.toProjectWithId(lock: String? = null) =
+    Project(
+        id = this.toProjectId(),
+        lock = lock?.let { AppLock(it) } ?: AppLock.NONE,
+    )

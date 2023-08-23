@@ -4,6 +4,7 @@ import me.neversleeps.api.multiplatform.v1.models.ProjectCreateObject
 import me.neversleeps.api.multiplatform.v1.models.ProjectCreateRequest
 import me.neversleeps.api.multiplatform.v1.models.ProjectDebugStub
 import me.neversleeps.api.multiplatform.v1.models.ProjectResponseObject
+import me.neversleeps.api.multiplatform.v1.models.WorkMode
 
 val projectResponseObject = ProjectResponseObject(
     title = "some title",
@@ -22,5 +23,6 @@ val projectCreateRequest = ProjectCreateRequest(
     requestId = "12345",
     requestType = "createProject",
     stub = ProjectDebugStub.SUCCESS,
+    mode = WorkMode.STUB,
     data = projectCreateObject,
 )

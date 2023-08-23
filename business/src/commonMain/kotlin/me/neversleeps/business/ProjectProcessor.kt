@@ -1,8 +1,18 @@
 package me.neversleeps.business
 
 import kotlinx.datetime.Clock
+import me.neversleeps.business.general.initRepo
+import me.neversleeps.business.general.prepareResult
 import me.neversleeps.business.groups.projectOperation
 import me.neversleeps.business.groups.projectStubs
+import me.neversleeps.business.repository.repositoryCreate
+import me.neversleeps.business.repository.repositoryDelete
+import me.neversleeps.business.repository.repositoryPrepareCreate
+import me.neversleeps.business.repository.repositoryPrepareDelete
+import me.neversleeps.business.repository.repositoryPrepareUpdate
+import me.neversleeps.business.repository.repositoryRead
+import me.neversleeps.business.repository.repositorySearch
+import me.neversleeps.business.repository.repositoryUpdate
 import me.neversleeps.business.statemachine.computeState
 import me.neversleeps.business.validation.project.finishAdFilterValidation
 import me.neversleeps.business.validation.project.finishAdValidation
@@ -11,6 +21,8 @@ import me.neversleeps.business.validation.project.validateDescriptionHasContent
 import me.neversleeps.business.validation.project.validateDescriptionNotEmpty
 import me.neversleeps.business.validation.project.validateIdNotEmpty
 import me.neversleeps.business.validation.project.validateIdProperFormat
+import me.neversleeps.business.validation.project.validateLockNotEmpty
+import me.neversleeps.business.validation.project.validateLockProperFormat
 import me.neversleeps.business.validation.project.validateTitleHasContent
 import me.neversleeps.business.validation.project.validateTitleNotEmpty
 import me.neversleeps.business.workers.projectInitStatus
@@ -31,7 +43,10 @@ import me.neversleeps.common.ProjectContext
 import me.neversleeps.common.helpers.asAppError
 import me.neversleeps.common.helpers.fail
 import me.neversleeps.common.models.AppCommand
+import me.neversleeps.common.models.AppLock
+import me.neversleeps.common.models.AppState
 import me.neversleeps.common.models.project.ProjectId
+import me.neversleeps.lib.cor.chain
 import me.neversleeps.lib.cor.rootChain
 import me.neversleeps.lib.cor.worker
 import me.neversleeps.logging.common.ILogWrapper
@@ -86,6 +101,7 @@ class ProjectProcessor(val settings: CorSettings) {
     companion object {
         private val BusinessChain = rootChain<ProjectContext> {
             projectInitStatus("Инициализация статуса")
+            initRepo("Инициализация репозитория")
             projectOperation("Создание проекта", AppCommand.CREATE) { // т.е. будет выполняться для команды AppCommand.CREATE
                 projectStubs("Обработка стабов") {
                     projectStubCreateSuccess("Имитация успешной обработки")
@@ -106,6 +122,12 @@ class ProjectProcessor(val settings: CorSettings) {
 
                     finishAdValidation("Завершение проверок")
                 }
+                chain {
+                    title = "Логика сохранения"
+                    repositoryPrepareCreate("Подготовка объекта для сохранения")
+                    repositoryCreate("Создание объявления в БД")
+                }
+                prepareResult("Подготовка ответа")
             }
             projectOperation("Получить проект", AppCommand.READ) {
                 projectStubs("Обработка стабов") {
@@ -125,6 +147,16 @@ class ProjectProcessor(val settings: CorSettings) {
                     finishAdValidation("Успешное завершение процедуры валидации")
                 }
                 computeState("Вычисление состояния проекта")
+                chain {
+                    title = "Логика чтения"
+                    repositoryRead("Чтение проекта из БД")
+                    worker {
+                        title = "Подготовка ответа для Read"
+                        on { state == AppState.RUNNING }
+                        handle { projectRepositoryDone = projectRepositoryRead }
+                    }
+                }
+                prepareResult("Подготовка ответа")
             }
             projectOperation("Обновить проект", AppCommand.UPDATE) {
                 projectStubs("Обработка стабов") {
@@ -138,10 +170,13 @@ class ProjectProcessor(val settings: CorSettings) {
                 projectValidation {
                     worker("Копируем поля в projectValidating") { projectValidating = projectRequest.deepCopy() }
                     worker("Очистка id") { projectValidating.id = ProjectId(projectValidating.id.asString().trim()) }
+                    worker("Очистка lock") { projectValidating.lock = AppLock(projectValidating.lock.asString().trim()) }
                     worker("Очистка заголовка") { projectValidating.title = projectValidating.title.trim() }
                     worker("Очистка описания") { projectValidating.description = projectValidating.description.trim() }
                     validateIdNotEmpty("Проверка на непустой id")
                     validateIdProperFormat("Проверка формата id")
+                    validateLockNotEmpty("Проверка на непустой lock")
+                    validateLockProperFormat("Проверка формата lock")
                     validateTitleNotEmpty("Проверка на непустой заголовок")
                     validateTitleHasContent("Проверка на наличие содержания в заголовке")
                     validateDescriptionNotEmpty("Проверка на непустое описание")
@@ -149,6 +184,13 @@ class ProjectProcessor(val settings: CorSettings) {
 
                     finishAdValidation("Успешное завершение процедуры валидации")
                 }
+                chain {
+                    title = "Логика сохранения"
+                    repositoryRead("Чтение проекта из БД")
+                    repositoryPrepareUpdate("Подготовка объекта для обновления")
+                    repositoryUpdate("Обновление объявления в БД")
+                }
+                prepareResult("Подготовка ответа")
             }
             projectOperation("Удалить проект", AppCommand.DELETE) {
                 projectStubs("Обработка стабов") {
@@ -161,10 +203,20 @@ class ProjectProcessor(val settings: CorSettings) {
                 projectValidation {
                     worker("Копируем поля в projectValidating") { projectValidating = projectRequest.deepCopy() }
                     worker("Очистка id") { projectValidating.id = ProjectId(projectValidating.id.asString().trim()) }
+                    worker("Очистка lock") { projectValidating.lock = AppLock(projectValidating.lock.asString().trim()) }
                     validateIdNotEmpty("Проверка на непустой id")
                     validateIdProperFormat("Проверка формата id")
+                    validateLockNotEmpty("Проверка на непустой lock")
+                    validateLockProperFormat("Проверка формата lock")
                     finishAdValidation("Успешное завершение процедуры валидации")
                 }
+                chain {
+                    title = "Логика удаления"
+                    repositoryRead("Чтение проекта из БД")
+                    repositoryPrepareDelete("Подготовка объекта для удаления")
+                    repositoryDelete("Удаление проекта из БД")
+                }
+                prepareResult("Подготовка ответа")
             }
             projectOperation("Поиск проектов", AppCommand.SEARCH) {
                 projectStubs("Обработка стабов") {
@@ -182,6 +234,8 @@ class ProjectProcessor(val settings: CorSettings) {
                     }
                     finishAdFilterValidation("Успешное завершение процедуры валидации")
                 }
+                repositorySearch("Поиск проектов в БД по фильтру")
+                prepareResult("Подготовка ответа")
             }
         }.build()
     }
