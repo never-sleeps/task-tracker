@@ -4,6 +4,7 @@ import kotlinx.datetime.Instant
 import me.neversleeps.common.NONE
 import me.neversleeps.common.models.AppLock
 import me.neversleeps.common.models.user.UserId
+import me.neversleeps.common.permissions.AppPrincipalRelations
 import me.neversleeps.common.statemachine.ObjectState
 
 data class Project(
@@ -18,6 +19,8 @@ data class Project(
     var timePublished: Instant = Instant.NONE,
     var timeUpdated: Instant = Instant.NONE,
     var lock: AppLock = AppLock.NONE,
+    var principalRelations: Set<AppPrincipalRelations> = emptySet(),
+    val permissionsClient: MutableSet<ProjectPermissionClient> = mutableSetOf(),
 ) {
     fun deepCopy(): Project = copy(
         permissions = permissions.toMutableSet(),

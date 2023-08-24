@@ -3,6 +3,7 @@ package me.neversleeps.business.project.validation
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import me.neversleeps.business.ProjectProcessor
+import me.neversleeps.business.project.addTestPrincipal
 import me.neversleeps.common.ProjectContext
 import me.neversleeps.common.models.AppCommand
 import me.neversleeps.common.models.AppLock
@@ -14,6 +15,8 @@ import me.neversleeps.common.stubs.WorkMode
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
+
+private val stub = ProjectStub.prepareResult { id = ProjectId("123-234-abc-ABC") }
 
 private val project = Project(
     id = ProjectId("123-234-abc-ABC"),
@@ -32,6 +35,7 @@ fun validationIdCorrect(command: AppCommand, processor: ProjectProcessor) = runT
         projectRequest = project.copy(id = ProjectId("123-234-abc-ABC")),
     )
 
+    ctx.addTestPrincipal(stub.createdBy)
     processor.execute(ctx)
 
     assertEquals(0, ctx.errors.size)
@@ -47,6 +51,7 @@ fun validationIdTrim(command: AppCommand, processor: ProjectProcessor) = runTest
         projectRequest = project.copy(id = ProjectId(" \n\t 123-234-abc-ABC \n\t ")),
     )
 
+    ctx.addTestPrincipal(stub.createdBy)
     processor.execute(ctx)
 
     assertEquals(0, ctx.errors.size)

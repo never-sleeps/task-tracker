@@ -16,6 +16,7 @@ import me.neversleeps.common.models.user.UserId
 import me.neversleeps.common.repository.project.DbProjectResponse
 import me.neversleeps.common.stubs.WorkMode
 import me.neversleeps.`in`.memory.project.ProjectRepositoryMock
+import me.neversleeps.business.project.addTestPrincipal
 import kotlin.test.assertEquals
 
 private val userId = UserId("321")
@@ -64,6 +65,7 @@ fun repositoryNotFoundTest(command: AppCommand) = runTest {
             lock = AppLock("123-234-abc-ABC"),
         ),
     )
+    ctx.addTestPrincipal(userId)
     processor.execute(ctx)
     assertEquals(AppState.FAILING, ctx.state)
     assertEquals(Project(), ctx.projectResponse)

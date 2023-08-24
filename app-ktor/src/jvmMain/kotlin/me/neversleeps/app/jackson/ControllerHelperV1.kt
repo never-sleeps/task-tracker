@@ -1,6 +1,8 @@
 package me.neversleeps.app.jackson
 
 import io.ktor.server.application.* // ktlint-disable no-wildcard-imports
+import io.ktor.server.auth.*
+import io.ktor.server.auth.jwt.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import me.neversleeps.api.jackson.v1.models.IRequest

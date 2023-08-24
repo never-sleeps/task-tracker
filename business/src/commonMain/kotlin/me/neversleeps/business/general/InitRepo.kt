@@ -3,6 +3,7 @@ package me.neversleeps.business.general
 import me.neversleeps.common.ProjectContext
 import me.neversleeps.common.helpers.errorAdministration
 import me.neversleeps.common.helpers.fail
+import me.neversleeps.common.permissions.AppUserGroups
 import me.neversleeps.common.repository.project.IProjectRepository
 import me.neversleeps.common.stubs.WorkMode
 import me.neversleeps.lib.cor.ICorChainDsl
@@ -17,6 +18,7 @@ fun ICorChainDsl<ProjectContext>.initRepo(title: String) = worker {
         projectRepository = when {
             workMode == WorkMode.TEST -> settings.repositoryTest
             workMode == WorkMode.STUB -> settings.repositoryStub
+            principal.groups.contains(AppUserGroups.TEST) -> settings.repositoryTest
             else -> settings.repositoryProd
         }
         if (workMode != WorkMode.STUB && projectRepository == IProjectRepository.NONE) {

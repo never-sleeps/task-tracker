@@ -15,6 +15,7 @@ import me.neversleeps.common.models.user.UserId
 import me.neversleeps.common.repository.project.DbProjectResponse
 import me.neversleeps.common.stubs.WorkMode
 import me.neversleeps.`in`.memory.project.ProjectRepositoryMock
+import me.neversleeps.business.project.addTestPrincipal
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -72,6 +73,7 @@ class RepositoryUpdateTest {
             workMode = WorkMode.TEST,
             projectRequest = projectToUpdate,
         )
+        ctx.addTestPrincipal(userId)
         processor.execute(ctx)
         assertEquals(AppState.FINISHING, ctx.state)
         assertEquals(projectToUpdate.id, ctx.projectResponse.id)

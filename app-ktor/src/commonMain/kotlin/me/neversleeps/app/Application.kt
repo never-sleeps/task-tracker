@@ -31,7 +31,7 @@ fun Application.module(
             call.respondText("Hello, world!")
         }
         route("/api/v2") { // до этого разделения на v1/v2 не было. тут введено из-за io.ktor.server.application.DuplicatePluginException
-            pluginRegistry.getOrNull(AttributeKey("ContentNegotiation"))?:install(ContentNegotiation) {
+            pluginRegistry.getOrNull(AttributeKey("ContentNegotiation")) ?: install(ContentNegotiation) {
                 json(apiMapper)
             }
 
