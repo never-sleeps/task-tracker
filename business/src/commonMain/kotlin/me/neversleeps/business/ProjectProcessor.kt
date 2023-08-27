@@ -5,6 +5,10 @@ import me.neversleeps.business.general.initRepo
 import me.neversleeps.business.general.prepareResult
 import me.neversleeps.business.groups.projectOperation
 import me.neversleeps.business.groups.projectStubs
+import me.neversleeps.business.permissions.accessValidation
+import me.neversleeps.business.permissions.chainPermissions
+import me.neversleeps.business.permissions.frontPermissions
+import me.neversleeps.business.permissions.searchTypes
 import me.neversleeps.business.repository.repositoryCreate
 import me.neversleeps.business.repository.repositoryDelete
 import me.neversleeps.business.repository.repositoryPrepareCreate
@@ -102,6 +106,7 @@ class ProjectProcessor(val settings: CorSettings) {
         private val BusinessChain = rootChain<ProjectContext> {
             projectInitStatus("Инициализация статуса")
             initRepo("Инициализация репозитория")
+
             projectOperation("Создание проекта", AppCommand.CREATE) { // т.е. будет выполняться для команды AppCommand.CREATE
                 projectStubs("Обработка стабов") {
                     projectStubCreateSuccess("Имитация успешной обработки")
@@ -122,13 +127,17 @@ class ProjectProcessor(val settings: CorSettings) {
 
                     finishAdValidation("Завершение проверок")
                 }
+                chainPermissions("Вычисление разрешений для пользователя")
                 chain {
                     title = "Логика сохранения"
                     repositoryPrepareCreate("Подготовка объекта для сохранения")
+                    accessValidation("Вычисление прав доступа")
                     repositoryCreate("Создание объявления в БД")
                 }
+                frontPermissions("Вычисление пользовательских разрешений для фронтенда")
                 prepareResult("Подготовка ответа")
             }
+
             projectOperation("Получить проект", AppCommand.READ) {
                 projectStubs("Обработка стабов") {
                     projectStubReadSuccess("Имитация успешной обработки")
@@ -147,17 +156,21 @@ class ProjectProcessor(val settings: CorSettings) {
                     finishAdValidation("Успешное завершение процедуры валидации")
                 }
                 computeState("Вычисление состояния проекта")
+                chainPermissions("Вычисление разрешений для пользователя")
                 chain {
                     title = "Логика чтения"
                     repositoryRead("Чтение проекта из БД")
+                    accessValidation("Вычисление прав доступа")
                     worker {
                         title = "Подготовка ответа для Read"
                         on { state == AppState.RUNNING }
                         handle { projectRepositoryDone = projectRepositoryRead }
                     }
                 }
+                frontPermissions("Вычисление пользовательских разрешений для фронтенда")
                 prepareResult("Подготовка ответа")
             }
+
             projectOperation("Обновить проект", AppCommand.UPDATE) {
                 projectStubs("Обработка стабов") {
                     projectStubUpdateSuccess("Имитация успешной обработки")
@@ -184,14 +197,18 @@ class ProjectProcessor(val settings: CorSettings) {
 
                     finishAdValidation("Успешное завершение процедуры валидации")
                 }
+                chainPermissions("Вычисление разрешений для пользователя")
                 chain {
                     title = "Логика сохранения"
                     repositoryRead("Чтение проекта из БД")
+                    accessValidation("Вычисление прав доступа")
                     repositoryPrepareUpdate("Подготовка объекта для обновления")
                     repositoryUpdate("Обновление объявления в БД")
                 }
+                frontPermissions("Вычисление пользовательских разрешений для фронтенда")
                 prepareResult("Подготовка ответа")
             }
+
             projectOperation("Удалить проект", AppCommand.DELETE) {
                 projectStubs("Обработка стабов") {
                     projectStubDeleteSuccess("Имитация успешной обработки")
@@ -210,14 +227,18 @@ class ProjectProcessor(val settings: CorSettings) {
                     validateLockProperFormat("Проверка формата lock")
                     finishAdValidation("Успешное завершение процедуры валидации")
                 }
+                chainPermissions("Вычисление разрешений для пользователя")
                 chain {
                     title = "Логика удаления"
                     repositoryRead("Чтение проекта из БД")
+                    accessValidation("Вычисление прав доступа")
                     repositoryPrepareDelete("Подготовка объекта для удаления")
                     repositoryDelete("Удаление проекта из БД")
                 }
+                frontPermissions("Вычисление пользовательских разрешений для фронтенда")
                 prepareResult("Подготовка ответа")
             }
+
             projectOperation("Поиск проектов", AppCommand.SEARCH) {
                 projectStubs("Обработка стабов") {
                     projectStubSearchSuccess("Имитация успешной обработки")
@@ -234,7 +255,10 @@ class ProjectProcessor(val settings: CorSettings) {
                     }
                     finishAdFilterValidation("Успешное завершение процедуры валидации")
                 }
+                chainPermissions("Вычисление разрешений для пользователя")
+                searchTypes("Подготовка поискового запроса")
                 repositorySearch("Поиск проектов в БД по фильтру")
+                frontPermissions("Вычисление пользовательских разрешений для фронтенда")
                 prepareResult("Подготовка ответа")
             }
         }.build()

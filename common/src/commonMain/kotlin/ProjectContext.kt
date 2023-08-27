@@ -7,6 +7,8 @@ import me.neversleeps.common.models.AppState
 import me.neversleeps.common.models.RequestId
 import me.neversleeps.common.models.project.Project
 import me.neversleeps.common.models.project.ProjectSearchFilter
+import me.neversleeps.common.permissions.AppPrincipalModel
+import me.neversleeps.common.permissions.AppUserPermissions
 import me.neversleeps.common.repository.project.IProjectRepository
 import me.neversleeps.common.stubs.ProjectDebugStub
 import me.neversleeps.common.stubs.WorkMode
@@ -40,4 +42,8 @@ data class ProjectContext(
     var projectRepositoryRead: Project = Project(),
     var projectRepositoryDone: Project = Project(),
     var projectsRepositoryDone: MutableList<Project> = mutableListOf(),
+
+    var principal: AppPrincipalModel = AppPrincipalModel.NONE,
+    val permissionsChain: MutableSet<AppUserPermissions> = mutableSetOf(),
+    var permitted: Boolean = false,
 ) : IContext

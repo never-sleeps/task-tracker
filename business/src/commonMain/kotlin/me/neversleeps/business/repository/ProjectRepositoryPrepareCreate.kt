@@ -11,6 +11,7 @@ fun ICorChainDsl<ProjectContext>.repositoryPrepareCreate(title: String) = worker
     on { state == AppState.RUNNING }
     handle {
         projectRepositoryRead = projectValidated.deepCopy()
+        projectRepositoryRead.createdBy = principal.id
         projectRepositoryPrepare = projectRepositoryRead
     }
 }

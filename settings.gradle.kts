@@ -43,7 +43,7 @@ pluginManagement {
     }
 }
 
-include("acceptance")
+// include("acceptance") does not support security
 include("common")
 include("api-jackson")
 include("api-multiplatform")
@@ -68,3 +68,4 @@ include("app-repository-stubs")
 include("app-repository-postgresql")
 include("app-repository-cassandra")
 include("app-repository-gremlin")
+include("auth")

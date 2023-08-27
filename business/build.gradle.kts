@@ -21,6 +21,7 @@ kotlin {
                 implementation(kotlin("stdlib-common"))
 
                 implementation(project(":common"))
+                implementation(project(":auth"))
                 implementation(project(":app-repository-in-memory"))
                 implementation(project(":stubs"))
                 implementation(project(":lib-cor"))

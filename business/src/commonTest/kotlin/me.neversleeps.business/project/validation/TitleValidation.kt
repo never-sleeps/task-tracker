@@ -3,6 +3,7 @@ package me.neversleeps.business.project.validation
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import me.neversleeps.business.ProjectProcessor
+import me.neversleeps.business.project.addTestPrincipal
 import me.neversleeps.common.ProjectContext
 import me.neversleeps.common.models.AppCommand
 import me.neversleeps.common.models.AppLock
@@ -33,6 +34,7 @@ fun validationTitleCorrect(command: AppCommand, processor: ProjectProcessor) = r
         projectRequest = project.copy(title = "abc"),
     )
 
+    ctx.addTestPrincipal(stub.createdBy)
     processor.execute(ctx)
 
     assertEquals(0, ctx.errors.size)
@@ -49,6 +51,7 @@ fun validationTitleTrim(command: AppCommand, processor: ProjectProcessor) = runT
         projectRequest = project.copy(title = " \n\t abc \t\n "),
     )
 
+    ctx.addTestPrincipal(stub.createdBy)
     processor.execute(ctx)
 
     assertEquals(0, ctx.errors.size)
@@ -65,6 +68,7 @@ fun validationTitleEmpty(command: AppCommand, processor: ProjectProcessor) = run
         projectRequest = project.copy(title = ""),
     )
 
+    ctx.addTestPrincipal(stub.createdBy)
     processor.execute(ctx)
 
     assertEquals(1, ctx.errors.size)
@@ -84,6 +88,7 @@ fun validationTitleSymbols(command: AppCommand, processor: ProjectProcessor) = r
         projectRequest = project.copy(title = "!@#$%^&*(),.{}"),
     )
 
+    ctx.addTestPrincipal(stub.createdBy)
     processor.execute(ctx)
 
     assertEquals(1, ctx.errors.size)
